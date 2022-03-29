@@ -35,7 +35,7 @@ export default function SocialLoginScreen() {
 					style={styles.googleLogo}
 				/>
 				<Text style={[styles.buttonText, styles.buttonTextGoogle]}>
-					Continue with Facebook
+					Continue with Google
 				</Text>
 			</TouchableOpacity>
 
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		flexDirection: "row",
+		justifyContent: "center",
 		alignItems: "center",
 		paddingHorizontal: 20,
 		paddingVertical: 15,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
 		borderColor: "#000000",
 	},
 	buttonText: {
-		fontSize: 20,
+		fontSize: 18,
 		fontWeight: "700",
 		color: "#fff",
 		marginLeft: 15,

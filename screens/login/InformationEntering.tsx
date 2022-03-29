@@ -47,6 +47,7 @@ const InformationEntering = (props: Props) => {
 
 	const handleSaveInformation = () => {
 		console.log("Handle save");
+		navigator.navigate("Root");
 	};
 
 	return (
