@@ -61,7 +61,7 @@ function RootNavigator() {
 			<Stack.Screen
 				name="EnterInfor"
 				component={InformationEntering}
-				// options={{ headerShown: false }}
+				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
 				name="Root"

@@ -1,41 +1,14 @@
-import {
-	Button,
-	Image,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { Button, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { logo1, googleLogo } from "../../assets/images";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Text, View } from "../../components/Themed";
 
 export default function SocialLoginScreen() {
 	const navigator = useNavigation();
 
-	const SocialButton = ({
-		iconName,
-		onClick,
-		color,
-		children,
-		propsStyle,
-	}: any) => {
-		return (
-			<TouchableOpacity
-				style={[styles.button, propsStyle]}
-				onPress={onClick}
-			>
-				<Ionicons
-					name={iconName}
-					size={32}
-					color={color}
-					style={{ marginRight: 15 }}
-				/>
-				<Text style={styles.buttonText}>{children}</Text>
-			</TouchableOpacity>
-		);
-	};
+	const s = require("../../globalStyles");
 
 	const handleFacebookLogin = () => {
 		console.log("login facebook");
@@ -47,8 +20,8 @@ export default function SocialLoginScreen() {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.titleh1}>Welcome Aboard, Mates!</Text>
+		<View style={s.standardContainer}>
+			<Text style={[s.headerH1]}>Welcome Aboard, Mates!</Text>
 			<Image source={logo1} style={styles.logo} />
 			<Text style={styles.titleh2}>Sign In To Continue</Text>
 
@@ -80,19 +53,9 @@ export default function SocialLoginScreen() {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		marginTop: 60,
-	},
-	titleh1: {
-		fontSize: 24,
-		marginBottom: 45,
-		fontWeight: "700",
-	},
 	titleh2: {
 		fontSize: 20,
-		marginBottom: 20,
+		marginBottom: 30,
 		fontWeight: "700",
 	},
 	logo: {
@@ -113,13 +76,19 @@ const styles = StyleSheet.create({
 		paddingVertical: 15,
 		width: 310,
 		borderRadius: 15,
-		marginBottom: 20,
+		marginBottom: 26,
+		shadowColor: "rgba(0, 0, 0, 0.7)",
+		shadowOpacity: 0.8,
+		elevation: 6,
+		shadowRadius: 15,
+		shadowOffset: { width: 1, height: 13 },
 	},
 	buttonFacebook: {
 		backgroundColor: "#1877F2",
 	},
 	buttonGoogle: {
 		backgroundColor: "white",
+		borderColor: "#000000",
 	},
 	buttonText: {
 		fontSize: 20,

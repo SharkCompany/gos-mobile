@@ -7,10 +7,12 @@ module.exports = function (api) {
 				"module-resolver",
 				{
 					alias: {
-						"@src": "./",
+						components: "./components",
+						interfaces: "./interfaces",
 					},
 				},
 			],
+			"react-native-reanimated/plugin",
 		],
 	};
 };
