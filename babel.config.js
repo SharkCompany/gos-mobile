@@ -8,7 +8,11 @@ module.exports = function (api) {
 				{
 					alias: {
 						components: "./components",
+						screens: "./screens",
 						interfaces: "./interfaces",
+						constants: "./constants",
+						hooks: "./hooks",
+						navigation: "./navigation"
 					},
 				},
 			],
