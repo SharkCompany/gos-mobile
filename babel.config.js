@@ -12,7 +12,8 @@ module.exports = function (api) {
 						interfaces: "./interfaces",
 						constants: "./constants",
 						hooks: "./hooks",
-						navigation: "./navigation"
+						navigation: "./navigation",
+						assets: "./assets",
 					},
 				},
 			],
