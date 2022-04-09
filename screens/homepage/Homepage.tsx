@@ -14,11 +14,11 @@ import NotificationTag from "components/NotificationTag";
 
 export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
 	const handlePressDiNhoXe = () => {
-		navigation.navigate("Searcher");
+		navigation.navigate("MapScreen");
 	};
 
 	const handleTimYenSau = () => {
-		navigation.navigate("Searcher");
+		navigation.navigate("MapScreen");
 	};
 
 	return (
@@ -56,12 +56,12 @@ export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
 					</Text>
 				</TouchableOpacity>
 			</View>
-			<View style={tw`mt-8 items-start w-full px-6 `}>
-				<Text style={tw`text-2xl font-bold`}>Thông báo</Text>
-				<NotificationTag content="Bạn và Kiệt đã kết nối với nhau" />
+			<View style={tw`mt-8 items-start w-full `}>
+				<Text style={tw`text-2xl font-bold px-6`}>Thông báo</Text>
+				{/* <NotificationTag content="Bạn và Kiệt đã kết nối với nhau" /> */}
 
 				<FlatList
-					style={tw`w-full`}
+					style={tw`w-full pt-2 `}
 					data={[
 						{ id: 1 },
 						{ id: 2 },

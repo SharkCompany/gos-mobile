@@ -44,7 +44,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 
 export type HomeScreenParamList = {
 	Home: undefined;
-	Searcher: undefined;
+	MapScreen: undefined;
 };
 
 export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
