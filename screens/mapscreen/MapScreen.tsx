@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
 import { FixMeLater } from "interfaces/migration";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 type Props = {};
 
