@@ -1,16 +1,13 @@
 import { Text, View } from 'components/Themed'
 import React from 'react'
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useAppSelector } from '../../redux/store';
-import { selectUser } from '../../redux/user/userSlice';
 import { logo1, googleLogo } from "../../assets/images";
 
 type Props = {}
 
 export default function LoginGoogle({ }: Props) {
-    const currentUser =  useAppSelector(selectUser);
     const handleGoogleLogin = () => {
-        console.log(currentUser);
+
     }
     return (
         <TouchableOpacity
