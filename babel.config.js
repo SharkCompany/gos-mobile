@@ -13,8 +13,7 @@ module.exports = function (api) {
 						constants: "./constants",
 						hooks: "./hooks",
 						navigation: "./navigation",
-						app:"./app"
-						
+						app: "./app",
 					},
 				},
 			],
