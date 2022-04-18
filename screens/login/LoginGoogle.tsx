@@ -4,13 +4,42 @@ import { Text, View } from 'components/Themed'
 import React from 'react'
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { logo1, googleLogo } from "../../assets/images";
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+
+WebBrowser.maybeCompleteAuthSession();
 
 type Props = {}
 
+
+
 export default function LoginGoogle({ }: Props) {
     const user = useAppSelector(selectUser);
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        expoClientId: '694675116554-l94l395jc66mjdcktunvpk9mvpgsq7nj.apps.googleusercontent.com',
+        // androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    });
+
+    async function getUserData(accessToken: string | undefined) {
+        let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        });
+
+        userInfoResponse.json().then(data => {
+            console.log(data);
+        });
+    }
+    React.useEffect(() => {
+        if (response?.type === 'success') {
+            const { authentication } = response;
+            getUserData(response.authentication?.accessToken);
+        }
+    }, [response]);
     const handleGoogleLogin = () => {
-        console.log(user);
+        promptAsync();
+        console.log("re--------");
+
+
 
     }
     return (
