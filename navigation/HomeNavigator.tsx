@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeScreenParamList } from "types";
 import Homepage from "screens/homepage/Homepage";
 import MapScreen from "screens/mapscreen/MapScreen";
+import MainSearchScreen from "screens/mapscreen/MainSearchScreen";
 
 type Props = {};
 
@@ -14,6 +15,16 @@ const HomeNavigator = (props: Props) => {
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
 			{/* <Stack.Screen name="Home" component={Homepage} /> */}
 			<Stack.Screen name="MapScreen" component={MapScreen} />
+			<Stack.Group
+				screenOptions={{
+					animation: "fade_from_bottom",
+				}}
+			>
+				<Stack.Screen
+					name="MainSearchScreen"
+					component={MainSearchScreen}
+				/>
+			</Stack.Group>
 		</Stack.Navigator>
 	);
 };

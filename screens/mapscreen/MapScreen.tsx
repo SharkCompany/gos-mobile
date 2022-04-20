@@ -18,24 +18,31 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import PlaceOption from "components/PlaceOption";
 import { placeIconInSearch } from "assets/images";
+import { useNavigation } from "@react-navigation/native";
+import { HomeScreenProps } from "types";
 
 type Props = {};
 
-const MapScreen = (props: Props) => {
+const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 	const options = [
 		{
-			label: "Tìm kiếm",
+			label: "Đi nhờ xe",
 			value: "1",
 			testID: "switch-one",
 			accessibilityLabel: "switch-one",
 		},
 		{
-			label: "Có sẵn",
-			value: "1.5",
-			testID: "switch-one-thirty",
-			accessibilityLabel: "switch-one-thirty",
+			label: "Tìm yên sau",
+			value: "2",
+			testID: "switch-one",
+			accessibilityLabel: "switch-one",
 		},
 	];
+
+	const onNavigateToMainSearchScreen = () => {
+		// navigator.navigate("")
+		navigation.navigate("MainSearchScreen");
+	};
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white`}>
@@ -53,7 +60,7 @@ const MapScreen = (props: Props) => {
 					style={{ width: "55%" }}
 					buttonColor="#7EBC36"
 					selectedColor="#FCF9F9"
-					fontSize={16}
+					fontSize={14}
 					borderColor="#7EBC36"
 					hasPadding
 				/>
@@ -62,11 +69,14 @@ const MapScreen = (props: Props) => {
 					<Ionicons name="add-circle" size={26} color="#7EBC36" />
 				</TouchableOpacity>
 			</View>
+
 			<View style={tw`h-2/5`}>
 				<Map />
 			</View>
+
 			<View style={tw`flex-1 `}>
 				<TouchableOpacity
+					onPress={onNavigateToMainSearchScreen}
 					style={tw`mx-6 flex-row my-4 h-12 rounded-lg px-3 items-center bg-gray-100 shadow-md  `}
 				>
 					<Image
