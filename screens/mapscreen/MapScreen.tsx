@@ -1,5 +1,6 @@
 import {
 	FlatList,
+	Image,
 	ScrollView,
 	StyleSheet,
 	Touchable,
@@ -16,6 +17,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import PlaceOption from "components/PlaceOption";
+import { placeIconInSearch } from "assets/images";
 
 type Props = {};
 
@@ -64,8 +66,17 @@ const MapScreen = (props: Props) => {
 				<Map />
 			</View>
 			<View style={tw`flex-1 `}>
-				<View style={tw`mx-6`}>
-					<GooglePlacesAutocomplete
+				<TouchableOpacity
+					style={tw`mx-6 flex-row my-4 h-12 rounded-lg px-3 items-center bg-gray-100 shadow-md  `}
+				>
+					<Image
+						source={placeIconInSearch}
+						style={tw`h-8 w-8 mr-3`}
+					/>
+					<Text style={tw`text-xl text-gray-500`}>
+						Bạn muốn đi đâu?{" "}
+					</Text>
+					{/* <GooglePlacesAutocomplete
 						placeholder="Where from ?"
 						styles={{
 							container: {
@@ -88,8 +99,8 @@ const MapScreen = (props: Props) => {
 							language: "vn",
 						}}
 						debounce={400}
-					/>
-				</View>
+					/> */}
+				</TouchableOpacity>
 
 				<FlatList
 					style={tw`px-6`}
