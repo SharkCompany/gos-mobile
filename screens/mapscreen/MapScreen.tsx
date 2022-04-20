@@ -8,6 +8,7 @@ import SwitchSelector from "react-native-switch-selector";
 import { FixMeLater } from "interfaces/migration";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { GOOGLE_MAPS_APIKEY } from "@env";
 
 type Props = {};
 
@@ -55,8 +56,32 @@ const MapScreen = (props: Props) => {
 			<View style={tw`h-2/5`}>
 				<Map />
 			</View>
-			<View style={tw`flex-1 `}>
-				<Text></Text>
+			<View style={tw`flex-1 px-6`}>
+				<GooglePlacesAutocomplete
+					placeholder="Where from ?"
+					styles={{
+						container: {
+							flex: 0,
+							marginTop: 12,
+						},
+						textInput: {
+							fontSize: 18,
+							backgroundColor: "#E5E5E5",
+							color: "#96989B",
+						},
+					}}
+					onPress={(data, details = null) => {
+						// 'details' is provided when fetchDetails = true
+						console.log(data, details);
+					}}
+					query={{
+						// key: GOOGLE_MAPS_APIKEY,
+						key: "",
+						language: "vn",
+					}}
+					debounce={400}
+				/>
+				<Text>Hello</Text>
 			</View>
 		</SafeAreaView>
 	);
