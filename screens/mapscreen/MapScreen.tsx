@@ -1,4 +1,5 @@
 import {
+	FlatList,
 	ScrollView,
 	StyleSheet,
 	Touchable,
@@ -62,39 +63,46 @@ const MapScreen = (props: Props) => {
 			<View style={tw`h-2/5`}>
 				<Map />
 			</View>
-			<ScrollView style={tw`flex-1 px-6`}>
-				<GooglePlacesAutocomplete
-					placeholder="Where from ?"
-					styles={{
-						container: {
-							flex: 0,
-							marginTop: 12,
-						},
-						textInput: {
-							fontSize: 18,
-							backgroundColor: "#E5E5E5",
-							color: "#96989B",
-						},
-					}}
-					onPress={(data, details = null) => {
-						// 'details' is provided when fetchDetails = true
-						console.log(data, details);
-					}}
-					query={{
-						// key: GOOGLE_MAPS_APIKEY,
-						key: "",
-						language: "vn",
-					}}
-					debounce={400}
-				/>
-				<View>
-					<PlaceOption />
-					<PlaceOption />
-					<PlaceOption />
-					<PlaceOption />
-					<PlaceOption />
+			<View style={tw`flex-1 `}>
+				<View style={tw`mx-6`}>
+					<GooglePlacesAutocomplete
+						placeholder="Where from ?"
+						styles={{
+							container: {
+								flex: 0,
+								marginTop: 12,
+							},
+							textInput: {
+								fontSize: 18,
+								backgroundColor: "#E5E5E5",
+								color: "#96989B",
+							},
+						}}
+						onPress={(data, details = null) => {
+							// 'details' is provided when fetchDetails = true
+							console.log(data, details);
+						}}
+						query={{
+							// key: GOOGLE_MAPS_APIKEY,
+							key: "",
+							language: "vn",
+						}}
+						debounce={400}
+					/>
 				</View>
-			</ScrollView>
+
+				<FlatList
+					style={tw`px-6`}
+					data={[
+						{ id: 1 },
+						{ id: 2 },
+						{ id: 3 },
+						{ id: 4 },
+						{ id: 4323 },
+					]}
+					renderItem={PlaceOption}
+				/>
+			</View>
 		</SafeAreaView>
 	);
 };

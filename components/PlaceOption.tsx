@@ -15,7 +15,9 @@ const PlaceOption = (props: Props) => {
 			</View>
 			<View style={tw`flex-1 justify-center mr-2`}>
 				<Text style={tw`text-lg font-bold `}>Ki tuc xa khu A</Text>
-				<Text>161 Nguyen Anh Kiet, phuong Binh Bong, Tp Hcm</Text>
+				<Text style={tw``}>
+					161 Nguyen Anh Kiet, phuong Binh Bong, Tp Hcm
+				</Text>
 			</View>
 			<View style={tw``}>
 				<Ionicons
