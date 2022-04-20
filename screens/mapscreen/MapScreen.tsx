@@ -1,4 +1,9 @@
-import { StyleSheet, Touchable, TouchableOpacity } from "react-native";
+import {
+	ScrollView,
+	StyleSheet,
+	Touchable,
+	TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { Text, View } from "components/Themed";
 import Map from "components/Map";
@@ -9,6 +14,7 @@ import { FixMeLater } from "interfaces/migration";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_APIKEY } from "@env";
+import PlaceOption from "components/PlaceOption";
 
 type Props = {};
 
@@ -56,7 +62,7 @@ const MapScreen = (props: Props) => {
 			<View style={tw`h-2/5`}>
 				<Map />
 			</View>
-			<View style={tw`flex-1 px-6`}>
+			<ScrollView style={tw`flex-1 px-6`}>
 				<GooglePlacesAutocomplete
 					placeholder="Where from ?"
 					styles={{
@@ -81,8 +87,14 @@ const MapScreen = (props: Props) => {
 					}}
 					debounce={400}
 				/>
-				<Text>Hello</Text>
-			</View>
+				<View>
+					<PlaceOption />
+					<PlaceOption />
+					<PlaceOption />
+					<PlaceOption />
+					<PlaceOption />
+				</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 };
