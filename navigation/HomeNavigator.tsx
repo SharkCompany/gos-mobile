@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeScreenParamList } from "types";
 import Homepage from "screens/homepage/Homepage";
 import MapScreen from "screens/mapscreen/MapScreen";
-import MainSearchScreen from "screens/mapscreen/MainSearchScreen";
+import MainSearchScreen from "screens/places-search-screen/MainSearchScreen";
 
 type Props = {};
 

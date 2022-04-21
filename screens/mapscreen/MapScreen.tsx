@@ -86,30 +86,6 @@ const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 					<Text style={tw`text-xl text-gray-500`}>
 						Bạn muốn đi đâu?{" "}
 					</Text>
-					{/* <GooglePlacesAutocomplete
-						placeholder="Where from ?"
-						styles={{
-							container: {
-								flex: 0,
-								marginTop: 12,
-							},
-							textInput: {
-								fontSize: 18,
-								backgroundColor: "#E5E5E5",
-								color: "#96989B",
-							},
-						}}
-						onPress={(data, details = null) => {
-							// 'details' is provided when fetchDetails = true
-							console.log(data, details);
-						}}
-						query={{
-							// key: GOOGLE_MAPS_APIKEY,
-							key: "",
-							language: "vn",
-						}}
-						debounce={400}
-					/> */}
 				</TouchableOpacity>
 
 				<FlatList
