@@ -11,6 +11,7 @@ module.exports = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		paddingTop: 60,
+		// backgroundColor: "black",
 	},
 	containerWithHeader: {
 		flex: 1,

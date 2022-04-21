@@ -13,11 +13,27 @@ module.exports = function (api) {
 						constants: "./constants",
 						hooks: "./hooks",
 						navigation: "./navigation",
+						assets: "./assets",
 						app: "./app",
 					},
 				},
 			],
 			"react-native-reanimated/plugin",
+			[
+				"module:react-native-dotenv",
+				{
+					envName: "APP_ENV",
+					moduleName: "@env",
+					path: ".env",
+					blocklist: null,
+					allowlist: null,
+					blacklist: null, // DEPRECATED
+					whitelist: null, // DEPRECATED
+					safe: false,
+					allowUndefined: true,
+					verbose: false,
+				},
+			],
 		],
 	};
 };
