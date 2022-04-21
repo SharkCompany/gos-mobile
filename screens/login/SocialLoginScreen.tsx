@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { logo1, googleLogo } from "../../assets/images";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Text, View } from "../../components/Themed";
+import LoginGoogle from "./LoginGoogle";
 
 export default function SocialLoginScreen() {
 	const navigator = useNavigation();
@@ -14,30 +15,13 @@ export default function SocialLoginScreen() {
 		console.log("login facebook");
 	};
 
-	const handleGoogleLogin = () => {
-		console.log("login google");
-		navigator.navigate("EnterInfor");
-	};
-
 	return (
 		<View style={s.standardContainer}>
 			<Text style={[s.headerH1]}>Welcome Aboard, Mates!</Text>
 			<Image source={logo1} style={styles.logo} />
 			<Text style={styles.titleh2}>Sign In To Continue</Text>
 
-			<TouchableOpacity
-				style={[styles.button, styles.buttonGoogle]}
-				onPress={handleGoogleLogin}
-			>
-				<Image
-					source={googleLogo}
-					width={32}
-					style={styles.googleLogo}
-				/>
-				<Text style={[styles.buttonText, styles.buttonTextGoogle]}>
-					Continue with Google
-				</Text>
-			</TouchableOpacity>
+			<LoginGoogle />
 
 			<TouchableOpacity
 				style={[styles.button, styles.buttonFacebook]}

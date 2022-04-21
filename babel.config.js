@@ -14,6 +14,7 @@ module.exports = function (api) {
 						hooks: "./hooks",
 						navigation: "./navigation",
 						assets: "./assets",
+						app: "./app",
 					},
 				},
 			],
