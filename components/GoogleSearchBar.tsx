@@ -4,10 +4,23 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { placeIconInSearch } from "assets/images";
 import tw from "twrnc";
 import { FixMeLater } from "interfaces/migration";
+import { GOOGLE_MAPS_APIKEY } from "@env";
 
 type Props = {};
 
-const GoogleSearchBar = ({ placeHolder, leftIcon, propsStyle }: FixMeLater) => {
+const GoogleSearchBar = ({
+	placeHolder,
+	leftIcon,
+	propsStyle,
+	onPressSearch,
+}: FixMeLater) => {
+	const handlePressSearch = (
+		data: FixMeLater,
+		details = null
+	): FixMeLater => {
+		console.log(data, details);
+	};
+
 	return (
 		<GooglePlacesAutocomplete
 			placeholder={placeHolder}
@@ -18,7 +31,6 @@ const GoogleSearchBar = ({ placeHolder, leftIcon, propsStyle }: FixMeLater) => {
 					alignItems: "center",
 					flex: 0,
 					borderRadius: 10,
-					// marginBottom: 4,
 					...propsStyle,
 				},
 				textInput: {
@@ -28,18 +40,18 @@ const GoogleSearchBar = ({ placeHolder, leftIcon, propsStyle }: FixMeLater) => {
 					borderRadius: 10,
 					height: "100%",
 				},
+				// listView: {
+				// 	backgroundColor: "green",
+				// },
 			}}
 			renderLeftButton={() => leftIcon}
-			onPress={(data, details = null) => {
-				// 'details' is provided when fetchDetails = true
-				console.log(data, details);
-			}}
+			onPress={handlePressSearch as FixMeLater}
 			query={{
 				// key: GOOGLE_MAPS_APIKEY,
 				key: "",
-				language: "vn",
+				language: "en",
 			}}
-			debounce={400}
+			debounce={1000}
 		/>
 	);
 };

@@ -18,6 +18,7 @@ const HomeNavigator = (props: Props) => {
 			<Stack.Group
 				screenOptions={{
 					animation: "fade_from_bottom",
+					presentation: "modal",
 				}}
 			>
 				<Stack.Screen

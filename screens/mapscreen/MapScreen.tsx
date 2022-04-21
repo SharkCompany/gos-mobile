@@ -1,24 +1,14 @@
-import {
-	FlatList,
-	Image,
-	ScrollView,
-	StyleSheet,
-	Touchable,
-	TouchableOpacity,
-} from "react-native";
-import React from "react";
-import { Text, View } from "components/Themed";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { placeIconInSearch } from "assets/images";
 import Map from "components/Map";
-import tw from "twrnc";
+import PlaceOption from "components/PlaceOption";
+import { Text, View } from "components/Themed";
+import { FixMeLater } from "interfaces/migration";
+import React from "react";
+import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
-import { FixMeLater } from "interfaces/migration";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { GOOGLE_MAPS_APIKEY } from "@env";
-import PlaceOption from "components/PlaceOption";
-import { placeIconInSearch } from "assets/images";
-import { useNavigation } from "@react-navigation/native";
+import tw from "twrnc";
 import { HomeScreenProps } from "types";
 
 type Props = {};

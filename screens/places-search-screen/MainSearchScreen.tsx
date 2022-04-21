@@ -3,16 +3,17 @@ import { Text, View } from "components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { Image } from "react-native";
-import { placeIconInSearch } from "assets/images";
+import { FlatList, Image, ScrollView } from "react-native";
+import { compassIcon, placeIconInSearch } from "assets/images";
 import GoogleSearchBar from "components/GoogleSearchBar";
+import PlaceOption from "components/PlaceOption";
 
 type Props = {};
 
 const MainSearchScreen = (props: Props) => {
 	const departureIcon = (
 		<Image
-			source={placeIconInSearch}
+			source={compassIcon}
 			style={tw`h-8 w-8 ml-3  self-center content-center`}
 		/>
 	);
@@ -40,6 +41,26 @@ const MainSearchScreen = (props: Props) => {
 					/>
 				</View>
 			</View>
+
+			<ScrollView>
+				<View>
+					<Text style={tw`font-bold text-lg mt-2`}>Gần đây</Text>
+					<View>
+						<PlaceOption />
+						<PlaceOption />
+					</View>
+				</View>
+
+				<View>
+					<Text style={tw`font-bold text-lg mt-2`}>Địa điểm</Text>
+					<View>
+						<PlaceOption />
+						<PlaceOption />
+						<PlaceOption />
+						<PlaceOption />
+					</View>
+				</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 };
