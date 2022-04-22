@@ -34,6 +34,7 @@ export default function LoginFirebase() {
       console.log(response);
 
       const auth = getAuth();
+      console.log(auth);
 
       const getToken = async () => {
 
