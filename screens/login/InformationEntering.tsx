@@ -65,7 +65,7 @@ const InformationEntering = (props: Props) => {
 					style={{
 						width: "100%",
 						flex: 1,
-						paddingHorizontal: "10%",
+						paddingHorizontal: "6%",
 					}}
 				>
 					{!image && (
@@ -174,8 +174,10 @@ const styles = StyleSheet.create({
 		paddingLeft: 6,
 	},
 	inputPairContainer: {
+		flex: 1,
 		marginBottom: 24,
 		padding: 2,
+		paddingHorizontal: 10,
 	},
 });
 

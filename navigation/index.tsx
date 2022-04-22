@@ -6,9 +6,9 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
+	NavigationContainer,
+	DefaultTheme,
+	DarkTheme,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
@@ -22,9 +22,9 @@ import SocialLoginScreen from "../screens/login/SocialLoginScreen";
 import TabOneScreen from "../screens/TabOneScreen";
 import TabTwoScreen from "../screens/TabTwoScreen";
 import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
+	RootStackParamList,
+	RootTabParamList,
+	RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import InformationEntering from "../screens/login/InformationEntering";
@@ -33,20 +33,21 @@ import Rides from "../screens/rides/Rides";
 import Homepage from "../screens/homepage/Homepage";
 import Messages from "../screens/messages/Messages";
 import Personal from "../screens/personal/Personal";
+import HomeNavigator from "./HomeNavigator";
 
 export default function Navigation({
-  colorScheme,
+	colorScheme,
 }: {
-  colorScheme: ColorSchemeName;
+	colorScheme: ColorSchemeName;
 }) {
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
-      <RootNavigator />
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer
+			linking={LinkingConfiguration}
+			theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+		>
+			<RootNavigator />
+		</NavigationContainer>
+	);
 }
 
 /**
@@ -56,33 +57,21 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="SocialLogin"
-        component={SocialLoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="EnterInfor"
-        component={InformationEntering}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
-  );
+	return (
+		<Stack.Navigator screenOptions={{ headerShown: false }}>
+			{/* <Stack.Screen name="SocialLogin" component={SocialLoginScreen} /> */}
+			{/* <Stack.Screen name="EnterInfor" component={InformationEntering} /> */}
+			<Stack.Screen name="Root" component={BottomTabNavigator} />
+			<Stack.Screen
+				name="NotFound"
+				component={NotFoundScreen}
+				options={{ title: "Oops!" }}
+			/>
+			<Stack.Group screenOptions={{ presentation: "modal" }}>
+				<Stack.Screen name="Modal" component={ModalScreen} />
+			</Stack.Group>
+		</Stack.Navigator>
+	);
 }
 
 /**
@@ -92,82 +81,74 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+	const colorScheme = useColorScheme();
 
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}
-    >
-      <BottomTab.Screen
-        name="Homepage"
-        component={Homepage}
-        options={({ navigation }: RootTabScreenProps<"Homepage">) => ({
-          title: "Homepage",
-          tabBarIcon: ({ color }) => <FeatherIcon name="home" color={color} />,
-          tabBarLabelPosition: "below-icon",
-          tabBarLabel: "Trang chủ",
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="Rides"
-        component={Rides}
-        options={{
-          title: "Rides",
-          tabBarLabel: "Chuyến đi",
-          tabBarIcon: ({ color }) => <FeatherIcon name="list" color={color} />,
-          tabBarLabelPosition: "below-icon",
-        }}
-      />
-      <BottomTab.Screen
-        name="Messages"
-        component={Messages}
-        options={{
-          title: "Messages",
-          tabBarLabel: "Tin nhắn",
-          tabBarIcon: ({ color }) => (
-            <FeatherIcon name="message-circle" color={color} />
-          ),
-          tabBarLabelPosition: "below-icon",
-        }}
-      />
-      <BottomTab.Screen
-        name="Personal"
-        component={Personal}
-        options={{
-          title: "Personal",
-          tabBarLabel: "Thông tin cá nhân",
-          tabBarIcon: ({ color }) => <FeatherIcon name="user" color={color} />,
-          tabBarLabelPosition: "below-icon",
-        }}
-      />
-    </BottomTab.Navigator>
-  );
+	return (
+		<BottomTab.Navigator
+			initialRouteName="TabOne"
+			screenOptions={{
+				tabBarActiveTintColor: Colors[colorScheme].tint,
+				headerShown: false,
+			}}
+		>
+			<BottomTab.Screen
+				name="Homepage"
+				component={HomeNavigator}
+				options={({ navigation }: RootTabScreenProps<"Homepage">) => ({
+					title: "Homepage",
+					tabBarIcon: ({ color }) => (
+						<FeatherIcon name="home" color={color} />
+					),
+					tabBarLabelPosition: "below-icon",
+					tabBarLabel: "Trang chủ",
+				})}
+			/>
+			<BottomTab.Screen
+				name="Rides"
+				component={Rides}
+				options={{
+					title: "Rides",
+					tabBarLabel: "Chuyến đi",
+					tabBarIcon: ({ color }) => (
+						<FeatherIcon name="list" color={color} />
+					),
+					tabBarLabelPosition: "below-icon",
+				}}
+			/>
+			<BottomTab.Screen
+				name="Messages"
+				component={Messages}
+				options={{
+					title: "Messages",
+					tabBarLabel: "Tin nhắn",
+					tabBarIcon: ({ color }) => (
+						<FeatherIcon name="message-circle" color={color} />
+					),
+					tabBarLabelPosition: "below-icon",
+				}}
+			/>
+			<BottomTab.Screen
+				name="Personal"
+				component={Personal}
+				options={{
+					title: "Personal",
+					tabBarLabel: "Thông tin cá nhân",
+					tabBarIcon: ({ color }) => (
+						<FeatherIcon name="user" color={color} />
+					),
+					tabBarLabelPosition: "below-icon",
+				}}
+			/>
+		</BottomTab.Navigator>
+	);
 }
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
+	name: React.ComponentProps<typeof FontAwesome>["name"];
+	color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+	return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 }
