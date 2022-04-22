@@ -6,6 +6,8 @@ import { TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { logo1, googleLogo } from "../../assets/images";
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import { useNavigation } from '@react-navigation/native';
+import LoginFirebase from './LoginFirebase';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -21,6 +23,8 @@ export default function LoginGoogle({ }: Props) {
     });
 
     async function getUserData(accessToken: string | undefined) {
+        const navigator = useNavigation();
+
         let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
             headers: { Authorization: `Bearer ${accessToken}` }
         });
@@ -28,36 +32,39 @@ export default function LoginGoogle({ }: Props) {
         userInfoResponse.json().then(data => {
             console.log(data);
         });
-    }
-    React.useEffect(() => {
-        if (response?.type === 'success') {
-            const { authentication } = response;
-            getUserData(response.authentication?.accessToken);
+
+        React.useEffect(() => {
+            if (response?.type === 'success') {
+                const { authentication } = response;
+                getUserData(response.authentication?.accessToken);
+                navigator.navigate("EnterInfor");
+            }
+        }, [response]);
+        const handleGoogleLogin = () => {
+            promptAsync();
+            console.log("re--------");
+
+
+
         }
-    }, [response]);
-    const handleGoogleLogin = () => {
-        promptAsync();
-        console.log("re--------");
+        return (
+            // <TouchableOpacity
+            //     style={[styles.button, styles.buttonGoogle]}
+            //     onPress={handleGoogleLogin}
+            // >
+            //     <Image
+            //         source={googleLogo}
+            //         width={32}
+            //         style={styles.googleLogo}
+            //     />
+            //     <Text style={[styles.buttonText, styles.buttonTextGoogle]}>
+            //         Continue with Google
+            //     </Text>
+            // </TouchableOpacity>
+            <LoginFirebase />
 
-
-
+        )
     }
-    return (
-        <TouchableOpacity
-            style={[styles.button, styles.buttonGoogle]}
-            onPress={handleGoogleLogin}
-        >
-            <Image
-                source={googleLogo}
-                width={32}
-                style={styles.googleLogo}
-            />
-            <Text style={[styles.buttonText, styles.buttonTextGoogle]}>
-                Continue with Google
-            </Text>
-        </TouchableOpacity>
-
-    )
 }
 
 const styles = StyleSheet.create({
