@@ -9,17 +9,24 @@ import PlaceOption from "components/PlaceOption";
 
 type Props = {};
 
-const PlaceResult = ({ navigation }: FixMeLater, props: Props) => {
-	useEffect(() => {
-		// Cho nay get data dua nao thang redux ne
-	}, []);
+const PlaceResult = (
+	{ navigation }: HomeScreenProps<"MapScreen">,
+	props: Props
+) => {
+	// useEffect(() => {
+	// 	// Cho nay get data dua nao thang redux ne
+	// 	// Kiem tra redux neu co ca dep and des thi navigate to Ride result
+	// }, []);
 
 	const onNavigateToMainSearchScreen = () => {
 		// navigator.navigate("")
 		navigation.navigate("MainSearchScreen");
 	};
 
-	const data = [{ id: 1 }, { id: 2 }, { id: 323 }, { id: 123 }];
+	const data = [
+		{ id: 1, title: "helle", description: "abd" },
+		{ id: 12323, title: "helle", description: "abd" },
+	];
 
 	return (
 		<View style={tw`flex-1 `}>

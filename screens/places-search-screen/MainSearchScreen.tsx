@@ -3,14 +3,20 @@ import { Text, View } from "components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { FlatList, Image, ScrollView } from "react-native";
+import { FlatList, Image, ListRenderItemInfo, ScrollView } from "react-native";
 import { compassIcon, placeIconInSearch } from "assets/images";
 import GoogleSearchBar from "components/GoogleSearchBar";
 import PlaceOption from "components/PlaceOption";
+import { useNavigation } from "@react-navigation/native";
+import { HomeScreenProps } from "types";
 
 type Props = {};
 
-const MainSearchScreen = (props: Props) => {
+const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
+	const onGobackEvent = () => {
+		navigation.navigate("MapScreen");
+	};
+
 	const departureIcon = (
 		<Image
 			source={compassIcon}
@@ -46,7 +52,10 @@ const MainSearchScreen = (props: Props) => {
 				<View>
 					<Text style={tw`font-bold text-lg mt-2 mx-2`}>Gần đây</Text>
 					<View>
-						<PlaceOption />
+						<PlaceOption
+							behavior="to-ride-result"
+							goBackHandler={onGobackEvent}
+						/>
 						<PlaceOption />
 					</View>
 				</View>

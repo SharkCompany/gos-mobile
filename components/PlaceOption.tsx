@@ -1,12 +1,34 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import {
+	View,
+	Text,
+	Image,
+	TouchableOpacity,
+	ListRenderItemInfo,
+} from "react-native";
 import React from "react";
 import tw from "twrnc";
 import { placeIcon } from "assets/images";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { FixMeLater } from "interfaces/migration";
+import { useNavigation } from "@react-navigation/native";
+
 type Props = {};
 
-const PlaceOption = (props: Props) => {
-	const handleSelectPlace = () => {};
+type Place = {
+	id?: number;
+	place?: string;
+	description?: string;
+};
+
+const PlaceOption = ({ item, behavior, goBackHandler }: FixMeLater) => {
+	const handleSelectPlace = () => {
+		if (behavior === "to-ride-result") {
+			// Set redux dep hoac des o day
+			if (goBackHandler) {
+				goBackHandler();
+			}
+		}
+	};
 
 	return (
 		<View style={tw`px-2 pt-1 mb-2`}>

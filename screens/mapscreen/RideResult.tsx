@@ -8,9 +8,9 @@ import RideOption from "components/RideOption";
 type Props = {};
 
 const RideResult = (props: Props) => {
-	useEffect(() => {
-		// Cho nay get data dua nao thang redux ne
-	}, []);
+	// useEffect(() => {
+	// 	// Cho nay get data dua nao thang redux ne
+	// }, []);
 
 	return (
 		<View style={tw`flex-1 mt-5`}>
