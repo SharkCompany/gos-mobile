@@ -27,7 +27,7 @@ const MainSearchScreen = (props: Props) => {
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white px-6 py-6`}>
-			<View style={tw`px-6 border-b-2 border-gray-200 pb-6`}>
+			<View style={tw`px-4 border-b-2 border-gray-200 pb-6`}>
 				<View style={tw`mb-3`}>
 					<GoogleSearchBar
 						placeHolder="Diem di"
@@ -44,7 +44,7 @@ const MainSearchScreen = (props: Props) => {
 
 			<ScrollView>
 				<View>
-					<Text style={tw`font-bold text-lg mt-2`}>Gần đây</Text>
+					<Text style={tw`font-bold text-lg mt-2 mx-2`}>Gần đây</Text>
 					<View>
 						<PlaceOption />
 						<PlaceOption />
@@ -52,7 +52,9 @@ const MainSearchScreen = (props: Props) => {
 				</View>
 
 				<View>
-					<Text style={tw`font-bold text-lg mt-2`}>Địa điểm</Text>
+					<Text style={tw`font-bold text-lg mt-2 mx-2`}>
+						Địa điểm
+					</Text>
 					<View>
 						<PlaceOption />
 						<PlaceOption />
