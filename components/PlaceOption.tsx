@@ -6,9 +6,12 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 type Props = {};
 
 const PlaceOption = (props: Props) => {
+	const handleSelectPlace = () => {};
+
 	return (
 		<View style={tw`px-2 pt-1 mb-2`}>
 			<TouchableOpacity
+				onPress={handleSelectPlace}
 				style={tw`flex-row bg-white items-center h-22 px-3 shadow-md rounded-md`}
 			>
 				<View>
