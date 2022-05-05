@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
@@ -9,6 +9,8 @@ import GoogleSearchBar from "components/GoogleSearchBar";
 import PlaceOption from "components/PlaceOption";
 import { useNavigation } from "@react-navigation/native";
 import { HomeScreenProps } from "types";
+import { useEffect } from "react";
+import { FixMeLater } from "interfaces/migration";
 
 type Props = {};
 
@@ -16,6 +18,8 @@ const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 	const onGobackEvent = () => {
 		navigation.navigate("MapScreen");
 	};
+
+	const [listPlaces, setListPlaces] = useState<FixMeLater>([]);
 
 	const departureIcon = (
 		<Image
@@ -31,9 +35,15 @@ const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 		/>
 	);
 
+	useEffect(() => {
+		const getStaticPlaces = () => {
+			fetch;
+		};
+	}, []);
+
 	return (
-		<SafeAreaView style={tw`flex-1 bg-white px-6 py-6`}>
-			<View style={tw`px-4 border-b-2 border-gray-200 pb-6`}>
+		<SafeAreaView style={tw`flex-1 bg-white py-6`}>
+			<View style={tw`border-b-2 border-gray-200 px-10 pb-6`}>
 				<View style={tw`mb-3`}>
 					<GoogleSearchBar
 						placeHolder="Diem di"
@@ -48,23 +58,13 @@ const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 				</View>
 			</View>
 
-			<ScrollView>
-				<View>
-					<Text style={tw`font-bold text-lg mt-2 mx-2`}>Gần đây</Text>
-					<View>
-						<PlaceOption
-							behavior="to-ride-result"
-							goBackHandler={onGobackEvent}
-						/>
-						<PlaceOption />
-					</View>
-				</View>
-
+			<ScrollView style={tw`px-6`}>
 				<View>
 					<Text style={tw`font-bold text-lg mt-2 mx-2`}>
 						Địa điểm
 					</Text>
 					<View>
+						<PlaceOption />
 						<PlaceOption />
 						<PlaceOption />
 						<PlaceOption />

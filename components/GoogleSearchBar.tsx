@@ -16,9 +16,10 @@ const GoogleSearchBar = ({
 }: FixMeLater) => {
 	const handlePressSearch = (
 		data: FixMeLater,
-		details = null
+		details: FixMeLater
 	): FixMeLater => {
-		console.log(data, details);
+		// console.log(data.description);
+		console.log(details.geometry);
 	};
 
 	return (
@@ -45,13 +46,27 @@ const GoogleSearchBar = ({
 				// },
 			}}
 			renderLeftButton={() => leftIcon}
-			onPress={handlePressSearch as FixMeLater}
+			// onPress={handlePressSearch as FixMeLater}
+			onPress={(data, details = null) => {
+				console.log(details?.geometry.location);
+				console.log(data.description);
+			}}
 			query={{
 				// key: GOOGLE_MAPS_APIKEY,
 				key: "",
 				language: "en",
 			}}
+			fetchDetails={true}
+			enablePoweredByContainer={false}
 			debounce={1000}
+			nearbyPlacesAPI="GooglePlacesSearch"
+			onFail={(error) => {
+				console.log(error);
+			}}
+			onNotFound={() => {
+				console.log("not found");
+			}}
+			minLength={2}
 		/>
 	);
 };
