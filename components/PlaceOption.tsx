@@ -20,13 +20,21 @@ type Place = {
 	description?: string;
 };
 
-const PlaceOption = ({ item, behavior, goBackHandler }: FixMeLater) => {
+const PlaceOption = ({
+	item,
+	behavior,
+	goBackHandler,
+	selectOptionEvent,
+}: FixMeLater) => {
 	const handleSelectPlace = () => {
-		if (behavior === "to-ride-result") {
-			// Set redux dep hoac des o day
-			if (goBackHandler) {
-				goBackHandler();
-			}
+		// if (behavior === "to-ride-result") {
+		// 	// Set redux dep hoac des o day
+		// 	if (goBackHandler) {
+		// 		goBackHandler();
+		// 	}
+		// }
+		if (selectOptionEvent) {
+			selectOptionEvent(item);
 		}
 	};
 

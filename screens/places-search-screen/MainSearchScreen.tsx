@@ -19,6 +19,9 @@ import { useEffect } from "react";
 import { FixMeLater } from "interfaces/migration";
 import InputSearch from "components/InputSearch";
 import jsonData from "constants/destination.json";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { setDeparture, setDestination } from "app/redux/ride/rideSlice";
+import { ListItem } from "react-native-elements/dist/list/ListItem";
 
 type Props = {};
 
@@ -27,10 +30,15 @@ const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 		navigation.navigate("MapScreen");
 	};
 
-	const [listPlaces, setListPlaces] = useState<FixMeLater>([]);
+	const dispatch = useAppDispatch();
+	const rideSelector = useAppSelector((state) => state.ride);
 
-	const [departure, setDeparture] = useState("");
-	const [destination, setDestination] = useState("");
+	const [inputDeparture, setInputDeparture] = useState("");
+	const [inputDestination, setInputDestination] = useState("");
+
+	const [currentInputSelect, setCurrentInputSelect] = useState("departure");
+
+	const listPlaces = useAppSelector((state) => state.place.listPlaces);
 
 	const departureIcon = (
 		<Image
@@ -46,15 +54,30 @@ const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 		/>
 	);
 
-	const loadPlaces = () => {
-		const data = JSON.parse(JSON.stringify(jsonData));
-		console.log(data);
-		setListPlaces(data);
+	const selectPlace = (item: FixMeLater) => {
+		if (currentInputSelect === "departure") {
+			dispatch(setDeparture(item));
+			setInputDeparture(item?.title + ", " + item?.address);
+		} else if (currentInputSelect === "destination") {
+			dispatch(setDestination(item));
+			setInputDestination(item?.title + ", " + item?.address);
+		}
 	};
 
 	useEffect(() => {
-		loadPlaces();
-	}, []);
+		if (rideSelector.destination && rideSelector.departure) {
+			navigation.goBack();
+		}
+
+		if (rideSelector?.departure) {
+			setInputDeparture(
+				rideSelector?.departure?.title +
+					", " +
+					rideSelector?.departure?.address
+			);
+			setCurrentInputSelect("destination");
+		}
+	}, [rideSelector]);
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white py-6`}>
@@ -68,32 +91,42 @@ const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 
 					<TextInput
 						style={tw`border`}
-						value={departure}
-						onChangeText={(text) => setDeparture(text)}
+						value={inputDeparture}
+						onChangeText={(text) => setInputDeparture(text)}
+						onFocus={() => setCurrentInputSelect("departure")}
 					/>
 				</View>
 				<View>
 					<TextInput
 						style={tw`border`}
-						value={destination}
-						onChangeText={(text) => setDestination(text)}
+						value={inputDestination}
+						onChangeText={(text) => setInputDestination(text)}
+						onFocus={() => setCurrentInputSelect("destination")}
 					/>
 				</View>
 			</View>
 
 			<ScrollView style={tw`px-6`}>
 				<View>
-					{/* <Text style={tw`font-bold text-lg mt-2 mx-2`}>
-						Bạn đang ở?
-					</Text> */}
-					<Text style={tw`font-bold text-lg mt-2 mx-2`}>
-						Bạn đang ở?
-					</Text>
+					{currentInputSelect === "departure" && (
+						<Text style={tw`font-bold text-lg mt-2 mx-2`}>
+							Bạn đang ở?
+						</Text>
+					)}
+					{currentInputSelect === "destination" && (
+						<Text style={tw`font-bold text-lg mt-2 mx-2`}>
+							Bạn muốn đến?
+						</Text>
+					)}
 					<View>
 						{listPlaces &&
 							listPlaces.map(
 								(item: FixMeLater, index: FixMeLater) => (
-									<PlaceOption key={index} item={item} />
+									<PlaceOption
+										key={index}
+										item={item}
+										selectOptionEvent={selectPlace}
+									/>
 								)
 							)}
 					</View>

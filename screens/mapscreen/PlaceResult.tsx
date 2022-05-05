@@ -1,32 +1,39 @@
 import { StyleSheet, TouchableOpacity, Image, FlatList } from "react-native";
 import React, { useEffect } from "react";
 import tw from "twrnc";
-import { HomeScreenProps } from "types";
+import { HomeScreenProps, MapSearchScreenProps } from "types";
 import { FixMeLater } from "interfaces/migration";
 import { placeIconInSearch } from "assets/images";
 import { Text, View } from "components/Themed";
 import PlaceOption from "components/PlaceOption";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { setDeparture } from "app/redux/ride/rideSlice";
 
 type Props = {};
 
 const PlaceResult = (
-	{ navigation }: HomeScreenProps<"MapScreen">,
+	{ navigation }: MapSearchScreenProps<"PlaceResult">,
 	props: Props
 ) => {
-	// useEffect(() => {
-	// 	// Cho nay get data dua nao thang redux ne
-	// 	// Kiem tra redux neu co ca dep and des thi navigate to Ride result
-	// }, []);
+	const dispatch = useAppDispatch();
+	const rideSelector = useAppSelector((state) => state.ride);
 
 	const onNavigateToMainSearchScreen = () => {
-		// navigator.navigate("")
 		navigation.navigate("MainSearchScreen");
 	};
 
-	const data = [
-		{ id: 1, title: "helle", description: "abd" },
-		{ id: 12323, title: "helle", description: "abd" },
-	];
+	const places = useAppSelector((state) => state.place.listPlaces);
+
+	const selectOption = (item: FixMeLater) => {
+		dispatch(setDeparture(item));
+		onNavigateToMainSearchScreen();
+	};
+
+	useEffect(() => {
+		if (rideSelector.destination && rideSelector.departure) {
+			navigation.navigate("RideResult");
+		}
+	}, [rideSelector]);
 
 	return (
 		<View style={tw`flex-1 `}>
@@ -38,7 +45,13 @@ const PlaceResult = (
 				<Text style={tw`text-xl text-gray-500`}>Bạn muốn đi đâu? </Text>
 			</TouchableOpacity>
 
-			<FlatList style={tw`px-4`} data={data} renderItem={PlaceOption} />
+			<FlatList
+				style={tw`px-4`}
+				data={places}
+				renderItem={({ item }) => (
+					<PlaceOption item={item} selectOptionEvent={selectOption} />
+				)}
+			/>
 		</View>
 	);
 };

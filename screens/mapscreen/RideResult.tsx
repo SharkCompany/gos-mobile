@@ -13,7 +13,7 @@ const RideResult = (props: Props) => {
 	// }, []);
 
 	return (
-		<View style={tw`flex-1 mt-5`}>
+		<View style={tw`flex-1`}>
 			<View style={tw`flex-row justify-center mx-6 mb-3`}>
 				<TouchableOpacity style={tw`absolute top-0 left-0`}>
 					<Ionicons

@@ -1,5 +1,6 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import placeSlice from "./place/placeSlice";
 import rideSlice from "./ride/rideSlice";
 import userslice from "./user/userSlice";
 
@@ -7,6 +8,7 @@ const store = configureStore({
 	reducer: {
 		user: userslice,
 		ride: rideSlice,
+		place: placeSlice,
 	},
 });
 

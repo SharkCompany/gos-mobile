@@ -1,22 +1,26 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { placeIconInSearch } from "assets/images";
+import { savePlaces } from "app/redux/place/placeSlice";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
 import Map from "components/Map";
-import PlaceOption from "components/PlaceOption";
-import RideOption from "components/RideOption";
-import { Text, View } from "components/Themed";
+import { View } from "components/Themed";
+import jsonData from "constants/destination.json";
 import { FixMeLater } from "interfaces/migration";
 import MapScreenSearchNavigator from "navigation/MapScreenSearchNavigator";
-import React from "react";
-import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
+import { useSelector } from "react-redux";
 import tw from "twrnc";
 import { HomeScreenProps } from "types";
-import PlaceResult from "./PlaceResult";
 
 type Props = {};
 
 const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
+	const dispatch = useAppDispatch();
+	const rideSelector = useAppSelector((state) => state.ride);
+	const places = useAppSelector((state) => state.place.listPlaces);
+
 	const options = [
 		{
 			label: "Đi nhờ xe",
@@ -31,6 +35,17 @@ const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 			accessibilityLabel: "switch-one",
 		},
 	];
+
+	const loadPlaces = () => {
+		const data = JSON.parse(JSON.stringify(jsonData));
+		dispatch(savePlaces(data));
+	};
+
+	useEffect(() => {
+		if (places.length === 0) {
+			loadPlaces();
+		}
+	}, []);
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white`}>
