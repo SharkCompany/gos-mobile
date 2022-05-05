@@ -40,10 +40,8 @@ const PlaceOption = ({ item, behavior, goBackHandler }: FixMeLater) => {
 					<Image source={placeIcon} style={tw`h-8 w-8 mr-3`} />
 				</View>
 				<View style={tw`flex-1 justify-center mr-2`}>
-					<Text style={tw`text-lg font-bold `}>Ki tuc xa khu A</Text>
-					<Text style={tw``}>
-						161 Nguyen Anh Kiet, phuong Binh Bong, Tp Hcm
-					</Text>
+					<Text style={tw`text-lg font-bold `}>{item?.title}</Text>
+					<Text style={tw``}>{item?.address}</Text>
 				</View>
 				<View style={tw``}>
 					<Ionicons

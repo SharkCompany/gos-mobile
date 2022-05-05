@@ -1,6 +1,6 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import rideSlice from "./user/rideSlice";
+import rideSlice from "./ride/rideSlice";
 import userslice from "./user/userSlice";
 
 const store = configureStore({
