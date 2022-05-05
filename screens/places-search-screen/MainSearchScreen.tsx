@@ -14,7 +14,7 @@ import { compassIcon, placeIconInSearch } from "assets/images";
 import GoogleSearchBar from "components/GoogleSearchBar";
 import PlaceOption from "components/PlaceOption";
 import { useNavigation } from "@react-navigation/native";
-import { HomeScreenProps } from "types";
+import { HomeScreenProps, MapSearchScreenProps } from "types";
 import { useEffect } from "react";
 import { FixMeLater } from "interfaces/migration";
 import InputSearch from "components/InputSearch";
@@ -25,11 +25,9 @@ import { ListItem } from "react-native-elements/dist/list/ListItem";
 
 type Props = {};
 
-const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
-	const onGobackEvent = () => {
-		navigation.navigate("MapScreen");
-	};
-
+const MainSearchScreen = ({
+	navigation,
+}: MapSearchScreenProps<"MainSearchScreen">) => {
 	const dispatch = useAppDispatch();
 	const rideSelector = useAppSelector((state) => state.ride);
 
@@ -67,6 +65,7 @@ const MainSearchScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 	useEffect(() => {
 		if (rideSelector.destination && rideSelector.departure) {
 			navigation.goBack();
+			navigation.navigate("RideResult");
 		}
 
 		if (rideSelector?.departure) {

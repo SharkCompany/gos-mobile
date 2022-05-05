@@ -29,12 +29,6 @@ const PlaceResult = (
 		onNavigateToMainSearchScreen();
 	};
 
-	useEffect(() => {
-		if (rideSelector.destination && rideSelector.departure) {
-			navigation.navigate("RideResult");
-		}
-	}, [rideSelector]);
-
 	return (
 		<View style={tw`flex-1 `}>
 			<TouchableOpacity
