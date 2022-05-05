@@ -3,24 +3,33 @@ import React from "react";
 import tw from "twrnc";
 import { placeIconInSearch } from "assets/images";
 import { useState } from "react";
+import { FixMeLater } from "interfaces/migration";
 
 type Props = {};
 
-const InputSearch = (props: Props) => {
-	const [textInput, setTextInput] = useState<string>("");
-
+const InputSearch = ({
+	identify,
+	placeHolder,
+	value,
+	setInputTextChange,
+	focusHandler,
+}: FixMeLater) => {
 	return (
 		<View
-			style={tw`mx-6 flex-row my-4 h-12 rounded-lg px-3 items-center bg-gray-100 shadow-md  `}
+			style={tw`flex-row h-12 rounded-lg px-3 items-center bg-gray-100 shadow-md`}
 		>
 			<Image source={placeIconInSearch} style={tw`h-8 w-8 mr-3`} />
 			<TextInput
-				// style={tw``}
-				placeholder="User Nickname"
+				style={tw` flex-1`}
+				value={value}
+				placeholder={placeHolder}
 				onChangeText={(searchString) => {
-					setTextInput(searchString);
+					if (setInputTextChange) {
+						setInputTextChange(searchString);
+					}
 				}}
 				underlineColorAndroid="transparent"
+				onFocus={() => focusHandler(identify)}
 			/>
 		</View>
 	);

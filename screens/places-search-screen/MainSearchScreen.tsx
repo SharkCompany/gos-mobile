@@ -38,19 +38,7 @@ const MainSearchScreen = ({
 
 	const listPlaces = useAppSelector((state) => state.place.listPlaces);
 
-	const departureIcon = (
-		<Image
-			source={compassIcon}
-			style={tw`h-8 w-8 ml-3  self-center content-center`}
-		/>
-	);
-
-	const destinationIcon = (
-		<Image
-			source={placeIconInSearch}
-			style={tw`h-8 w-8 ml-3  self-center content-center`}
-		/>
-	);
+	const handleInputTextChange = () => {};
 
 	const selectPlace = (item: FixMeLater) => {
 		if (currentInputSelect === "departure") {
@@ -81,26 +69,26 @@ const MainSearchScreen = ({
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white py-6`}>
 			<View style={tw`border-b-2 border-gray-200 px-10 pb-6`}>
-				<View style={tw`mb-3`}>
+				<View style={tw`mb-4`}>
 					{/* <GoogleSearchBar
 						placeHolder="Diem di"
 						leftIcon={departureIcon}
 					/> */}
-					{/* <InputSearch /> */}
-
-					<TextInput
-						style={tw`border`}
+					<InputSearch
+						identify="departure"
+						placeHolder="Điểm đi"
 						value={inputDeparture}
-						onChangeText={(text) => setInputDeparture(text)}
-						onFocus={() => setCurrentInputSelect("departure")}
+						setInputTextChange={setCurrentInputSelect}
+						focusHandler={setCurrentInputSelect}
 					/>
 				</View>
 				<View>
-					<TextInput
-						style={tw`border`}
+					<InputSearch
+						identify="destination"
+						placeHolder="Điểm đến"
 						value={inputDestination}
-						onChangeText={(text) => setInputDestination(text)}
-						onFocus={() => setCurrentInputSelect("destination")}
+						setInputTextChange={setCurrentInputSelect}
+						focusHandler={setCurrentInputSelect}
 					/>
 				</View>
 			</View>

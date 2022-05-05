@@ -1,5 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { savePlaces } from "app/redux/place/placeSlice";
+import { savePlaces } from "app/redux/places/placeSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import Map from "components/Map";
 import { View } from "components/Themed";
