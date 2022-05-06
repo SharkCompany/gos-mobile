@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator<HomeScreenParamList>();
 const HomeNavigator = (props: Props) => {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			{/* <Stack.Screen name="Home" component={Homepage} /> */}
+			<Stack.Screen name="Home" component={Homepage} />
 			<Stack.Screen name="MapScreen" component={MapScreen} />
 			<Stack.Group
 				screenOptions={{

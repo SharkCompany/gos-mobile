@@ -27,7 +27,7 @@ export default function SocialLoginScreen() {
       {/* <LoginGoogle /> */}
 
       <LoginFirebase />
-	  <LoginFacebook />
+	  {/* <LoginFacebook /> */}
       <TouchableOpacity
         style={[styles.button, styles.buttonFacebook]}
         onPress={handleFacebookLogin}
