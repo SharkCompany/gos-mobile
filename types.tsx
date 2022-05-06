@@ -54,5 +54,15 @@ export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
 		BottomTabScreenProps<RootTabParamList>
 	>;
 
+export type MapSearchScreenParamList = {
+	PlaceResult: undefined;
+	MainSearchScreen: undefined;
+	RideResult: undefined;
+};
+
+export type MapSearchScreenProps<
+	Screen extends keyof MapSearchScreenParamList
+> = NativeStackScreenProps<MapSearchScreenParamList, Screen>;
+
 // export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
 // 	NativeStackScreenProps<HomeScreenParamList, Screen>;

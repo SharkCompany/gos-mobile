@@ -1,19 +1,26 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { placeIconInSearch } from "assets/images";
+import { savePlaces } from "app/redux/places/placeSlice";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
 import Map from "components/Map";
-import PlaceOption from "components/PlaceOption";
-import { Text, View } from "components/Themed";
+import { View } from "components/Themed";
+import jsonData from "constants/destination.json";
 import { FixMeLater } from "interfaces/migration";
-import React from "react";
-import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import MapScreenSearchNavigator from "navigation/MapScreenSearchNavigator";
+import React, { useEffect } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
+import { useSelector } from "react-redux";
 import tw from "twrnc";
 import { HomeScreenProps } from "types";
 
 type Props = {};
 
 const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
+	const dispatch = useAppDispatch();
+	const rideSelector = useAppSelector((state) => state.ride);
+	const places = useAppSelector((state) => state.place.listPlaces);
+
 	const options = [
 		{
 			label: "Đi nhờ xe",
@@ -29,10 +36,16 @@ const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 		},
 	];
 
-	const onNavigateToMainSearchScreen = () => {
-		// navigator.navigate("")
-		navigation.navigate("MainSearchScreen");
+	const loadPlaces = () => {
+		const data = JSON.parse(JSON.stringify(jsonData));
+		dispatch(savePlaces(data));
 	};
+
+	useEffect(() => {
+		if (places.length === 0) {
+			loadPlaces();
+		}
+	}, []);
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white`}>
@@ -64,32 +77,7 @@ const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 				<Map />
 			</View>
 
-			<View style={tw`flex-1 `}>
-				<TouchableOpacity
-					onPress={onNavigateToMainSearchScreen}
-					style={tw`mx-6 flex-row my-4 h-12 rounded-lg px-3 items-center bg-gray-100 shadow-md  `}
-				>
-					<Image
-						source={placeIconInSearch}
-						style={tw`h-8 w-8 mr-3`}
-					/>
-					<Text style={tw`text-xl text-gray-500`}>
-						Bạn muốn đi đâu?{" "}
-					</Text>
-				</TouchableOpacity>
-
-				<FlatList
-					style={tw`px-6`}
-					data={[
-						{ id: 1 },
-						{ id: 2 },
-						{ id: 3 },
-						{ id: 4 },
-						{ id: 4323 },
-					]}
-					renderItem={PlaceOption}
-				/>
-			</View>
+			<MapScreenSearchNavigator />
 		</SafeAreaView>
 	);
 };

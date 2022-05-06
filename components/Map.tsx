@@ -14,23 +14,23 @@ const Map = (props: Props) => {
 			style={tw`flex-1`}
 			mapType="mutedStandard"
 			initialRegion={{
-				latitude: 37.78825,
-				longitude: -122.4324,
+				latitude: 10.878444577010265,
+				longitude: 106.8063227835844,
 				// latitude: origin.location.lat,
 				// longitude: origin.location.lng,
-				latitudeDelta: 0.008,
-				longitudeDelta: 0.008,
+				latitudeDelta: 0.02,
+				longitudeDelta: 0.02,
 			}}
 		>
-			{/* <Marker
+			<Marker
 				coordinate={{
-					latitude: 37.78825,
-					longitude: -122.4324,
+					latitude: 10.878444577010265,
+					longitude: 106.8063227835844,
 				}}
 				title="Origin"
 				description={"Description ne"}
 				identifier="origin"
-			/> */}
+			/>
 		</MapView>
 	);
 };
