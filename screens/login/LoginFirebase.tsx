@@ -48,7 +48,7 @@ export default function LoginFirebase() {
       
       
 
-      const toke = async () => {
+      const getToken = async () => {
         let token = await auth.currentUser?.getIdToken(true);
       };
       getToken();
