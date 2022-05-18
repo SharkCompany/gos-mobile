@@ -1,6 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import { storeLocalData } from "app/utils/AppAsyncStorage";
+import { authApi } from "app/api/auth.api";
+import { useAppDispatch } from "app/redux/store";
+import { setUser } from "app/redux/user/userSlice";
+import { storeUserToLocal } from "app/utils/AppAsyncStorage";
 import { Text } from "components/Themed";
+import { AuthSessionResult } from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import { initializeApp } from "firebase/app";
@@ -28,6 +32,7 @@ initializeApp({
 WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginFirebase() {
+  const dispatch = useAppDispatch();
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
       "1085941473784-mc7hcttobtvieq1m4giea7mq8dg9kbqs.apps.googleusercontent.com",
@@ -35,29 +40,36 @@ export default function LoginFirebase() {
 
   const navigator = useNavigation();
 
-  React.useEffect(() => {
+  async function LoginGoogleHandler(response: AuthSessionResult | null) {
     if (response?.type === "success") {
       const { id_token } = response.params;
 
       const auth = getAuth() as any;
-
-      console.log("da login", auth.currentUser?.stsTokenManager?.accessToken);
-
-      const token = auth.currentUser?.stsTokenManager?.accessToken;
-
-      
-      
-
-      const getToken = async () => {
-        let token = await auth.currentUser?.getIdToken(true);
-      };
-      getToken();
-      navigator.navigate("EnterInfor");
-
-      //   const provider = new GoogleAuthProvider();
       const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential);
+      await signInWithCredential(auth, credential);
+      console.log("hi", auth);
+
+      let token = await auth.currentUser?.getIdToken(true);
+      console.log("day la token", token);
+      try {
+        const data = await authApi.login(token);
+        if (data) {
+          let user: AuthUserModel = data;
+          console.log(user);
+          storeUserToLocal(user);
+          dispatch(setUser(user.info));
+          if (user.info.phone_number) {
+            navigator.navigate("Root");
+          } else navigator.navigate("EnterInfor");
+        }
+      } catch (error) {}
     }
+
+    //   const provider = new GoogleAuthProvider();
+  }
+
+  React.useEffect(() => {
+    LoginGoogleHandler(response);
   }, [response]);
 
   return (

@@ -1,5 +1,5 @@
-import { API_ENDPOINT, STORAGE_USER_KEY } from "app/constants";
-import { getLocalData } from "app/utils/AppAsyncStorage";
+import { API_ENDPOINT, LOCALSTORAGE_USER_KEY } from "app/constants";
+import { getLocalData, getUserFromLocal } from "app/utils/AppAsyncStorage";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { AuthUserModel } from "models/User.model";
 import queryString from "query-string";
@@ -17,7 +17,7 @@ axiosClient.interceptors.request.use(
   async function (config: AxiosRequestConfig) {
     // Do something before request is sent
     let token;
-    const adminUser = await getLocalData(STORAGE_USER_KEY);
+    const adminUser = await getUserFromLocal();
     if (adminUser) {
       const user: AuthUserModel = adminUser;
       token = user.tokens.accessToken;
