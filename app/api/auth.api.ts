@@ -9,8 +9,9 @@ export const authApi = {
       headers: { Authorization: "Bearer " + token },
     });
 
-    instance.get("/login").then((response) => {
+    return await instance.get("/login").then((response) => {
       return response.data;
     });
   },
+  
 };

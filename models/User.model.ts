@@ -2,11 +2,10 @@ import { stringify } from "@firebase/util";
 
 export interface UserModel {
   id: string;
-  picture: string;
   name: string;
   email: string;
   phone_number: string;
-  avatar: string;
+  picture: string;
   licensePlates: string;
   bio: string;
 }
