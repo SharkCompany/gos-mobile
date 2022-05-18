@@ -1,27 +1,14 @@
-import React, { useState } from "react";
+import { setDeparture, setDestination } from "app/redux/ride/rideSlice";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
+import InputSearch from "components/InputSearch";
+import PlaceOption from "components/PlaceOption";
 import { Text, View } from "components/Themed";
+import { FixMeLater } from "interfaces/migration";
+import React, { useEffect, useState } from "react";
+import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import {
-	FlatList,
-	Image,
-	ListRenderItemInfo,
-	ScrollView,
-	TextInput,
-} from "react-native";
-import { compassIcon, placeIconInSearch } from "assets/images";
-import GoogleSearchBar from "components/GoogleSearchBar";
-import PlaceOption from "components/PlaceOption";
-import { useNavigation } from "@react-navigation/native";
-import { HomeScreenProps, MapSearchScreenProps } from "types";
-import { useEffect } from "react";
-import { FixMeLater } from "interfaces/migration";
-import InputSearch from "components/InputSearch";
-import jsonData from "constants/destination.json";
-import { useAppDispatch, useAppSelector } from "app/redux/store";
-import { setDeparture, setDestination } from "app/redux/ride/rideSlice";
-import { ListItem } from "react-native-elements/dist/list/ListItem";
+import { MapSearchScreenProps } from "types";
 
 type Props = {};
 

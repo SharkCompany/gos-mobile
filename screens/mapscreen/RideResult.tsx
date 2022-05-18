@@ -7,16 +7,33 @@ import RideOption from "components/RideOption";
 import { useAppDispatch } from "app/redux/store";
 import { setDeparture, setDestination } from "app/redux/ride/rideSlice";
 import { MapSearchScreenProps } from "types";
-
+import { BackHandler } from "react-native";
 type Props = {};
 
 const RideResult = (
 	{ navigation }: MapSearchScreenProps<"RideResult">,
 	props: Props
 ) => {
-	// useEffect(() => {
-	// 	// Cho nay get data dua nao thang redux ne
-	// }, []);
+	function handleBackButtonClick() {
+		navigation.goBack();
+		dispatch(setDestination(null));
+		dispatch(setDeparture(null));
+		return true;
+	}
+
+	useEffect(() => {
+		BackHandler.addEventListener(
+			"hardwareBackPress",
+			handleBackButtonClick
+		);
+		return () => {
+			BackHandler.removeEventListener(
+				"hardwareBackPress",
+				handleBackButtonClick
+			);
+		};
+		// Cho nay get data dua nao thang redux ne
+	}, []);
 
 	const dispatch = useAppDispatch();
 

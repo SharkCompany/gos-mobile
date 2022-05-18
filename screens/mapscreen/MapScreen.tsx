@@ -10,7 +10,6 @@ import React, { useEffect } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
-import { useSelector } from "react-redux";
 import tw from "twrnc";
 import { HomeScreenProps } from "types";
 
