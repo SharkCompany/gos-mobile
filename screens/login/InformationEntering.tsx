@@ -67,6 +67,7 @@ const InformationEntering = (props: Props) => {
     } catch (error) {
       console.log(error);
     }
+    navigator.navigate("Root");
   };
 
   return (
