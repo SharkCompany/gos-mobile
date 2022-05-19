@@ -3,12 +3,20 @@ import React from "react";
 import tw from "twrnc";
 import { placeIcon } from "assets/images";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { FixMeLater } from "interfaces/migration";
 
-const RideOption = () => {
+const RideOption = ({ selectHandler }: FixMeLater) => {
+	const onSelectItem = () => {
+		if (selectHandler) {
+			selectHandler();
+		}
+	};
+
 	return (
 		<View style={tw`px-4 pt-1`}>
 			<TouchableOpacity
 				style={tw` items-center justify-between mb-2 px-3 shadow-md rounded-md flex-row py-2 bg-white`}
+				onPress={onSelectItem}
 			>
 				<View>
 					<View style={tw`flex-row items-center mb-1 `}>

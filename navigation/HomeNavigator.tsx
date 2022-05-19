@@ -5,6 +5,7 @@ import { HomeScreenParamList } from "types";
 import Homepage from "screens/homepage/Homepage";
 import MapScreen from "screens/mapscreen/MapScreen";
 import MainSearchScreen from "screens/places-search-screen/MainSearchScreen";
+import RideDetail from "screens/ride-detail/RideDetail";
 
 type Props = {};
 
@@ -26,6 +27,7 @@ const HomeNavigator = (props: Props) => {
 					component={MainSearchScreen}
 				/>
 			</Stack.Group>
+			<Stack.Screen name="RideDetail" component={RideDetail} />
 		</Stack.Navigator>
 	);
 };

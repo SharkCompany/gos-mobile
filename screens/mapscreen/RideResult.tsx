@@ -8,6 +8,7 @@ import { useAppDispatch } from "app/redux/store";
 import { setDeparture, setDestination } from "app/redux/ride/rideSlice";
 import { MapSearchScreenProps } from "types";
 import { BackHandler } from "react-native";
+import { FixMeLater } from "interfaces/migration";
 type Props = {};
 
 const RideResult = (
@@ -33,14 +34,23 @@ const RideResult = (
 			);
 		};
 		// Cho nay get data dua nao thang redux ne
+		// Get data ride dua vao destiantion and departure trong redux
 	}, []);
 
 	const dispatch = useAppDispatch();
+
+	const onNavigateToMainSearchScreen = () => {
+		navigation.navigate("RideDetail");
+	};
 
 	const cancelSelectingRides = () => {
 		dispatch(setDestination(null));
 		dispatch(setDeparture(null));
 		navigation.goBack();
+	};
+
+	const selectRide = (item: FixMeLater) => {
+		onNavigateToMainSearchScreen();
 	};
 
 	return (
@@ -68,7 +78,9 @@ const RideResult = (
 					{ id: 4 },
 					{ id: 4323 },
 				]}
-				renderItem={RideOption}
+				renderItem={({ item }) => (
+					<RideOption selectHandler={selectRide} />
+				)}
 			/>
 		</View>
 	);

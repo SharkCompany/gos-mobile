@@ -46,6 +46,7 @@ export type HomeScreenParamList = {
 	Home: undefined;
 	MapScreen: undefined;
 	MainSearchScreen: undefined;
+	RideDetail: undefined;
 };
 
 export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
@@ -58,6 +59,7 @@ export type MapSearchScreenParamList = {
 	PlaceResult: undefined;
 	MainSearchScreen: undefined;
 	RideResult: undefined;
+	RideDetail: undefined;
 };
 
 export type MapSearchScreenProps<
