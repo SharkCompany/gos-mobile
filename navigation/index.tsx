@@ -6,34 +6,28 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-	NavigationContainer,
-	DefaultTheme,
 	DarkTheme,
+	DefaultTheme,
+	NavigationContainer,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import FeatherIcon from "components/FeathureIcon";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
-
+import { ColorSchemeName } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import Messages from "../screens/messages/Messages";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import SocialLoginScreen from "../screens/login/SocialLoginScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import Personal from "../screens/personal/Personal";
 import {
 	RootStackParamList,
 	RootTabParamList,
 	RootTabScreenProps,
 } from "../types";
-import LinkingConfiguration from "./LinkingConfiguration";
-import InformationEntering from "../screens/login/InformationEntering";
-import FeatherIcon from "components/FeathureIcon";
-import Rides from "../screens/rides/Rides";
-import Homepage from "../screens/homepage/Homepage";
-import Messages from "../screens/messages/Messages";
-import Personal from "../screens/personal/Personal";
 import HomeNavigator from "./HomeNavigator";
+import LinkingConfiguration from "./LinkingConfiguration";
+import RideNavigator from "./RideNavigator";
 
 export default function Navigation({
 	colorScheme,
@@ -105,7 +99,7 @@ function BottomTabNavigator() {
 			/>
 			<BottomTab.Screen
 				name="Rides"
-				component={Rides}
+				component={RideNavigator}
 				options={{
 					title: "Rides",
 					tabBarLabel: "Chuyến đi",

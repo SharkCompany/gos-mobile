@@ -6,7 +6,7 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 } from "react-native";
-import { RootTabScreenProps } from "types";
+import { RideHistoryScreenProps, RootTabScreenProps } from "types";
 import tw from "twrnc";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,7 +16,9 @@ import PlaceOption from "components/PlaceOption";
 import RideOption from "components/RideOption";
 import RideHistoryOption from "components/RideHistoryOption";
 
-export default function Rides({ navigation }: RootTabScreenProps<"Rides">) {
+export default function RideHistory({
+	navigation,
+}: RideHistoryScreenProps<"RideHistory">) {
 	const options = [
 		{
 			label: "Đi nhờ xe",
@@ -41,7 +43,9 @@ export default function Rides({ navigation }: RootTabScreenProps<"Rides">) {
 
 				<Text style={tw`text-2xl font-bold`}>Lịch sử chuyến đi</Text>
 
-				<TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => navigation.navigate("CreateRide")}
+				>
 					<Ionicons name="add-circle" size={26} color="#7EBC36" />
 				</TouchableOpacity>
 			</View>
@@ -53,20 +57,3 @@ export default function Rides({ navigation }: RootTabScreenProps<"Rides">) {
 		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: "80%",
-	},
-});

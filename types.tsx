@@ -66,5 +66,17 @@ export type MapSearchScreenProps<
 	Screen extends keyof MapSearchScreenParamList
 > = NativeStackScreenProps<MapSearchScreenParamList, Screen>;
 
+export type RideHistoryScreenParamsList = {
+	RideHistory: undefined;
+	CreateRide: undefined;
+};
+
+export type RideHistoryScreenProps<
+	Screen extends keyof RideHistoryScreenParamsList
+> = CompositeScreenProps<
+	BottomTabScreenProps<RideHistoryScreenParamsList, Screen>,
+	BottomTabScreenProps<MapSearchScreenParamList>
+>;
+
 // export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
 // 	NativeStackScreenProps<HomeScreenParamList, Screen>;
