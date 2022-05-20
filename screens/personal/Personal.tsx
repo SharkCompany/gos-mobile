@@ -1,20 +1,19 @@
 import EditScreenInfo from "components/EditScreenInfo";
-import { Text, View } from "components/Themed";
+import { Text, TextTW, View } from "components/Themed";
 import { StyleSheet } from "react-native";
-import { RootTabScreenProps } from "types";
+import tw from "twrnc";
 
 export default function Personal({
   navigation,
 }: RootTabScreenProps<"Personal">) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Personal</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+    <View style={tw`flex-1 items-center`}>
+      <View style={tw`h-[40%] bg-[#7EBC36] w-full pt-10 px-6 rounded-b-3xl`}>
+        <Text style={tw`text-2xl font-bold text-center text-white`}>Welcome Nguyen Kiet</Text>
+        <View style={tw`bg-inherit items-center justify-center h-full`}>
+          <TextTW className="text-center text-white"></TextTW>
+        </View>
+      </View>
     </View>
   );
 }
