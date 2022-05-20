@@ -14,6 +14,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FeatherIcon from "components/FeathureIcon";
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
+import InformationEntering from "screens/login/InformationEntering";
+import SocialLoginScreen from "screens/login/SocialLoginScreen";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import Messages from "../screens/messages/Messages";
@@ -53,8 +55,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			{/* <Stack.Screen name="SocialLogin" component={SocialLoginScreen} /> */}
-			{/* <Stack.Screen name="EnterInfor" component={InformationEntering} /> */}
+			<Stack.Screen name="SocialLogin" component={SocialLoginScreen} />
+			<Stack.Screen name="EnterInfor" component={InformationEntering} />
 			<Stack.Screen name="Root" component={BottomTabNavigator} />
 			<Stack.Screen
 				name="NotFound"
