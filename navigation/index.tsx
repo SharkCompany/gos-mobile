@@ -55,8 +55,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			<Stack.Screen name="SocialLogin" component={SocialLoginScreen} />
-			<Stack.Screen name="EnterInfor" component={InformationEntering} />
+			{/* <Stack.Screen name="SocialLogin" component={SocialLoginScreen} /> */}
+			{/* <Stack.Screen name="EnterInfor" component={InformationEntering} /> */}
 			<Stack.Screen name="Root" component={BottomTabNavigator} />
 			<Stack.Screen
 				name="NotFound"
