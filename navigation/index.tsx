@@ -11,8 +11,10 @@ import {
 	NavigationContainer,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
 import FeatherIcon from "components/FeathureIcon";
 import * as React from "react";
+import { useEffect } from "react";
 import { ColorSchemeName } from "react-native";
 import InformationEntering from "screens/login/InformationEntering";
 import SocialLoginScreen from "screens/login/SocialLoginScreen";
@@ -30,12 +32,28 @@ import {
 import HomeNavigator from "./HomeNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import RideNavigator from "./RideNavigator";
+import jsonData from "constants/destination.json";
+import { savePlaces } from "app/redux/places/placeSlice";
 
 export default function Navigation({
 	colorScheme,
 }: {
 	colorScheme: ColorSchemeName;
 }) {
+	const dispatch = useAppDispatch();
+	const places = useAppSelector((state) => state.place.listPlaces);
+
+	const loadPlaces = () => {
+		const data = JSON.parse(JSON.stringify(jsonData));
+		dispatch(savePlaces(data));
+	};
+
+	useEffect(() => {
+		if (places.length === 0) {
+			loadPlaces();
+		}
+	}, []);
+
 	return (
 		<NavigationContainer
 			linking={LinkingConfiguration}

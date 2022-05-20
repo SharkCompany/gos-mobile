@@ -39,7 +39,7 @@ const PlaceOption = ({
 	};
 
 	return (
-		<View style={tw`px-2 pt-1 mb-2`}>
+		<View style={tw`px-2 pt-1 mb-3`}>
 			<TouchableOpacity
 				onPress={handleSelectPlace}
 				style={tw`flex-row bg-white items-center h-22 px-3 shadow-md rounded-md`}

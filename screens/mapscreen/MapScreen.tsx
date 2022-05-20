@@ -16,10 +16,6 @@ import { HomeScreenProps } from "types";
 type Props = {};
 
 const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
-	const dispatch = useAppDispatch();
-	const rideSelector = useAppSelector((state) => state.ride);
-	const places = useAppSelector((state) => state.place.listPlaces);
-
 	const options = [
 		{
 			label: "Đi nhờ xe",
@@ -34,17 +30,6 @@ const MapScreen = ({ navigation }: HomeScreenProps<"MapScreen">) => {
 			accessibilityLabel: "switch-one",
 		},
 	];
-
-	const loadPlaces = () => {
-		const data = JSON.parse(JSON.stringify(jsonData));
-		dispatch(savePlaces(data));
-	};
-
-	useEffect(() => {
-		if (places.length === 0) {
-			loadPlaces();
-		}
-	}, []);
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white`}>

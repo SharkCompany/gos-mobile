@@ -17,7 +17,7 @@ const placeSlice = createSlice({
 	},
 });
 
-export const rideSelector = (state: AppRootState) => state.ride;
+export const placesSelector = (state: AppRootState) => state.place.listPlaces;
 
 export const { savePlaces } = placeSlice.actions;
 export default placeSlice.reducer;

@@ -1,47 +1,58 @@
-import EditScreenInfo from "components/EditScreenInfo";
-import { Text, View } from "components/Themed";
-import {
-	FlatList,
-	ScrollView,
-	StyleSheet,
-	TextInput,
-	TouchableOpacity,
-} from "react-native";
-import { RideHistoryScreenProps, RootTabScreenProps } from "types";
-import tw from "twrnc";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import SwitchSelector from "react-native-switch-selector";
-import { FixMeLater } from "interfaces/migration";
-import PlaceOption from "components/PlaceOption";
-import RideOption from "components/RideOption";
-import RideHistoryOption from "components/RideHistoryOption";
-import InputWithLabel from "components/InputWithLabel";
+import { placesSelector } from "app/redux/places/placeSlice";
+import { useAppSelector } from "app/redux/store";
+import DateTimePicker from "components/DateTimePicker";
+import InputWithLabel, {
+	TouchableInputWithLabel,
+} from "components/InputWithLabel";
 import MainButton from "components/MainButton";
+import { Text, View } from "components/Themed";
+import { FixMeLater } from "interfaces/migration";
+import { useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import tw from "twrnc";
+import { RideHistoryScreenProps } from "types";
 
 export default function CreateRide({
 	navigation,
+	route,
 }: RideHistoryScreenProps<"RideHistory">) {
 	const s = require("../../globalStyles");
 
-	const options = [
-		{
-			label: "Đi nhờ xe",
-			value: "1",
-			testID: "switch-one",
-			accessibilityLabel: "switch-one",
-		},
-		{
-			label: "Tìm yên sau",
-			value: "2",
-			testID: "switch-one",
-			accessibilityLabel: "switch-one",
-		},
-	];
+	const [originInput, setOriginInput] = useState("");
+
+	const [destinationInput, setDestinationInput] = useState("");
+
+	const [currentInputing, setCurrentInputing] = useState("origin");
+
+	const handleInputOrigin = () => {
+		setCurrentInputing("origin");
+		navigation.navigate("CreateRideSearchPlaces");
+	};
+
+	const handleInputDestination = () => {
+		setCurrentInputing("destination");
+		navigation.navigate("CreateRideSearchPlaces");
+	};
+
+	const handleOnPress = () => {};
+
+	useEffect(() => {
+		const returnPlacesSearch: FixMeLater = route.params;
+
+		if (returnPlacesSearch?.place) {
+			if (currentInputing === "origin") {
+				setOriginInput(returnPlacesSearch?.place?.title);
+			} else if (currentInputing === "destination") {
+				setDestinationInput(returnPlacesSearch?.place?.title);
+			}
+		}
+	}, [route.params]);
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white px-6`}>
-			<View style={tw`justify-center h-1/10 `}>
+			<View style={tw`justify-center my-4  `}>
 				<View style={tw`items-center`}>
 					<Text style={tw`text-2xl font-bold`}>Tạo chuyến đi</Text>
 				</View>
@@ -51,15 +62,30 @@ export default function CreateRide({
 				</TouchableOpacity>
 			</View>
 
-			<View>
-				<InputWithLabel label="Điểm xuất phát" />
-				<InputWithLabel label="Điểm đến" />
-				<InputWithLabel label="Giá" />
-				{/* <InputWithLabel label="Thời gian" /> */}
+			<View style={tw`mb-4`}>
+				<TouchableInputWithLabel
+					label="Bắt đầu"
+					pressInHandler={handleInputOrigin}
+					value={originInput}
+					setValue={setOriginInput}
+				/>
+				<TouchableInputWithLabel
+					label="Kết thúc"
+					pressInHandler={handleInputDestination}
+					value={destinationInput}
+					setValue={setDestinationInput}
+				/>
+
+				<InputWithLabel label="Giá cước đề xuất" numeric={true} />
+
+				<InputWithLabel label="Thời gian xuất phát" />
+				<DateTimePicker />
 			</View>
 			<View style={tw`items-center`}>
 				<View style={tw`w-[50%]`}>
-					<MainButton>Tạo chuyến đi</MainButton>
+					<MainButton eventHandler={handleOnPress}>
+						Tạo chuyến đi
+					</MainButton>
 				</View>
 			</View>
 		</SafeAreaView>

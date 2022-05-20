@@ -9,6 +9,7 @@ import {
 	NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FixMeLater } from "interfaces/migration";
 
 declare global {
 	namespace ReactNavigation {
@@ -68,7 +69,9 @@ export type MapSearchScreenProps<
 
 export type RideHistoryScreenParamsList = {
 	RideHistory: undefined;
-	CreateRide: undefined;
+	CreateRide: FixMeLater;
+	SearchPlaces: undefined;
+	CreateRideSearchPlaces: FixMeLater;
 };
 
 export type RideHistoryScreenProps<
