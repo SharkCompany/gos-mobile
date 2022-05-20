@@ -62,7 +62,9 @@ export default function LoginFirebase() {
             navigator.navigate("Root");
           } else navigator.navigate("EnterInfor");
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     //   const provider = new GoogleAuthProvider();

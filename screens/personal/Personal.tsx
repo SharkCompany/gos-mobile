@@ -51,7 +51,7 @@ export default function Personal({
       picture: image,
     };
 
-    try {
+    try { 
       const data = await userApi.updateUser(updateData);
       console.log("date login response", data);
       navigator.navigate("Root");

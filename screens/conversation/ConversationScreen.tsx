@@ -1,17 +1,16 @@
 import ChatConversation from "components/ChatConversation/ChatConversation";
 import EditScreenInfo from "components/EditScreenInfo";
-import { Text, View } from "components/Themed";
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaViewTW, Text, View } from "components/Themed";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { RootTabScreenProps } from "types";
 
-export default function Messages({
+export default function ConversationScreen({
   navigation,
 }: RootTabScreenProps<"Messages">) {
   return (
-    <SafeAreaView>
+    <SafeAreaViewTW className="flex-1 bg-white">
       <ChatConversation />
-    </SafeAreaView>
+    </SafeAreaViewTW>
   );
 }
 
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    // justifyContent: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,

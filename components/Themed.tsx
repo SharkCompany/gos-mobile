@@ -3,7 +3,11 @@
  * https://docs.expo.io/guides/color-schemes/
  */
 
-import { Text as DefaultText, View as DefaultView } from "react-native";
+import {
+  Text as DefaultText,
+  View as DefaultView,
+  SafeAreaView as DefaultSafeAreaView,
+} from "react-native";
 
 import tw from "twrnc";
 
@@ -35,6 +39,9 @@ type TailwindProps = {
 
 export type TextProps = ThemeProps & DefaultText["props"] & TailwindProps;
 export type ViewProps = ThemeProps & DefaultView["props"] & TailwindProps;
+export type SafeAreaViewProps = ThemeProps &
+  DefaultSafeAreaView["props"] &
+  TailwindProps;
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -71,6 +78,20 @@ export function ViewTW(props: ViewProps) {
 
   return (
     <DefaultView
+      style={[{ backgroundColor }, tw.style(className)]}
+      {...otherProps}
+    />
+  );
+}
+export function SafeAreaViewTW(props: ViewProps) {
+  const { className, style, lightColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: lightColor },
+    "background"
+  );
+
+  return (
+    <DefaultSafeAreaView
       style={[{ backgroundColor }, tw.style(className)]}
       {...otherProps}
     />

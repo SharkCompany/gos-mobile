@@ -6,6 +6,7 @@ import Homepage from "screens/homepage/Homepage";
 import MapScreen from "screens/mapscreen/MapScreen";
 import MainSearchScreen from "screens/places-search-screen/MainSearchScreen";
 import RideDetail from "screens/ride-detail/RideDetail";
+import ConversationScreen from "screens/conversation/ConversationScreen";
 
 type Props = {};
 
@@ -28,6 +29,7 @@ const HomeNavigator = (props: Props) => {
 				/>
 			</Stack.Group>
 			<Stack.Screen name="RideDetail" component={RideDetail} />
+			<Stack.Screen name="ConversationScreen" component={ConversationScreen} />
 		</Stack.Navigator>
 	);
 };
