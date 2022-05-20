@@ -26,6 +26,10 @@ export default function CreateRide({
 
 	const [currentInputing, setCurrentInputing] = useState("origin");
 
+	const [departureTime, setDepartureTime] = useState("");
+
+	const [isShowingTimePicker, setIsShowingTimePicker] = useState(false);
+
 	const handleInputOrigin = () => {
 		setCurrentInputing("origin");
 		navigation.navigate("CreateRideSearchPlaces");
@@ -34,6 +38,14 @@ export default function CreateRide({
 	const handleInputDestination = () => {
 		setCurrentInputing("destination");
 		navigation.navigate("CreateRideSearchPlaces");
+	};
+
+	const onSelectDepartureTime = (time: FixMeLater) => {
+		const dformat =
+			[time.getHours(), time.getMinutes()].join(":") +
+			" - " +
+			[time.getDate(), time.getMonth() + 1, time.getFullYear()].join("/");
+		setDepartureTime(dformat);
 	};
 
 	const handleOnPress = () => {};
@@ -78,8 +90,17 @@ export default function CreateRide({
 
 				<InputWithLabel label="Giá cước đề xuất" numeric={true} />
 
-				<InputWithLabel label="Thời gian xuất phát" />
-				<DateTimePicker />
+				<TouchableInputWithLabel
+					label="Thời gian xuất phát"
+					pressInHandler={() => setIsShowingTimePicker(true)}
+					value={departureTime}
+				/>
+
+				<DateTimePicker
+					isVisible={isShowingTimePicker}
+					setIsVisible={setIsShowingTimePicker}
+					selectHandler={onSelectDepartureTime}
+				/>
 			</View>
 			<View style={tw`items-center`}>
 				<View style={tw`w-[50%]`}>
