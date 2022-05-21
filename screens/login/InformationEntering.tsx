@@ -54,7 +54,7 @@ const InformationEntering = (props: Props) => {
 
   const handleSaveInformation = async () => {
     const updateData: Partial<UserModel> = {
-      phone_number: phonenumber,
+      phone: phonenumber,
       bio: bio,
       licensePlates: bienSoXe,
       picture: image,
@@ -62,12 +62,11 @@ const InformationEntering = (props: Props) => {
 
     try {
       const data = await userApi.updateUser(updateData);
-      console.log("date login response", data);
+      console.log("cập nhật thành công", data);
       navigator.navigate("Root");
     } catch (error) {
-      console.log(error);
+      console.log("lỗi rồi",error);
     }
-    navigator.navigate("Root");
   };
 
   return (

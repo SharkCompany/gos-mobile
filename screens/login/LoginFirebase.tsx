@@ -40,8 +40,6 @@ export default function LoginFirebase() {
 
   const navigator = useNavigation();
 
-  
-
   async function LoginGoogleHandler(response: AuthSessionResult | null) {
     if (response?.type === "success") {
       const { id_token } = response.params;
@@ -54,19 +52,18 @@ export default function LoginFirebase() {
       let token = await auth.currentUser?.getIdToken(true);
       console.log("day la token", token);
       try {
-
         const data = await authApi.login(token);
         if (data) {
           let user: AuthUserModel = data;
-          console.log(user);
+          console.log("đăng nhập thành công", data);
           storeUserToLocal(user);
           dispatch(setUser(user.info));
-          if (user.info.phone_number) {
+          if (user.info.phone) {
             navigator.navigate("Root");
           } else navigator.navigate("EnterInfor");
         }
       } catch (error) {
-        console.log(error);
+        console.log("lỗi đăng nhập", error);
       }
     }
 
