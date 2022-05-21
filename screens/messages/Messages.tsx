@@ -1,5 +1,6 @@
 import ChatConversation from "components/ChatConversation/ChatConversation";
 import EditScreenInfo from "components/EditScreenInfo";
+import ThanksForUsingGos from "components/ThanksForUsingGos";
 import { Text, View } from "components/Themed";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,7 +11,7 @@ export default function Messages({
 }: RootTabScreenProps<"Messages">) {
   return (
     <SafeAreaView>
-      <ChatConversation />
+      <ThanksForUsingGos price={500000} />
     </SafeAreaView>
   );
 }
