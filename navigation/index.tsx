@@ -62,10 +62,8 @@ export default function Navigation({
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <ViewTW className="relative h-full w-full">
-        <AppLoading />
-        <RootNavigator />
-      </ViewTW>
+      <AppLoading />
+      <RootNavigator />
     </NavigationContainer>
   );
 }
