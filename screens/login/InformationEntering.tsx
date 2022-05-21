@@ -5,6 +5,7 @@ import {
   Platform,
   ScrollView,
   Image,
+  ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -63,9 +64,11 @@ const InformationEntering = (props: Props) => {
     try {
       const data = await userApi.updateUser(updateData);
       console.log("cập nhật thành công", data);
+      ToastAndroid.show("Cập nhật thành công", ToastAndroid.TOP);
       navigator.navigate("Root");
     } catch (error) {
-      console.log("lỗi rồi",error);
+      ToastAndroid.show("Cập nhật thất bại", ToastAndroid.TOP);
+      console.log("lỗi rồi", error);
     }
   };
 

@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "app/redux/store";
 import FeatherIcon from "components/FeathureIcon";
 import * as React from "react";
 import { useEffect } from "react";
-import { ColorSchemeName } from "react-native";
+import { ActivityIndicator, ColorSchemeName } from "react-native";
 import InformationEntering from "screens/login/InformationEntering";
 import SocialLoginScreen from "screens/login/SocialLoginScreen";
 import Colors from "../constants/Colors";
@@ -34,6 +34,9 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import RideNavigator from "./RideNavigator";
 import jsonData from "constants/destination.json";
 import { savePlaces } from "app/redux/places/placeSlice";
+import { selectLoading } from "app/redux/setting/settingSlice";
+import { TextTW, ViewTW } from "components/Themed";
+import AppLoading from "components/AppLoading";
 
 export default function Navigation({
   colorScheme,
@@ -59,7 +62,10 @@ export default function Navigation({
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      <ViewTW className="relative h-full w-full">
+        <AppLoading />
+        <RootNavigator />
+      </ViewTW>
     </NavigationContainer>
   );
 }

@@ -6,18 +6,20 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
 export default function App() {
-	const isLoadingComplete = useCachedResources();
-	const colorScheme = useColorScheme();
+  const isLoadingComplete = useCachedResources();
+  const colorScheme = useColorScheme();
 
-	if (!isLoadingComplete) {
-		return null;
-	} else {
-		return (
-			<Provider store={store}>
-				<SafeAreaProvider>
-					<Navigation colorScheme={colorScheme} />
-				</SafeAreaProvider>
-			</Provider>
-		);
-	}
+
+
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <Provider store={store}>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+        </SafeAreaProvider>
+      </Provider>
+    );
+  }
 }

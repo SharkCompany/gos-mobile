@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { userApi } from "app/api/user.api";
-import { useAppSelector } from "app/redux/store";
-import { selectUser } from "app/redux/user/userSlice";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { selectUser, setUser } from "app/redux/user/userSlice";
 import MainButton from "components/MainButton";
-import { Text, TextTW, View, ViewTW } from "components/Themed";
+import { Text, View, ViewTW } from "components/Themed";
 import * as ImagePicker from "expo-image-picker";
 import { FixMeLater } from "interfaces/migration";
 import { UserModel } from "models/User.model";
-import { default as React, useState } from "react";
+import { default as React, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TextInput } from "react-native";
 import { Avatar } from "react-native-elements";
 import tw from "twrnc";
@@ -17,12 +17,13 @@ export default function Personal({
   navigation,
 }: RootTabScreenProps<"Personal">) {
   const userInfo = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
   console.log("user ne", userInfo);
   const navigator = useNavigation();
   const s = require("../../globalStyles");
   const widthRelative = "80%";
 
-  const [phonenumber, setPhonenumber] = useState(userInfo?.phone_number);
+  const [phonenumber, setPhonenumber] = useState(userInfo?.phone);
   const [bienSoXe, setBienSoXe] = useState(userInfo?.licensePlates);
   const [bio, setBio] = useState(userInfo?.bio);
   const [name, setName] = useState(userInfo?.name);
@@ -43,22 +44,28 @@ export default function Personal({
     }
   };
 
+  async function getMeHandler() {
+    const user = await userApi.getMe();
+    dispatch(setUser(user));
+  }
+
+  useEffect(() => {}, []);
+
   const handleSaveInformation = async () => {
     const updateData: Partial<UserModel> = {
-      phone_number: phonenumber,
+      phone: phonenumber,
       bio: bio,
       licensePlates: bienSoXe,
       picture: image,
     };
 
-    try { 
+    try {
       const data = await userApi.updateUser(updateData);
-      console.log("date login response", data);
+      console.log("cập nhật thành công", data);
       navigator.navigate("Root");
     } catch (error) {
-      console.log(error);
+      console.log("lỗi cập nhật", error);
     }
-    navigator.navigate("Root");
   };
   return (
     <View style={tw`flex-1 items-center`}>

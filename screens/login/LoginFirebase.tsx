@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { authApi } from "app/api/auth.api";
+import { setAppLoading } from "app/redux/setting/settingSlice";
 import { useAppDispatch } from "app/redux/store";
 import { setUser } from "app/redux/user/userSlice";
 import { storeUserToLocal } from "app/utils/AppAsyncStorage";
@@ -42,6 +43,7 @@ export default function LoginFirebase() {
 
   async function LoginGoogleHandler(response: AuthSessionResult | null) {
     if (response?.type === "success") {
+      dispatch(setAppLoading(true));
       const { id_token } = response.params;
 
       const auth = getAuth() as any;
@@ -64,6 +66,8 @@ export default function LoginFirebase() {
         }
       } catch (error) {
         console.log("lỗi đăng nhập", error);
+      } finally {
+        dispatch(setAppLoading(false));
       }
     }
 

@@ -13,7 +13,7 @@ const settingSlice = createSlice({
   name: "setting",
   initialState,
   reducers: {
-    setSetting(state, action: PayloadAction<boolean>) {
+    setAppLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
   },
@@ -21,5 +21,5 @@ const settingSlice = createSlice({
 
 export const selectLoading = (state: AppRootState) => state.setting.loading;
 
-export const { setSetting } = settingSlice.actions;
+export const { setAppLoading } = settingSlice.actions;
 export default settingSlice.reducer;
