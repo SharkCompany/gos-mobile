@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { userApi } from "app/api/user.api";
+import { setAppLoading } from "app/redux/setting/settingSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import { selectUser, setUser } from "app/redux/user/userSlice";
 import MainButton from "components/MainButton";
@@ -8,7 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 import { FixMeLater } from "interfaces/migration";
 import { UserModel } from "models/User.model";
 import { default as React, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TextInput } from "react-native";
+import { ScrollView, StyleSheet, TextInput, ToastAndroid } from "react-native";
 import { Avatar } from "react-native-elements";
 import tw from "twrnc";
 import { RootTabScreenProps } from "types";
@@ -45,11 +46,14 @@ export default function Personal({
   };
 
   async function getMeHandler() {
-    const user = await userApi.getMe();
+    const user: UserModel = await userApi.getMe();
+    console.log("get me:", user);
     dispatch(setUser(user));
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getMeHandler();
+  }, []);
 
   const handleSaveInformation = async () => {
     const updateData: Partial<UserModel> = {
@@ -60,11 +64,16 @@ export default function Personal({
     };
 
     try {
+      dispatch(setAppLoading(true));
       const data = await userApi.updateUser(updateData);
+      ToastAndroid.show("Cập nhật thành công", ToastAndroid.BOTTOM);
       console.log("cập nhật thành công", data);
       navigator.navigate("Root");
     } catch (error) {
+      ToastAndroid.show("Cập nhật thất bại!", ToastAndroid.BOTTOM);
       console.log("lỗi cập nhật", error);
+    } finally {
+      dispatch(setAppLoading(false));
     }
   };
   return (

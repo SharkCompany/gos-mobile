@@ -6,7 +6,7 @@ export const userApi = {
   updateUser: async (user: Partial<UserModel>) => {
     return await axiosClient.post("/information", user);
   },
-  getMe: async () => {
+  getMe: async (): Promise<UserModel> => {
     return await axiosClient.get("/me");
   },
 };

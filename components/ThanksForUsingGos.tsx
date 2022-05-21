@@ -71,7 +71,7 @@ export default function ThanksForUsingGos({ price }: Props) {
                 Nguyễn Anh Kiệt
               </TextTW>
               <ViewTW className="flex justify-center w-full px-20">
-                <TextTW className="text-center inline py-2 text-[#7EBC36] mt-5 mb-5 bg-gray-200 ">
+                <TextTW className="text-center py-2 text-[#7EBC36] mt-5 mb-5 bg-gray-200 ">
                   51H-626.23
                 </TextTW>
               </ViewTW>

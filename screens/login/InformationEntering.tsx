@@ -18,10 +18,11 @@ import { Text, View } from "../../components/Themed";
 import MainButton from "components/MainButton";
 import * as ImagePicker from "expo-image-picker";
 import { FixMeLater } from "interfaces/migration";
-import { useAppSelector } from "app/redux/store";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
 import { selectUser } from "app/redux/user/userSlice";
 import { UserModel } from "models/User.model";
 import { userApi } from "app/api/user.api";
+import { setAppLoading } from "app/redux/setting/settingSlice";
 
 type Props = {};
 
@@ -31,6 +32,8 @@ const InformationEntering = (props: Props) => {
   const navigator = useNavigation();
   const s = require("../../globalStyles");
   const widthRelative = "80%";
+
+  const dispatch = useAppDispatch();
 
   const [phonenumber, setPhonenumber] = useState<string>("");
   const [bienSoXe, setBienSoXe] = useState<string>("");
@@ -62,6 +65,7 @@ const InformationEntering = (props: Props) => {
     };
 
     try {
+      dispatch(setAppLoading(true));
       const data = await userApi.updateUser(updateData);
       console.log("cập nhật thành công", data);
       ToastAndroid.show("Cập nhật thành công", ToastAndroid.TOP);
@@ -69,6 +73,8 @@ const InformationEntering = (props: Props) => {
     } catch (error) {
       ToastAndroid.show("Cập nhật thất bại", ToastAndroid.TOP);
       console.log("lỗi rồi", error);
+    } finally {
+      dispatch(setAppLoading(false));
     }
   };
 
