@@ -7,6 +7,7 @@ import MapScreen from "screens/mapscreen/MapScreen";
 import MainSearchScreen from "screens/places-search-screen/MainSearchScreen";
 import RideHistory from "screens/rides/RideHistory";
 import CreateRide from "screens/create-ride-screen/CreateRide";
+import CreateRidesSearchPlaces from "screens/create-ride-search-places/CreateRidesSearchPlaces";
 
 type Props = {};
 
@@ -18,6 +19,10 @@ const RideNavigator = (props: Props) => {
 			<Stack.Screen name="RideHistory" component={RideHistory} />
 
 			<Stack.Screen name="CreateRide" component={CreateRide} />
+			<Stack.Screen
+				name="CreateRideSearchPlaces"
+				component={CreateRidesSearchPlaces}
+			/>
 		</Stack.Navigator>
 	);
 };

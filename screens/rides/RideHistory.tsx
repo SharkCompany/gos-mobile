@@ -35,8 +35,8 @@ export default function RideHistory({
 	];
 
 	return (
-		<SafeAreaView style={tw`flex-1 bg-white px-6`}>
-			<View style={tw`flex-row justify-between h-1/10 items-center `}>
+		<SafeAreaView style={tw`flex-1 bg-white `}>
+			<View style={tw`flex-row justify-between my-4 items-center px-6 `}>
 				<TouchableOpacity>
 					<Ionicons name="caret-back" size={26} color="#7EBC36" />
 				</TouchableOpacity>
@@ -50,7 +50,26 @@ export default function RideHistory({
 				</TouchableOpacity>
 			</View>
 
-			<ScrollView>
+			<View style={tw`px-2 items-center mb-4 px-6`}>
+				<SwitchSelector
+					options={options}
+					initial={0}
+					onPress={(value: FixMeLater) =>
+						console.log(`Call onPress with value: ${value}`)
+					}
+					buttonColor="#7EBC36"
+					selectedColor="#FCF9F9"
+					fontSize={14}
+					borderColor="#7EBC36"
+					hasPadding
+				/>
+			</View>
+
+			<ScrollView style={tw`px-6`}>
+				<RideHistoryOption />
+				<RideHistoryOption />
+				<RideHistoryOption />
+				<RideHistoryOption />
 				<RideHistoryOption />
 				<RideHistoryOption />
 			</ScrollView>

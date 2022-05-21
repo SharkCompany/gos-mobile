@@ -13,7 +13,7 @@ const RideHistoryOption = ({ selectHandler }: FixMeLater) => {
 	};
 
 	return (
-		<View style={tw`px-4 pt-1`}>
+		<View style={tw`px-2 pt-1`}>
 			<TouchableOpacity
 				style={tw` items-center justify-between mb-2 px-4 shadow-md rounded-md flex-row py-2 bg-white`}
 				onPress={onSelectItem}
