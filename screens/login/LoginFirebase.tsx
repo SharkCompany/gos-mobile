@@ -74,19 +74,6 @@ export default function LoginFirebase() {
 		LoginGoogleHandler(response);
 	}, [response]);
 
-<<<<<<< HEAD
-  return (
-    <TouchableOpacity
-      style={[styles.button, styles.buttonGoogle]}
-      onPress={() => promptAsync({ useProxy: true })}
-    >
-      <Image source={googleLogo} width={32} style={styles.googleLogo} />
-      <Text style={[styles.buttonText, styles.buttonTextGoogle]}>
-        Continue with Google
-      </Text>
-    </TouchableOpacity>
-  );
-=======
 	return (
 		<TouchableOpacity
 			style={[styles.button, styles.buttonGoogle]}
@@ -98,7 +85,6 @@ export default function LoginFirebase() {
 			</Text>
 		</TouchableOpacity>
 	);
->>>>>>> origin/nk/chi-tiet-chuyen-di
 }
 
 const styles = StyleSheet.create({
