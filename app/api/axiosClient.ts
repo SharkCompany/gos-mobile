@@ -16,14 +16,13 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   async function (config: AxiosRequestConfig) {
     // Do something before request is sent
-    let token;
     const adminUser = await getUserFromLocal();
     if (adminUser) {
       const user: AuthUserModel = adminUser;
       token = user.tokens.accessToken;
     }
     config.headers.Authorization = `Bearer ${token}`;
-    console.log("axios config", config?.headers?.Authorization);
+    // console.log("axios config", config?.headers?.Authorization);
     return config;
   },
   function (error: any) {

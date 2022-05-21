@@ -8,16 +8,15 @@ type Props = {};
 const InputWithLabel = ({
 	label,
 	placeholder,
-	pressInHandler,
+	valueChangeHandler,
 	value,
 	numeric,
 }: FixMeLater) => {
 	const s = require("../globalStyles");
 
-	const handleOnPressIn = () => {
-		Keyboard.dismiss();
-		if (pressInHandler) {
-			pressInHandler();
+	const handleTextChange = (text: string) => {
+		if (valueChangeHandler) {
+			valueChangeHandler(text.toString());
 		}
 	};
 
@@ -28,7 +27,7 @@ const InputWithLabel = ({
 				<TextInput
 					style={[styles.inputBasic, s.dropShadowButton]}
 					placeholder={placeholder}
-					onPressIn={handleOnPressIn}
+					onChangeText={handleTextChange}
 					value={value}
 					keyboardType={numeric && "numeric"}
 				/>
