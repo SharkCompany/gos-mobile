@@ -1,7 +1,7 @@
 import { RideModel } from "models/Ride.model";
 import axiosClient from "./axiosClient";
 
-const url = "/drive";
+const url = "drive";
 
 export const rideApi = {
 	createRide: (ride: Partial<RideModel>) => {

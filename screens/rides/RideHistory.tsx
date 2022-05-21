@@ -15,24 +15,31 @@ import { FixMeLater } from "interfaces/migration";
 import PlaceOption from "components/PlaceOption";
 import RideOption from "components/RideOption";
 import RideHistoryOption from "components/RideHistoryOption";
+import { useState } from "react";
 
 export default function RideHistory({
 	navigation,
 }: RideHistoryScreenProps<"RideHistory">) {
+	const [selectingRideType, setSelectingRideType] = useState("dinho");
 	const options = [
 		{
 			label: "Đi nhờ xe",
-			value: "1",
+			value: "dinho",
 			testID: "switch-one",
 			accessibilityLabel: "switch-one",
 		},
 		{
 			label: "Tìm yên sau",
-			value: "2",
+			value: "yensau",
 			testID: "switch-one",
 			accessibilityLabel: "switch-one",
 		},
 	];
+
+	const handleSelectingTypeChange = (value: FixMeLater) => {
+		console.log(value);
+		setSelectingRideType(value);
+	};
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white `}>
@@ -44,7 +51,11 @@ export default function RideHistory({
 				<Text style={tw`text-2xl font-bold`}>Lịch sử chuyến đi</Text>
 
 				<TouchableOpacity
-					onPress={() => navigation.navigate("CreateRide")}
+					onPress={() =>
+						navigation.navigate("CreateRide", {
+							rideType: selectingRideType,
+						})
+					}
 				>
 					<Ionicons name="add-circle" size={26} color="#7EBC36" />
 				</TouchableOpacity>
@@ -54,9 +65,7 @@ export default function RideHistory({
 				<SwitchSelector
 					options={options}
 					initial={0}
-					onPress={(value: FixMeLater) =>
-						console.log(`Call onPress with value: ${value}`)
-					}
+					onPress={handleSelectingTypeChange}
 					buttonColor="#7EBC36"
 					selectedColor="#FCF9F9"
 					fontSize={14}
