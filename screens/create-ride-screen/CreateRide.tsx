@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { placesSelector } from "app/redux/places/placeSlice";
 import { useAppSelector } from "app/redux/store";
+import { DateToDateTimeString } from "app/utils/DateTimeParse";
 import DateTimePicker from "components/DateTimePicker";
 import InputWithLabel, {
 	TouchableInputWithLabel,
@@ -20,13 +21,21 @@ export default function CreateRide({
 }: RideHistoryScreenProps<"RideHistory">) {
 	const s = require("../../globalStyles");
 
-	const [originInput, setOriginInput] = useState("");
+	const [originInput, setOriginInput] = useState<FixMeLater>("");
 
-	const [destinationInput, setDestinationInput] = useState("");
+	const [destinationInput, setDestinationInput] = useState<FixMeLater>("");
 
-	const [currentInputing, setCurrentInputing] = useState("origin");
+	const [currentInputing, setCurrentInputing] =
+		useState<FixMeLater>("origin");
 
-	const [departureTime, setDepartureTime] = useState("");
+	const [displayingDepartureTime, setDisplayingDepartureTime] = useState("");
+
+	const [dataToServer, setDataToServer] = useState({
+		origin: "",
+		destination: "",
+		price: 1,
+		departureTime: "",
+	});
 
 	const [isShowingTimePicker, setIsShowingTimePicker] = useState(false);
 
@@ -41,23 +50,31 @@ export default function CreateRide({
 	};
 
 	const onSelectDepartureTime = (time: FixMeLater) => {
-		const dformat =
-			[time.getHours(), time.getMinutes()].join(":") +
-			" - " +
-			[time.getDate(), time.getMonth() + 1, time.getFullYear()].join("/");
-		setDepartureTime(dformat);
+		setDisplayingDepartureTime(DateToDateTimeString(time));
+		setDataToServer({ ...dataToServer, departureTime: time.toISOString() });
+		// console.log(DateToDateTimeString(time));
 	};
 
-	const handleOnPress = () => {};
+	const handleOnPress = () => {
+		console.log(dataToServer);
+	};
 
 	useEffect(() => {
 		const returnPlacesSearch: FixMeLater = route.params;
 
 		if (returnPlacesSearch?.place) {
 			if (currentInputing === "origin") {
-				setOriginInput(returnPlacesSearch?.place?.title);
+				setOriginInput(returnPlacesSearch?.place);
+				setDataToServer({
+					...dataToServer,
+					origin: returnPlacesSearch?.place?.id,
+				});
 			} else if (currentInputing === "destination") {
-				setDestinationInput(returnPlacesSearch?.place?.title);
+				setDestinationInput(returnPlacesSearch?.place);
+				setDataToServer({
+					...dataToServer,
+					destination: returnPlacesSearch?.place?.id,
+				});
 			}
 		}
 	}, [route.params]);
@@ -78,13 +95,13 @@ export default function CreateRide({
 				<TouchableInputWithLabel
 					label="Bắt đầu"
 					pressInHandler={handleInputOrigin}
-					value={originInput}
+					value={originInput?.title}
 					setValue={setOriginInput}
 				/>
 				<TouchableInputWithLabel
 					label="Kết thúc"
 					pressInHandler={handleInputDestination}
-					value={destinationInput}
+					value={destinationInput?.title}
 					setValue={setDestinationInput}
 				/>
 
@@ -93,7 +110,7 @@ export default function CreateRide({
 				<TouchableInputWithLabel
 					label="Thời gian xuất phát"
 					pressInHandler={() => setIsShowingTimePicker(true)}
-					value={departureTime}
+					value={displayingDepartureTime}
 				/>
 
 				<DateTimePicker
