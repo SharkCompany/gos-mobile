@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { placesSelector } from "app/redux/places/placeSlice";
 import { createRide } from "app/redux/ride/rideSlice";
-import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { useAppDispatch } from "app/redux/store";
 import { DateToDateTimeString } from "app/utils/DateTimeParse";
 import DateTimePicker from "components/DateTimePicker";
 import InputWithLabel, {
@@ -12,16 +11,27 @@ import { Text, View } from "components/Themed";
 import { FixMeLater } from "interfaces/migration";
 import { loaiChuyenDi, RideModel } from "models/Ride.model";
 import { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
 import { RideHistoryScreenProps } from "types";
+import RadioButtonRN from "radio-buttons-react-native";
+import CustomRadioButton from "components/CustomRadioButton";
 
 export default function CreateRide({
 	navigation,
 	route,
 }: RideHistoryScreenProps<"RideHistory">) {
-	const s = require("../../globalStyles");
+	const data = [
+		{
+			value: loaiChuyenDi.dinho,
+			label: "Đi nhờ xe",
+		},
+		{
+			value: loaiChuyenDi.yensau,
+			label: "Tìm yên sau",
+		},
+	];
 
 	const dispatch = useAppDispatch();
 
@@ -36,12 +46,12 @@ export default function CreateRide({
 
 	const [displayingDepartureTime, setDisplayingDepartureTime] = useState("");
 
-	const [dataToServer, setDataToServer] = useState<Partial<RideModel>>({
-		destination: "",
-		price: "string",
+	const [dataToServer, setDataToServer] = useState<FixMeLater>({
+		destinationId: "",
+		price: "1",
 		available: true,
 		timeStart: "",
-		depaturePlace: "",
+		departureId: "",
 		type: loaiChuyenDi.dinho,
 	});
 
@@ -68,10 +78,15 @@ export default function CreateRide({
 		setDataToServer({ ...dataToServer, price: priceInput });
 	};
 
+	const handleTypeChange = (item: { label: string; value: string }) => {
+		setDataToServer({ ...dataToServer, type: item.value });
+	};
+
 	const handleOnPress = () => {
-		// console.log(dataToServer);
+		console.log(dataToServer);
 		dispatch(createRide(dataToServer)).then((data) => {
 			console.log("response data", data);
+			// navigation.goBack();
 		});
 	};
 
@@ -83,70 +98,85 @@ export default function CreateRide({
 				setOriginInput(returnPlacesSearch?.place);
 				setDataToServer({
 					...dataToServer,
-					depaturePlace: returnPlacesSearch?.place?.id.toString(),
+					departureId: returnPlacesSearch?.place?.id,
 				});
 			} else if (currentInputing === "destination") {
 				setDestinationInput(returnPlacesSearch?.place);
 				setDataToServer({
 					...dataToServer,
-					destination: returnPlacesSearch?.place?.id.toString(),
+					destinationId: returnPlacesSearch?.place?.id,
 				});
 			}
 		}
 	}, [route.params]);
 
 	return (
-		<SafeAreaView style={tw`flex-1 bg-white px-6`}>
-			<View style={tw`justify-center my-4  `}>
-				<View style={tw`items-center`}>
-					<Text style={tw`text-2xl font-bold`}>Tạo chuyến đi</Text>
+		<SafeAreaView style={tw`flex-1 bg-white `}>
+			<ScrollView style={tw`px-6`}>
+				<View style={tw`justify-center my-4  `}>
+					<View style={tw`items-center`}>
+						<Text style={tw`text-2xl font-bold`}>
+							Tạo chuyến đi
+						</Text>
+					</View>
+
+					<TouchableOpacity
+						style={tw`absolute `}
+						onPress={() => navigation.goBack()}
+					>
+						<Ionicons name="caret-back" size={26} color="#7EBC36" />
+					</TouchableOpacity>
 				</View>
 
-				<TouchableOpacity style={tw`absolute `}>
-					<Ionicons name="caret-back" size={26} color="#7EBC36" />
-				</TouchableOpacity>
-			</View>
-
-			<View style={tw`mb-4`}>
-				<TouchableInputWithLabel
-					label="Bắt đầu"
-					pressInHandler={handleInputOrigin}
-					value={originInput?.title}
-					setValue={setOriginInput}
-				/>
-				<TouchableInputWithLabel
-					label="Kết thúc"
-					pressInHandler={handleInputDestination}
-					value={destinationInput?.title}
-					setValue={setDestinationInput}
-				/>
-
-				<InputWithLabel
-					label="Giá cước đề xuất"
-					numeric={true}
-					value={priceInput}
-					valueChangeHandler={handlePriceInputChange}
-				/>
-
-				<TouchableInputWithLabel
-					label="Thời gian xuất phát"
-					pressInHandler={() => setIsShowingTimePicker(true)}
-					value={displayingDepartureTime}
-				/>
-
-				<DateTimePicker
-					isVisible={isShowingTimePicker}
-					setIsVisible={setIsShowingTimePicker}
-					selectHandler={onSelectDepartureTime}
-				/>
-			</View>
-			<View style={tw`items-center`}>
-				<View style={tw`w-[50%]`}>
-					<MainButton eventHandler={handleOnPress}>
-						Tạo chuyến đi
-					</MainButton>
+				<View style={tw`mb-4`}>
+					<CustomRadioButton
+						data={data}
+						onChangeHandler={handleTypeChange}
+						label="Loại chuyến đi"
+					/>
 				</View>
-			</View>
+
+				<View style={tw`mb-4`}>
+					<TouchableInputWithLabel
+						label="Bắt đầu"
+						pressInHandler={handleInputOrigin}
+						value={originInput?.title}
+						setValue={setOriginInput}
+					/>
+					<TouchableInputWithLabel
+						label="Kết thúc"
+						pressInHandler={handleInputDestination}
+						value={destinationInput?.title}
+						setValue={setDestinationInput}
+					/>
+
+					<InputWithLabel
+						label="Giá cước đề xuất"
+						numeric={true}
+						value={priceInput}
+						valueChangeHandler={handlePriceInputChange}
+					/>
+
+					<TouchableInputWithLabel
+						label="Thời gian xuất phát"
+						pressInHandler={() => setIsShowingTimePicker(true)}
+						value={displayingDepartureTime}
+					/>
+
+					<DateTimePicker
+						isVisible={isShowingTimePicker}
+						setIsVisible={setIsShowingTimePicker}
+						selectHandler={onSelectDepartureTime}
+					/>
+				</View>
+				<View style={tw`items-center mb-10`}>
+					<View style={tw`w-[60%]`}>
+						<MainButton eventHandler={handleOnPress}>
+							Tạo chuyến đi
+						</MainButton>
+					</View>
+				</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 }

@@ -19,10 +19,18 @@ const RideNavigator = (props: Props) => {
 			<Stack.Screen name="RideHistory" component={RideHistory} />
 
 			<Stack.Screen name="CreateRide" component={CreateRide} />
-			<Stack.Screen
-				name="CreateRideSearchPlaces"
-				component={CreateRidesSearchPlaces}
-			/>
+
+			<Stack.Group
+				screenOptions={{
+					animation: "fade_from_bottom",
+					presentation: "modal",
+				}}
+			>
+				<Stack.Screen
+					name="CreateRideSearchPlaces"
+					component={CreateRidesSearchPlaces}
+				/>
+			</Stack.Group>
 		</Stack.Navigator>
 	);
 };
