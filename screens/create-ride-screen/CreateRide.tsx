@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { placesSelector } from "app/redux/places/placeSlice";
-import { useAppSelector } from "app/redux/store";
+import { createRide } from "app/redux/ride/rideSlice";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
 import { DateToDateTimeString } from "app/utils/DateTimeParse";
 import DateTimePicker from "components/DateTimePicker";
 import InputWithLabel, {
@@ -9,6 +10,7 @@ import InputWithLabel, {
 import MainButton from "components/MainButton";
 import { Text, View } from "components/Themed";
 import { FixMeLater } from "interfaces/migration";
+import { loaiChuyenDi, RideModel } from "models/Ride.model";
 import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,20 +23,26 @@ export default function CreateRide({
 }: RideHistoryScreenProps<"RideHistory">) {
 	const s = require("../../globalStyles");
 
+	const dispatch = useAppDispatch();
+
 	const [originInput, setOriginInput] = useState<FixMeLater>("");
 
 	const [destinationInput, setDestinationInput] = useState<FixMeLater>("");
+
+	const [priceInput, setPriceInput] = useState<string>("");
 
 	const [currentInputing, setCurrentInputing] =
 		useState<FixMeLater>("origin");
 
 	const [displayingDepartureTime, setDisplayingDepartureTime] = useState("");
 
-	const [dataToServer, setDataToServer] = useState({
-		origin: "",
+	const [dataToServer, setDataToServer] = useState<Partial<RideModel>>({
 		destination: "",
-		price: 1,
-		departureTime: "",
+		price: "string",
+		available: true,
+		timeStart: "",
+		depaturePlace: "",
+		type: loaiChuyenDi.dinho,
 	});
 
 	const [isShowingTimePicker, setIsShowingTimePicker] = useState(false);
@@ -51,12 +59,20 @@ export default function CreateRide({
 
 	const onSelectDepartureTime = (time: FixMeLater) => {
 		setDisplayingDepartureTime(DateToDateTimeString(time));
-		setDataToServer({ ...dataToServer, departureTime: time.toISOString() });
+		setDataToServer({ ...dataToServer, timeStart: time.toISOString() });
 		// console.log(DateToDateTimeString(time));
 	};
 
+	const handlePriceInputChange = (value: FixMeLater) => {
+		setPriceInput(value);
+		setDataToServer({ ...dataToServer, price: priceInput });
+	};
+
 	const handleOnPress = () => {
-		console.log(dataToServer);
+		// console.log(dataToServer);
+		dispatch(createRide(dataToServer)).then((data) => {
+			console.log("response data", data);
+		});
 	};
 
 	useEffect(() => {
@@ -67,13 +83,13 @@ export default function CreateRide({
 				setOriginInput(returnPlacesSearch?.place);
 				setDataToServer({
 					...dataToServer,
-					origin: returnPlacesSearch?.place?.id,
+					depaturePlace: returnPlacesSearch?.place?.id.toString(),
 				});
 			} else if (currentInputing === "destination") {
 				setDestinationInput(returnPlacesSearch?.place);
 				setDataToServer({
 					...dataToServer,
-					destination: returnPlacesSearch?.place?.id,
+					destination: returnPlacesSearch?.place?.id.toString(),
 				});
 			}
 		}
@@ -105,7 +121,12 @@ export default function CreateRide({
 					setValue={setDestinationInput}
 				/>
 
-				<InputWithLabel label="Giá cước đề xuất" numeric={true} />
+				<InputWithLabel
+					label="Giá cước đề xuất"
+					numeric={true}
+					value={priceInput}
+					valueChangeHandler={handlePriceInputChange}
+				/>
 
 				<TouchableInputWithLabel
 					label="Thời gian xuất phát"
