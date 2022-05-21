@@ -77,7 +77,7 @@ export default function LoginFirebase() {
   return (
     <TouchableOpacity
       style={[styles.button, styles.buttonGoogle]}
-      onPress={() => promptAsync()}
+      onPress={() => promptAsync({ useProxy: true })}
     >
       <Image source={googleLogo} width={32} style={styles.googleLogo} />
       <Text style={[styles.buttonText, styles.buttonTextGoogle]}>
