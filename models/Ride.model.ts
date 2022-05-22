@@ -4,6 +4,7 @@ export interface RideModel {
 	available: boolean;
 	timeStart: string;
 	depaturePlace: string;
+	departureId:string;
 	type: loaiChuyenDi;
 }
 export enum loaiChuyenDi {
