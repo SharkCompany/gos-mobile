@@ -4,24 +4,26 @@ import placeSlice from "./places/placeSlice";
 import rideSlice from "./ride/rideSlice";
 import userslice from "./user/userSlice";
 import settingSlice from "./setting/settingSlice";
+import messageSlice from "./messages/messageSlice";
 
 const store = configureStore({
-  reducer: {
-    user: userslice,
-    ride: rideSlice,
-    place: placeSlice,
-    setting: settingSlice,
-  },
+	reducer: {
+		user: userslice,
+		ride: rideSlice,
+		place: placeSlice,
+		setting: settingSlice,
+		message: messageSlice,
+	},
 });
 
 export type AppDispatch = typeof store.dispatch;
 export type AppRootState = ReturnType<typeof store.getState>;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppRootState,
-  unknown,
-  Action<string>
+	ReturnType,
+	AppRootState,
+	unknown,
+	Action<string>
 >;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<AppRootState> = useSelector;

@@ -19,6 +19,8 @@ import jsonData from "constants/destination.json";
 import * as React from "react";
 import { useEffect } from "react";
 import { ColorSchemeName } from "react-native";
+import InformationEntering from "screens/login/InformationEntering";
+import SocialLoginScreen from "screens/login/SocialLoginScreen";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
@@ -73,8 +75,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			{/* <Stack.Screen name="SocialLogin" component={SocialLoginScreen} /> */}
-			{/* <Stack.Screen name="EnterInfor" component={InformationEntering} /> */}
+			<Stack.Screen name="SocialLogin" component={SocialLoginScreen} />
+			<Stack.Screen name="EnterInfor" component={InformationEntering} />
 			<Stack.Screen name="Root" component={BottomTabNavigator} />
 			<Stack.Screen
 				name="NotFound"

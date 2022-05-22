@@ -1,17 +1,34 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import tw from "twrnc";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { MessageScreenProps } from "types";
 import MessageCard from "components/MessageCard";
+import { useEffect } from "react";
+import { useAppDispatch } from "app/redux/store";
+import { getConversations } from "app/redux/messages/messageSlice";
+import { FixMeLater } from "interfaces/migration";
 
 type Props = {};
 
 const AllMessages = ({ navigation }: MessageScreenProps<"AllMessage">) => {
-	const pressOnMessageCard = () => {
-		navigation.navigate("DetailMessage");
+	const dispatch = useAppDispatch();
+
+	const pressOnMessageCard = (item: FixMeLater) => {
+		navigation.navigate("DetailMessage", { conversationID: 1 });
 	};
+
+	const [listMessages, setListMessages] = useState([]);
+
+	useEffect(() => {
+		dispatch(getConversations())
+			.unwrap()
+			.then((data: FixMeLater) => {
+				console.log(data);
+				setListMessages(data);
+			});
+	}, []);
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white `}>

@@ -1,9 +1,12 @@
 import { SafeAreaViewTW, TextTW, View, ViewTW } from "components/Themed";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar } from "react-native-elements";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MainButton from "components/MainButton";
 import { Button, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import tw from "twrnc";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { FixMeLater } from "interfaces/migration";
 
 type Props = {};
 
@@ -28,33 +31,25 @@ const mess_data: { id: number; mess: string }[] = [
 		id: 1,
 		mess: "kakakkaak",
 	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 2,
-		mess: "fjjfjfjjf",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 2,
-		mess: "fjjfjfjjf",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
 ];
 
-export default function ChatConversation({}: Props) {
+export default function ChatConversation({
+	userInfor,
+	listMessages,
+	sendHandler,
+}: FixMeLater) {
+	// user infor
+	// chat list
+	// send handler
+
+	const handleSendMessage = () => {
+		if (sendHandler && textInput) {
+			sendHandler(textInput);
+		}
+	};
+
+	const [textInput, setTextInput] = useState("");
+
 	const ClientMess = ({ mess }: { mess: string }) => (
 		<ViewTW className="w-full bg-inherit mb-2 flex items-start bg-gray-100">
 			<ViewTW className="bg-[#bde952] max-w-[80%] py-3 px-4 rounded-xl ">
@@ -85,7 +80,7 @@ export default function ChatConversation({}: Props) {
 	);
 
 	return (
-		<ViewTW>
+		<SafeAreaView>
 			<ViewTW className="w-full h-full bg-red-400  flex">
 				<ViewTW className="flex flex-row items-center py-5 w-full   px-4 border-b-2 border-[#7EBC36] bg-white">
 					<ViewTW className="mr-2">
@@ -105,18 +100,21 @@ export default function ChatConversation({}: Props) {
 					</TextTW>
 				</ViewTW>
 				<ViewTW className="flex-1 bg-gray-100">
-					<ScrollView className="bg-inherit">
+					<ScrollView style={tw`bg-inherit`}>
 						<MessagesComponent />
 					</ScrollView>
 				</ViewTW>
 				<ViewTW className="px-4 py-4 flex flex-row bg-white">
 					<ViewTW className="flex-1">
 						<ViewTW className="w-full">
-							<TextInput></TextInput>
+							<TextInput
+								value={textInput}
+								onChangeText={(text) => setTextInput(text)}
+							/>
 						</ViewTW>
 					</ViewTW>
 					<ViewTW className="">
-						<TouchableOpacity>
+						<TouchableOpacity onPress={handleSendMessage}>
 							<Ionicons
 								name="send-outline"
 								size={22}
@@ -126,6 +124,6 @@ export default function ChatConversation({}: Props) {
 					</ViewTW>
 				</ViewTW>
 			</ViewTW>
-		</ViewTW>
+		</SafeAreaView>
 	);
 }
