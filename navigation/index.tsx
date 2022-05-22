@@ -11,16 +11,16 @@ import {
 	NavigationContainer,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { savePlaces } from "app/redux/places/placeSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
+import AppLoading from "components/AppLoading";
 import FeatherIcon from "components/FeathureIcon";
+import jsonData from "constants/destination.json";
 import * as React from "react";
 import { useEffect } from "react";
-import { ActivityIndicator, ColorSchemeName } from "react-native";
-import InformationEntering from "screens/login/InformationEntering";
-import SocialLoginScreen from "screens/login/SocialLoginScreen";
+import { ColorSchemeName } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import Messages from "../screens/messages/Messages";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import Personal from "../screens/personal/Personal";
@@ -31,12 +31,8 @@ import {
 } from "../types";
 import HomeNavigator from "./HomeNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
+import MessageNavigator from "./MessageNavigator";
 import RideNavigator from "./RideNavigator";
-import jsonData from "constants/destination.json";
-import { savePlaces } from "app/redux/places/placeSlice";
-import { selectLoading } from "app/redux/setting/settingSlice";
-import { TextTW, ViewTW } from "components/Themed";
-import AppLoading from "components/AppLoading";
 
 export default function Navigation({
 	colorScheme,
@@ -135,7 +131,7 @@ function BottomTabNavigator() {
 			/>
 			<BottomTab.Screen
 				name="Messages"
-				component={Messages}
+				component={MessageNavigator}
 				options={{
 					title: "Messages",
 					tabBarLabel: "Tin nhắn",
