@@ -52,7 +52,10 @@ export default function RideHistory({
 
   const userInfor = useAppSelector(selectUser);
 
-  const my_drives = rides.filter((ride) => ride.creatorId === userInfor?.id);
+  const my_drives = rides.filter(
+    (ride) =>
+      ride.creatorId === userInfor?.id || ride.matcherId === userInfor?.id
+  );
 
   console.log(my_drives.length);
   console.log(rides.length);

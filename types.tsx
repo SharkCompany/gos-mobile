@@ -52,6 +52,7 @@ export type HomeScreenParamList = {
   MainSearchScreen: undefined;
   RideDetail: { rideInfo: RideModel };
   ConversationScreen: undefined;
+  CreateRide: FixMeLater | undefined;
 };
 
 export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =

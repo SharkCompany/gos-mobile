@@ -33,11 +33,11 @@ const RideHistoryOption = ({ selectHandler, rideInfo }: RideProps) => {
   console.log("RideHistoryOption",rideInfo);
 
   const getStatus = () => {
-    
-    if (!available && driveHistory[0].cancelReason !== null) return "Đã hủy";
-    if (driveHistory[0]?.status === DriveStatus.waiting) return "Đang chờ";
-    if (driveHistory[0]?.status === DriveStatus.matched) return "Đã kết nối";
-    return driveHistory[0]?.status;
+    const index = driveHistory.length-1;
+    if (!available && driveHistory[index].cancelReason !== null) return "Đã hủy";
+    if (driveHistory[index]?.status === DriveStatus.waiting) return "Đang chờ";
+    if (driveHistory[index]?.status === DriveStatus.matched) return "Đã kết nối";
+    return driveHistory[index]?.status;
   };
 
   

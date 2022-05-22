@@ -61,7 +61,11 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
           hasPadding
         />
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={
+          ()=>{
+            navigation.navigate("CreateRide")
+          }
+        }>
           <Ionicons name="add-circle" size={26} color="#7EBC36" />
         </TouchableOpacity>
       </View>
@@ -81,7 +85,7 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
   );
 };
 
-const TimYenSau = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
+const TimYenSau = ({ navigation }: HomeScreenProps<"MapScreen">) => {
   const selectRide = (a: any) => {};
   const dispatch = useAppDispatch();
   const rides = useAppSelector(selectRides);
