@@ -64,8 +64,14 @@ const InformationEntering = (props: Props) => {
       picture: image,
     };
 
+    if (phonenumber === "") {
+      ToastAndroid.show("Bạn cần nhập số điện thoại", ToastAndroid.BOTTOM);
+      return;
+    }
+
     try {
       dispatch(setAppLoading(true));
+      console.log(updateData);
       const data = await userApi.updateUser(updateData);
       console.log("cập nhật thành công", data);
       ToastAndroid.show("Cập nhật thành công", ToastAndroid.TOP);

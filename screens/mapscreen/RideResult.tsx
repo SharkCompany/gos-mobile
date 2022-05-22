@@ -9,6 +9,7 @@ import { setDeparture, setDestination } from "app/redux/ride/rideSlice";
 import { MapSearchScreenProps } from "types";
 import { BackHandler } from "react-native";
 import { FixMeLater } from "interfaces/migration";
+import { RideModel } from "models/Ride.model";
 type Props = {};
 
 const RideResult = (
@@ -79,7 +80,7 @@ const RideResult = (
 					{ id: 4323 },
 				]}
 				renderItem={({ item }) => (
-					<RideOption selectHandler={selectRide} />
+					<RideOption rideInfo={item as unknown as RideModel} selectHandler={selectRide} />
 				)}
 			/>
 		</View>

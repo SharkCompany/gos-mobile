@@ -1,13 +1,24 @@
 export interface RideModel {
-	destination: string;
-	price: string;
-	available: boolean;
-	timeStart: string;
-	depaturePlace: string;
-	departureId:string;
-	type: loaiChuyenDi;
+  price: string;
+  available: boolean;
+  timeStart: string;
+  destinationId: number;
+  departureId: number;
+  type: loaiChuyenDi;
 }
 export enum loaiChuyenDi {
-	dinho = "dinho",
-	yensau = "yensau",
+  dinho = "dinho",
+  yensau = "yensau",
+}
+
+export enum DriveStatus {
+  waiting = "waiting",
+  matched = "matched",
+}
+
+export interface GetRideQuerySchema {
+  available: boolean;
+  type: loaiChuyenDi;
+  timeStart: string;
+  destination: string;
 }

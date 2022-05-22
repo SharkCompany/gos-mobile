@@ -1,15 +1,24 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { savePlaces } from "app/redux/places/placeSlice";
+import { getRides, selectRides } from "app/redux/ride/rideSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import Map from "components/Map";
+import RideOption from "components/RideOption";
 import { TextTW, View, ViewTW } from "components/Themed";
 import jsonData from "constants/destination.json";
 import { FixMeLater } from "interfaces/migration";
+import { loaiChuyenDi, RideModel } from "models/Ride.model";
 import MapScreenSearchNavigator from "navigation/MapScreenSearchNavigator";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
+import { useDispatch } from "react-redux";
 import tw from "twrnc";
 import { HomeScreenProps } from "types";
 
@@ -19,13 +28,13 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
   const options = [
     {
       label: "Đi nhờ xe",
-      value: "1",
+      value: loaiChuyenDi.dinho,
       testID: "switch-one",
       accessibilityLabel: "switch-one",
     },
     {
       label: "Tìm yên sau",
-      value: "2",
+      value: loaiChuyenDi.yensau,
       testID: "switch-one",
       accessibilityLabel: "switch-one",
     },
@@ -51,9 +60,7 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
           options={options}
           initial={tab === "dinho" ? 0 : 1}
           onPress={(value: FixMeLater) => {
-            console.log(value)
-            if (value === "1") setTab("dinho");
-            else setTab("yensau");
+            setTab(value);
           }}
           style={{ width: "55%" }}
           buttonColor="#7EBC36"
@@ -68,7 +75,9 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
         </TouchableOpacity>
       </View>
       {tab === "yensau" ? (
-        <TimYenSau />
+        <ViewTW className="h-full">
+          <TimYenSau />
+        </ViewTW>
       ) : (
         <>
           <View style={tw`h-2/5`}>
@@ -82,9 +91,31 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
 };
 
 const TimYenSau = () => {
+  const selectRide = (a: any) => {
+    console.log(a);
+  };
+  const dispatch = useAppDispatch();
+  const rides = useAppSelector(selectRides);
+  console.log("rides nè", rides);
+  useEffect(() => {
+    dispatch(getRides({ available: true, type: loaiChuyenDi.dinho }));
+  }, []);
+
   return (
-    <ViewTW>
-      <TextTW>hello</TextTW>
+    <ViewTW className="pb-16">
+      <FlatList
+        style={tw`px-4`}
+        data={rides}
+        renderItem={({ item }) => (
+          <RideOption rideInfo={item as RideModel} selectHandler={selectRide} />
+        )}
+      />
+      {/* <ScrollView>
+        {rides.map((ride) => (
+          <RideOption rideInfo={ride} selectHandler={selectRide} />
+        ))}
+      </ScrollView> */}
+      <ViewTW className="h-56"></ViewTW>
     </ViewTW>
   );
 };

@@ -49,6 +49,7 @@ export default function Navigation({
     dispatch(savePlaces(data));
   };
 
+
   useEffect(() => {
     if (places.length === 0) {
       loadPlaces();
