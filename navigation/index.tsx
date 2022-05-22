@@ -57,15 +57,15 @@ export default function Navigation({
 		}
 	}, []);
 
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
-      <AppLoading />
-      <RootNavigator />
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer
+			linking={LinkingConfiguration}
+			theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+		>
+			<AppLoading />
+			<RootNavigator />
+		</NavigationContainer>
+	);
 }
 
 /**
@@ -77,7 +77,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
 	return (
 		<Stack.Navigator screenOptions={{ headerShown: false }}>
-			<Stack.Screen name="SocialLogin" component={SocialLoginScreen} />
+			{/* <Stack.Screen name="SocialLogin" component={SocialLoginScreen} /> */}
 			{/* <Stack.Screen name="EnterInfor" component={InformationEntering} /> */}
 			<Stack.Screen name="Root" component={BottomTabNavigator} />
 			<Stack.Screen

@@ -1,18 +1,20 @@
-import EditScreenInfo from "components/EditScreenInfo";
-import { Text, View } from "components/Themed";
-import {
-	Button,
-	FlatList,
-	ScrollView,
-	StyleSheet,
-	TouchableOpacity,
-} from "react-native";
-import { HomeScreenProps, RootTabScreenProps } from "types";
-import tw from "twrnc";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import NotificationTag from "components/NotificationTag";
+import { Text, View } from "components/Themed";
+import { Dimensions, Image, ScrollView, TouchableOpacity } from "react-native";
+import tw from "twrnc";
+import { HomeScreenProps } from "types";
+import { diNhoXe, timYenSau } from "assets/images";
+import { useRef } from "react";
+import Carousel from "react-native-snap-carousel";
+import { FixMeLater } from "interfaces/migration";
+import HomeCarousel from "components/Carousel/HomeCarousel";
 
 export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
+	const SLIDER_WIDTH = Dimensions.get("window").width;
+	const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
+	const ITEM_HEIGHT = Math.round((ITEM_WIDTH * 3) / 4);
+
 	const handlePressDiNhoXe = () => {
 		navigation.navigate("MapScreen");
 	};
@@ -21,16 +23,19 @@ export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
 		navigation.navigate("MapScreen");
 	};
 
+	const carouselRef = useRef<FixMeLater>();
+
 	return (
-		<View style={tw`flex-1 items-center`}>
+		<View style={tw`flex-1 items-center `}>
 			<View
 				style={tw`h-[50%] bg-[#7EBC36] w-full pt-10 px-6 rounded-b-3xl`}
 			>
 				<Text style={tw`text-2xl font-bold`}>Welcome Nguyen Kiet</Text>
-				<View style={tw`bg-inherit items-center justify-center h-full`}>
-					<Text>Banner gi do </Text>
+				<View style={tw`bg-inherit items-center justify-center `}>
+					<HomeCarousel />
 				</View>
 			</View>
+			<View></View>
 			<View style={tw`w-full px-6 flex-row justify-between px-10`}>
 				<TouchableOpacity
 					onPress={handlePressDiNhoXe}
@@ -56,26 +61,14 @@ export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
 					</Text>
 				</TouchableOpacity>
 			</View>
-			<View style={tw`mt-8 items-start w-full `}>
-				<Text style={tw`text-2xl font-bold px-6`}>Thông báo</Text>
-				{/* <NotificationTag content="Bạn và Kiệt đã kết nối với nhau" /> */}
-
-				<FlatList
-					style={tw`w-full pt-2 `}
-					data={[
-						{ id: 1 },
-						{ id: 2 },
-						{ id: 3 },
-						{ id: 22 },
-						{ id: 2232 },
-					]}
-					renderItem={({ item }) => (
-						<NotificationTag content="Bạn và Kiệt đã kết nối với nhau" />
-					)}
-					keyExtractor={(item: any) => item.id}
-					scrollToOverflowEnabled
-					scrollEnabled
-				/>
+			<View style={tw`mt-8 items-start w-full flex-1`}>
+				<Text style={tw`text-2xl font-bold px-6 py-2`}>Thông báo</Text>
+				<ScrollView style={tw`w-full mb-2`}>
+					<NotificationTag content="Bạn và Kiệt đã kết nối với nhau" />
+					<NotificationTag content="Bạn và Kiệt đã kết nối với nhau" />
+					<NotificationTag content="Bạn và Kiệt đã kết nối với nhau" />
+					<NotificationTag content="Bạn và Kiệt đã kết nối với nhau" />
+				</ScrollView>
 			</View>
 		</View>
 	);
