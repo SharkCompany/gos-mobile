@@ -22,10 +22,9 @@ export const createRide = createAsyncThunk(
   async (data: Partial<RideModel>, thunkAPI) => {
     try {
       const response = await rideApi.createRide(data);
-      console.log(response);
+
       return response;
     } catch (error) {
-      console.log("error ne", error);
       throw error;
     }
   }
@@ -35,13 +34,12 @@ export const getRides = createAsyncThunk(
   async (query: Partial<GetRideQuerySchema>, thunkAPI) => {
     const { dispatch } = thunkAPI;
     try {
+      dispatch(setRides([]));
       const response = await rideApi.getRides(query);
       dispatch(setRides(response));
-      console.log("get rides", response);
+
       return response;
-    } catch (error) {
-      console.log("error ne", error);
-    }
+    } catch (error) {}
   }
 );
 export const getMyRides = createAsyncThunk(
@@ -51,11 +49,9 @@ export const getMyRides = createAsyncThunk(
     try {
       const response = await rideApi.getRides(query);
       dispatch(setRides(response));
-      console.log("get rides", response);
+
       return response;
-    } catch (error) {
-      console.log("error ne", error);
-    }
+    } catch (error) {}
   }
 );
 

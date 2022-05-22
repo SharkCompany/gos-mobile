@@ -19,7 +19,7 @@ export default function Personal({
 }: RootTabScreenProps<"Personal">) {
   const userInfo = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
-  console.log("user ne", userInfo);
+  
   const navigator = useNavigation();
   const s = require("../../globalStyles");
   const widthRelative = "80%";
@@ -47,7 +47,7 @@ export default function Personal({
 
   async function getMeHandler() {
     const user: UserModel = await userApi.getMe();
-    console.log("get me:", user);
+    
     dispatch(setUser(user));
   }
 
@@ -67,11 +67,11 @@ export default function Personal({
       dispatch(setAppLoading(true));
       const data = await userApi.updateUser(updateData);
       ToastAndroid.show("Cập nhật thành công", ToastAndroid.BOTTOM);
-      console.log("cập nhật thành công", data);
+      
       navigator.navigate("Root");
     } catch (error) {
       ToastAndroid.show("Cập nhật thất bại!", ToastAndroid.BOTTOM);
-      console.log("lỗi cập nhật", error);
+      
     } finally {
       dispatch(setAppLoading(false));
     }

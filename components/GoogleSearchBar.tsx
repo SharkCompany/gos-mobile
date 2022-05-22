@@ -18,8 +18,8 @@ const GoogleSearchBar = ({
 		data: FixMeLater,
 		details: FixMeLater
 	): FixMeLater => {
-		// console.log(data.description);
-		console.log(details.geometry);
+		// 
+		
 	};
 
 	return (
@@ -48,8 +48,8 @@ const GoogleSearchBar = ({
 			renderLeftButton={() => leftIcon}
 			// onPress={handlePressSearch as FixMeLater}
 			onPress={(data, details = null) => {
-				console.log(details?.geometry.location);
-				console.log(data.description);
+				
+				
 			}}
 			query={{
 				// key: GOOGLE_MAPS_APIKEY,
@@ -61,10 +61,10 @@ const GoogleSearchBar = ({
 			debounce={1000}
 			nearbyPlacesAPI="GooglePlacesSearch"
 			onFail={(error) => {
-				console.log(error);
+				
 			}}
 			onNotFound={() => {
-				console.log("not found");
+				
 			}}
 			minLength={2}
 		/>

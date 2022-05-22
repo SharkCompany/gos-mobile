@@ -14,7 +14,7 @@ export default function SocialLoginScreen() {
   const s = require("../../globalStyles");
 
   const handleFacebookLogin = () => {
-    console.log("login facebook");
+    
     navigator.navigate("EnterInfor");
   };
 

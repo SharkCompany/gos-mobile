@@ -30,7 +30,7 @@ export default function LoginGoogle({ }: Props) {
         });
 
         userInfoResponse.json().then(data => {
-            console.log(data);
+            
         });
 
         React.useEffect(() => {
@@ -42,7 +42,7 @@ export default function LoginGoogle({ }: Props) {
         }, [response]);
         const handleGoogleLogin = () => {
             promptAsync();
-            console.log("re--------");
+            
 
 
 

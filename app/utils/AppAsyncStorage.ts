@@ -10,7 +10,7 @@ export const getLocalData = async (key: string) => {
     }
     return null;
   } catch (e) {
-    console.log("get data error", e);
+    
   }
 };
 
@@ -19,7 +19,7 @@ export const storeLocalData = async (key: string, value: any) => {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
   } catch (e) {
-    console.log("save data error", e);
+    
   }
 };
 export const storeUserToLocal = async (user: AuthUserModel) => {
@@ -27,7 +27,7 @@ export const storeUserToLocal = async (user: AuthUserModel) => {
     const jsonValue = JSON.stringify(user);
     await AsyncStorage.setItem(LOCALSTORAGE_USER_KEY, jsonValue);
   } catch (e) {
-    console.log("storeUserToLocal Error", e);
+    
   }
 };
 
@@ -38,7 +38,7 @@ export async function getUserFromLocal(): Promise<AuthUserModel | null> {
       return JSON.parse(value);
     } else return null;
   } catch (e) {
-    console.log("getUserFromLocal Error", e);
+    
     return null;
   }
 }

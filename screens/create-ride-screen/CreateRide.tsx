@@ -69,7 +69,7 @@ export default function CreateRide({
   const onSelectDepartureTime = (time: FixMeLater) => {
     setDisplayingDepartureTime(DateToDateTimeString(time));
     setDataToServer({ ...dataToServer, timeStart: time.toISOString() });
-    // console.log(DateToDateTimeString(time));
+    // 
   };
 
   const handlePriceInputChange = (value: FixMeLater) => {
@@ -82,10 +82,10 @@ export default function CreateRide({
   };
 
   const handleOnPress = () => {
-    console.log(dataToServer);
+    
     dispatch(createRide(dataToServer)).then((data) => {
       if (data.payload) {
-        console.log("response data", data);
+        
         ToastAndroid.show("Tạo chuyến đi thành công", ToastAndroid.BOTTOM);
 		navigation.goBack();
       } else {

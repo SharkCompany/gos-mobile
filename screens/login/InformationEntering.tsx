@@ -28,7 +28,7 @@ type Props = {};
 
 const InformationEntering = (props: Props) => {
   const userInfo = useAppSelector(selectUser);
-  console.log("user ne", userInfo);
+  
   const navigator = useNavigation();
   const s = require("../../globalStyles");
   const widthRelative = "80%";
@@ -71,14 +71,14 @@ const InformationEntering = (props: Props) => {
 
     try {
       dispatch(setAppLoading(true));
-      console.log(updateData);
+      
       const data = await userApi.updateUser(updateData);
-      console.log("cập nhật thành công", data);
+      
       ToastAndroid.show("Cập nhật thành công", ToastAndroid.TOP);
       navigator.navigate("Root");
     } catch (error) {
       ToastAndroid.show("Cập nhật thất bại", ToastAndroid.TOP);
-      console.log("lỗi rồi", error);
+      
     } finally {
       dispatch(setAppLoading(false));
     }

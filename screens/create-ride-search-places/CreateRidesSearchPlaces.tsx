@@ -16,7 +16,7 @@ const CreateRidesSearchPlaces = ({
 	const listPlaces = useAppSelector((state) => state.place.listPlaces);
 
 	const selectPlace = (item: FixMeLater) => {
-		// console.log(item);
+		// 
 		navigation.navigate("CreateRide", { place: item });
 	};
 	return (

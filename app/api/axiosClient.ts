@@ -23,7 +23,7 @@ axiosClient.interceptors.request.use(
 			token = user.tokens.accessToken;
 		}
 		config.headers.Authorization = `Bearer ${token}`;
-		// console.log("axios config", config?.headers?.Authorization);
+		// 
 		return config;
 	},
 	function (error: any) {

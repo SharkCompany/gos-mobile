@@ -68,12 +68,12 @@ const YenSau = ({ selectHandler, rideInfo }: Props) => {
           <View style={tw`flex-row items-center mb-1 `}>
             <Image source={placeIcon} style={tw`h-5 w-5 mr-3`} />
             <Text style={tw`font-bold`}>Từ: </Text>
-            <Text>{rideInfo.destination?.title}</Text>
+            <Text>{rideInfo.departure?.title}</Text>
           </View>
           <View style={tw`flex-row items-center mb-1 `}>
             <Image source={placeIcon} style={tw`h-5 w-5 mr-3`} />
             <Text style={tw`font-bold`}>Đến: </Text>
-            <Text>{rideInfo.departure?.title}</Text>
+            <Text>{rideInfo.destination?.title}</Text>
           </View>
 
           <View style={tw`flex-row items-center mb-1`}>

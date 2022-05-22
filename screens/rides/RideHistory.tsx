@@ -18,7 +18,7 @@ import RideHistoryOption from "components/RideHistoryOption";
 import { useEffect, useState } from "react";
 import { loaiChuyenDi } from "models/Ride.model";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
-import { getRides, selectRides } from "app/redux/ride/rideSlice";
+import { getRides, selectRides, setRides } from "app/redux/ride/rideSlice";
 import { selectUser } from "app/redux/user/userSlice";
 
 export default function RideHistory({

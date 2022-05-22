@@ -57,15 +57,14 @@ export default function LoginFirebase() {
       const auth = getAuth() as any;
       const credential = GoogleAuthProvider.credential(id_token);
       await signInWithCredential(auth, credential);
-      console.log("hi", auth);
 
       let token = await auth.currentUser?.getIdToken(true);
-      console.log("day la token", token);
+
       try {
         const data = await authApi.login(token);
         if (data) {
           let user: AuthUserModel = data;
-          console.log("đăng nhập thành công", data);
+          console.log("Đăng nhập thành công, thông tin user:", data);
           storeUserToLocal(user);
           dispatch(setUser(user.info));
           if (user.info.phone) {
@@ -74,7 +73,6 @@ export default function LoginFirebase() {
           } else navigator.navigate("EnterInfor");
         }
       } catch (error) {
-        console.log("lỗi đăng nhập", error);
         ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.BOTTOM);
         navigator.navigate("SocialLogin");
       } finally {

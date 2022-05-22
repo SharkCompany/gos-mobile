@@ -10,13 +10,13 @@ export const rideApi = {
     return axiosClient.post(url + sub_url, ride);
   },
   getRides: (query: Partial<GetRideQuerySchema>): Promise<RideModel[]> => {
+    console.log("GetRidesAPI, query:", query);
     return axiosClient.get("/drive", { params: query });
   },
   getRideById: (id: number) => {
     return axiosClient.get("/drive/" + id);
   },
-  connect: (data: any) => {
-    const sub_url = "";
-    return axiosClient.post(url, data);
+  connect: (id: number) => {
+    return axiosClient.patch("/drive/match", { id });
   },
 };

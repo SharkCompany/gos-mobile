@@ -8,10 +8,7 @@ import { FixMeLater } from "interfaces/migration";
 import { loaiChuyenDi, RideModel } from "models/Ride.model";
 import MapScreenSearchNavigator from "navigation/MapScreenSearchNavigator";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList, StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
 import tw from "twrnc";
@@ -38,7 +35,6 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
   const [tab, setTab] = useState<"dinho" | "yensau">(route.params.type);
 
   useEffect(() => {
-    console.log("mapscreen", route.params.type);
     if (route.params.type) {
       setTab(route.params.type);
     }
@@ -71,7 +67,7 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
       </View>
       {tab === "yensau" ? (
         <ViewTW className="h-full">
-          <TimYenSau />
+          <TimYenSau navigation={navigation} />
         </ViewTW>
       ) : (
         <>
@@ -85,13 +81,11 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
   );
 };
 
-const TimYenSau = () => {
-  const selectRide = (a: any) => {
-    console.log(a);
-  };
+const TimYenSau = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
+  const selectRide = (a: any) => {};
   const dispatch = useAppDispatch();
   const rides = useAppSelector(selectRides);
-  console.log("rides nè", rides);
+
   useEffect(() => {
     dispatch(getRides({ available: true, type: loaiChuyenDi.dinho }));
   }, []);
@@ -102,7 +96,12 @@ const TimYenSau = () => {
         style={tw`px-4`}
         data={rides}
         renderItem={({ item }) => (
-          <RideOption rideInfo={item as RideModel} selectHandler={selectRide} />
+          <RideOption
+            rideInfo={item as RideModel}
+            selectHandler={() => {
+              navigation.navigate("RideDetail", { rideInfo: item });
+            }}
+          />
         )}
       />
       {/* <ScrollView>

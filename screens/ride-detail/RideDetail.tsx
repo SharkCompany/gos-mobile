@@ -1,4 +1,6 @@
 import { rideApi } from "app/api/ride.api";
+import { setAppLoading } from "app/redux/setting/settingSlice";
+import { useAppDispatch } from "app/redux/store";
 import { DateToDateTimeString } from "app/utils/DateTimeParse";
 import { formatCurrency } from "app/utils/helper";
 import MainButton from "components/MainButton";
@@ -19,9 +21,24 @@ import { HomeScreenProps } from "types";
 type Props = {};
 
 function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
-  function handleConnect() {
-    console.log("hi");
-    navigation.navigate("ConversationScreen");
+  const dispatch = useAppDispatch();
+
+  async function handleConnect() {
+    dispatch(setAppLoading(true));
+    try {
+      if (rideInfo?.id) {
+        const res = await rideApi.connect(rideInfo?.id);
+        
+        ToastAndroid.show("Kết nối thành công", ToastAndroid.BOTTOM);
+      }
+    } catch (error) {
+      
+      ToastAndroid.show("Kết nối thất bại", ToastAndroid.BOTTOM);
+    } finally {
+      dispatch(setAppLoading(false));
+    }
+
+    // navigation.navigate("ConversationScreen");
   }
 
   const [rideInfo, setRideInfo] = useState<RideModel | undefined>();
@@ -29,13 +46,14 @@ function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
   async function getRideInfo(id: number) {
     try {
       const ride = await rideApi.getRideById(id);
-      console.log("thong bao ride", ride);
+      
+      
       if (ride) {
         setRideInfo(ride as unknown as RideModel);
       }
     } catch (error) {
       ToastAndroid.show("Lấy chuyến đi thất bại", ToastAndroid.BOTTOM);
-      console.log(error);
+      
       setRideInfo(undefined);
     }
   }
