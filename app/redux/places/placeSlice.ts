@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FixMeLater } from "interfaces/migration";
+import { PlaceModel } from "models/Place.model";
 import { UserModel } from "models/User.model";
 import { AppRootState } from "../store";
 
-const initialState: FixMeLater = {
+export interface PlaceState  {
+	listPlaces : PlaceModel[]
+}
+
+const initialState: PlaceState = {
 	listPlaces: [],
 };
 
@@ -14,6 +19,10 @@ const placeSlice = createSlice({
 		savePlaces(state, action: PayloadAction<FixMeLater>) {
 			state.listPlaces = action.payload;
 		},
+		setPlaces(state,action:PayloadAction<PlaceModel[]>) {
+			state.listPlaces = action.payload;
+		}	
+		
 	},
 });
 

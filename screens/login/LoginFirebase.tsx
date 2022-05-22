@@ -1,4 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  NavigationHelpersContext,
+  useNavigation,
+} from "@react-navigation/native";
 import { authApi } from "app/api/auth.api";
 import { setAppLoading } from "app/redux/setting/settingSlice";
 import { useAppDispatch } from "app/redux/store";
@@ -16,7 +19,12 @@ import {
 } from "firebase/auth";
 import { AuthUserModel } from "models/User.model";
 import * as React from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  ToastAndroid,
+  TouchableOpacity,
+} from "react-native";
 import { googleLogo } from "../../assets/images";
 
 // Initialize Firebase
@@ -61,11 +69,14 @@ export default function LoginFirebase() {
           storeUserToLocal(user);
           dispatch(setUser(user.info));
           if (user.info.phone) {
+            ToastAndroid.show("Đăng nhập thành công", ToastAndroid.BOTTOM);
             navigator.navigate("Root");
           } else navigator.navigate("EnterInfor");
         }
       } catch (error) {
         console.log("lỗi đăng nhập", error);
+        ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.BOTTOM);
+        navigator.navigate("SocialLogin");
       } finally {
         dispatch(setAppLoading(false));
       }
