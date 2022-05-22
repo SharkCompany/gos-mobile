@@ -1,24 +1,19 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { savePlaces } from "app/redux/places/placeSlice";
 import { getRides, selectRides } from "app/redux/ride/rideSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import Map from "components/Map";
 import RideOption from "components/RideOption";
-import { TextTW, View, ViewTW } from "components/Themed";
-import jsonData from "constants/destination.json";
+import { View, ViewTW } from "components/Themed";
 import { FixMeLater } from "interfaces/migration";
 import { loaiChuyenDi, RideModel } from "models/Ride.model";
 import MapScreenSearchNavigator from "navigation/MapScreenSearchNavigator";
 import React, { useEffect, useState } from "react";
 import {
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
+  FlatList, StyleSheet,
+  TouchableOpacity
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchSelector from "react-native-switch-selector";
-import { useDispatch } from "react-redux";
 import tw from "twrnc";
 import { HomeScreenProps } from "types";
 

@@ -15,8 +15,11 @@ import { FixMeLater } from "interfaces/migration";
 import PlaceOption from "components/PlaceOption";
 import RideOption from "components/RideOption";
 import RideHistoryOption from "components/RideHistoryOption";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loaiChuyenDi } from "models/Ride.model";
+import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { getRides, selectRides } from "app/redux/ride/rideSlice";
+import { selectUser } from "app/redux/user/userSlice";
 
 export default function RideHistory({
   navigation,
@@ -24,6 +27,7 @@ export default function RideHistory({
   const [selectingRideType, setSelectingRideType] = useState<loaiChuyenDi>(
     loaiChuyenDi.dinho
   );
+  const dispatch = useAppDispatch();
   const options = [
     {
       label: "Đi nhờ xe",
@@ -43,6 +47,19 @@ export default function RideHistory({
     console.log(value);
     setSelectingRideType(value);
   };
+
+  const rides = useAppSelector(selectRides);
+
+  const userInfor = useAppSelector(selectUser);
+
+  const my_drives = rides.filter((ride) => ride.creatorId === userInfor?.id);
+
+  console.log(my_drives.length);
+  console.log(rides.length);
+
+  useEffect(() => {
+    dispatch(getRides({ type: selectingRideType }));
+  }, [selectingRideType]);
 
   return (
     <SafeAreaView style={tw`flex-1 bg-white `}>
@@ -79,12 +96,9 @@ export default function RideHistory({
 
       {}
       <ScrollView style={tw`px-6`}>
-        <RideHistoryOption />
-        <RideHistoryOption />
-        <RideHistoryOption />
-        <RideHistoryOption />
-        <RideHistoryOption />
-        <RideHistoryOption />
+        {my_drives.map((ride) => (
+          <RideHistoryOption rideInfo={ride} />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

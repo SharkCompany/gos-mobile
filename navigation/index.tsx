@@ -13,6 +13,8 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { savePlaces } from "app/redux/places/placeSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { setUser } from "app/redux/user/userSlice";
+import { getUserFromLocal } from "app/utils/AppAsyncStorage";
 import AppLoading from "components/AppLoading";
 import FeatherIcon from "components/FeathureIcon";
 import jsonData from "constants/destination.json";
@@ -49,11 +51,18 @@ export default function Navigation({
     dispatch(savePlaces(data));
   };
 
+  const loadUser = async () => {
+    const adminUser = await getUserFromLocal();
+    if (adminUser) {
+      dispatch(setUser(adminUser?.info));
+    }
+  };
 
   useEffect(() => {
     if (places.length === 0) {
       loadPlaces();
     }
+    loadUser();
   }, []);
 
   return (

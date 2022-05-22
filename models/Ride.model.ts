@@ -1,11 +1,29 @@
+import { PlaceModel } from "./Place.model";
+import { UserModel } from "./User.model";
+
 export interface RideModel {
   price: string;
   available: boolean;
   timeStart: string;
   destinationId: number;
   departureId: number;
+  creatorId: number;
+  matcherId: null;
   type: loaiChuyenDi;
+  destination: PlaceModel;
+  creator: UserModel;
+  matcher: UserModel;
+  departure: PlaceModel;
+  driveHistory: DriveHistory[];
 }
+
+export interface DriveHistory {
+  id: number;
+  driveId: number;
+  status: DriveStatus;
+  cancelReason: string;
+}
+
 export enum loaiChuyenDi {
   dinho = "dinho",
   yensau = "yensau",

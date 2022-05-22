@@ -44,6 +44,20 @@ export const getRides = createAsyncThunk(
     }
   }
 );
+export const getMyRides = createAsyncThunk(
+  "ride/get-rides",
+  async (query: Partial<GetRideQuerySchema>, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    try {
+      const response = await rideApi.getRides(query);
+      dispatch(setRides(response));
+      console.log("get rides", response);
+      return response;
+    } catch (error) {
+      console.log("error ne", error);
+    }
+  }
+);
 
 const rideSlice = createSlice({
   name: "ride",
