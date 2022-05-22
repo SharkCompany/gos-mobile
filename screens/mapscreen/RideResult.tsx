@@ -43,7 +43,7 @@ const RideResult = (
   const dispatch = useAppDispatch();
 
   const onNavigateToMainSearchScreen = () => {
-    navigation.navigate("RideDetail");
+    // navigation.navigate("RideDetail",{ rideInfo: item });
   };
 
   const cancelSelectingRides = () => {
@@ -52,8 +52,9 @@ const RideResult = (
     navigation.goBack();
   };
 
-  const selectRide = (item: FixMeLater) => {
-    onNavigateToMainSearchScreen();
+  const selectRide = (item: RideModel) => {
+    // onNavigateToMainSearchScreen();
+    navigation.navigate("RideDetail", { rideInfo: item });
   };
 
   const rides = useAppSelector(selectRides);
@@ -85,7 +86,9 @@ const RideResult = (
         renderItem={({ item }) => (
           <RideOption
             rideInfo={item as unknown as RideModel}
-            selectHandler={selectRide}
+            selectHandler={() => {
+              selectRide(item);
+            }}
           />
         )}
       />

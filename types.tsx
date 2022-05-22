@@ -10,6 +10,7 @@ import {
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FixMeLater } from "interfaces/migration";
+import { RideModel } from "models/Ride.model";
 
 declare global {
   namespace ReactNavigation {
@@ -49,7 +50,7 @@ export type HomeScreenParamList = {
     type: "dinho" | "yensau";
   };
   MainSearchScreen: undefined;
-  RideDetail: undefined;
+  RideDetail: { rideInfo: RideModel };
   ConversationScreen: undefined;
 };
 
@@ -63,7 +64,7 @@ export type MapSearchScreenParamList = {
   PlaceResult: undefined;
   MainSearchScreen: undefined;
   RideResult: undefined;
-  RideDetail: undefined;
+  RideDetail: { rideInfo: RideModel };
 };
 
 export type MapSearchScreenProps<

@@ -12,9 +12,8 @@ export const rideApi = {
   getRides: (query: Partial<GetRideQuerySchema>): Promise<RideModel[]> => {
     return axiosClient.get("/drive", { params: query });
   },
-  getRideById: (id: string) => {
-    const sub_url = "/ride";
-    return axiosClient.get(url + sub_url + "/id");
+  getRideById: (id: number) => {
+    return axiosClient.get("/drive/" + id);
   },
   connect: (data: any) => {
     const sub_url = "";

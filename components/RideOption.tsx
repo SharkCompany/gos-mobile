@@ -21,17 +21,11 @@ const RideOption = (props: Props) => {
 };
 
 const DiNho = ({ selectHandler, rideInfo }: Props) => {
-  const onSelectItem = () => {
-    if (selectHandler) {
-      selectHandler();
-    }
-  };
-
   return (
     <View style={tw`px-4 pt-1`}>
       <TouchableOpacity
         style={tw` items-center justify-between mb-2 px-3 shadow-md rounded-md flex-row py-2 bg-white`}
-        onPress={onSelectItem}
+        onPress={selectHandler}
       >
         <View>
           <View style={tw`flex-row items-center mb-1 `}>
@@ -64,41 +58,22 @@ const DiNho = ({ selectHandler, rideInfo }: Props) => {
   );
 };
 const YenSau = ({ selectHandler, rideInfo }: Props) => {
-  const places = useAppSelector(placesSelector);
-
-  function getPlace(id: number): PlaceModel | null {
-    const index = places.findIndex((place) => place.id === id);
-    if (index >= 0) {
-      return places[index];
-    }
-    return null;
-  }
-
-  const start = getPlace(rideInfo.departureId);
-  const end = getPlace(rideInfo.destinationId);
-
-  const onSelectItem = () => {
-    if (selectHandler) {
-      selectHandler();
-    }
-  };
-
   return (
     <View style={tw`px-4 pt-1`}>
       <TouchableOpacity
         style={tw` items-center justify-between mb-2 px-3 shadow-md rounded-md flex-row py-2 bg-white`}
-        onPress={onSelectItem}
+        onPress={selectHandler}
       >
         <View>
           <View style={tw`flex-row items-center mb-1 `}>
             <Image source={placeIcon} style={tw`h-5 w-5 mr-3`} />
             <Text style={tw`font-bold`}>Từ: </Text>
-            <Text>{start?.title}</Text>
+            <Text>{rideInfo.destination?.title}</Text>
           </View>
           <View style={tw`flex-row items-center mb-1 `}>
             <Image source={placeIcon} style={tw`h-5 w-5 mr-3`} />
             <Text style={tw`font-bold`}>Đến: </Text>
-            <Text>{end?.title}</Text>
+            <Text>{rideInfo.departure?.title}</Text>
           </View>
 
           <View style={tw`flex-row items-center mb-1`}>

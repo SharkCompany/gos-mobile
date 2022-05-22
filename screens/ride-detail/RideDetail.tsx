@@ -1,7 +1,16 @@
+import { rideApi } from "app/api/ride.api";
+import { DateToDateTimeString } from "app/utils/DateTimeParse";
+import { formatCurrency } from "app/utils/helper";
 import MainButton from "components/MainButton";
-import { Text, View } from "components/Themed";
-import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, TextTW, View, ViewTW } from "components/Themed";
+import { RideModel } from "models/Ride.model";
+import React, { useEffect, useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  ToastAndroid,
+  TouchableOpacity,
+} from "react-native";
 import { Avatar } from "react-native-elements/dist/avatar/Avatar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
@@ -9,11 +18,33 @@ import { HomeScreenProps } from "types";
 
 type Props = {};
 
-function RideDetail({ navigation }: HomeScreenProps<"RideDetail">) {
+function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
   function handleConnect() {
     console.log("hi");
     navigation.navigate("ConversationScreen");
   }
+
+  const [rideInfo, setRideInfo] = useState<RideModel | undefined>();
+
+  async function getRideInfo(id: number) {
+    try {
+      const ride = await rideApi.getRideById(id);
+      console.log("thong bao ride", ride);
+      if (ride) {
+        setRideInfo(ride as unknown as RideModel);
+      }
+    } catch (error) {
+      ToastAndroid.show("Lấy chuyến đi thất bại", ToastAndroid.BOTTOM);
+      console.log(error);
+      setRideInfo(undefined);
+    }
+  }
+
+  useEffect(() => {
+    getRideInfo(route.params.rideInfo?.id);
+  }, [route.params.rideInfo]);
+
+  if (!rideInfo) return <TextTW>lỗi</TextTW>;
 
   return (
     <SafeAreaView style={tw`flex-1 bg-white py-6`}>
@@ -24,6 +55,7 @@ function RideDetail({ navigation }: HomeScreenProps<"RideDetail">) {
           </Text>
           <View style={tw`mb-6`}>
             <Avatar
+              source={{ uri: rideInfo?.creator.picture }}
               size={160}
               rounded
               containerStyle={{
@@ -38,23 +70,28 @@ function RideDetail({ navigation }: HomeScreenProps<"RideDetail">) {
             <View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw`text-lg w-[40%]`}>Họ và tên</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>Nguyễn Kiệt</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {rideInfo?.creator.name}
+                </Text>
               </View>
-              <View style={tw`flex-row mb-1`}>
-                <Text style={tw` text-lg w-[40%]`}>Trường</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>Nguyễn Kiệt</Text>
-              </View>
+
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw` text-lg w-[40%]`}>Số điện thoại</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>Nguyễn Kiệt</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {rideInfo?.creator.phone}
+                </Text>
               </View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw` text-lg w-[40%]`}>Giới thiệu</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>Nguyễn Kiệt</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {rideInfo?.creator.bio}
+                </Text>
               </View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw` text-lg w-[40%]`}>Biển số xe</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>72-E1-73202</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {rideInfo?.creator.licensePlates}
+                </Text>
               </View>
             </View>
           </View>
@@ -64,19 +101,27 @@ function RideDetail({ navigation }: HomeScreenProps<"RideDetail">) {
             <View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw`text-lg w-[40%]`}>Nơi đi</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>Nguyễn Kiệt</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {rideInfo?.departure?.title}
+                </Text>
               </View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw` text-lg w-[40%]`}>Nơi đến</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>Nguyễn Kiệt</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {rideInfo?.destination?.title}
+                </Text>
               </View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw` text-lg w-[40%]`}>Khởi hành</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>Nguyễn Kiệt</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {DateToDateTimeString(rideInfo?.timeStart)}
+                </Text>
               </View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw` text-lg w-[40%]`}>Cước phí</Text>
-                <Text style={tw`text-lg text-[#7EBC36]`}>10.000 VND</Text>
+                <Text style={tw`text-lg text-[#7EBC36]`}>
+                  {/* {formatCurrency(rideInfo?.price)} */}
+                </Text>
               </View>
             </View>
           </View>
