@@ -17,6 +17,8 @@ export default function ThanksForUsingGos({ rideInfo }: Props) {
   const client =
     rideInfo.type === loaiChuyenDi.dinho ? rideInfo.creator : rideInfo.matcher;
 
+    
+
   return (
     <ViewTW className="bg-inherit">
       <ScrollView>

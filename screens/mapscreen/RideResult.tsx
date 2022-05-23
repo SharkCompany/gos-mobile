@@ -7,6 +7,7 @@ import RideOption from "components/RideOption";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import {
   getRides,
+  rideSelector,
   selectRides,
   setDeparture,
   setDestination,
@@ -58,12 +59,14 @@ const RideResult = (
   };
 
   const rides = useAppSelector(selectRides);
+  const ridesInfor = useAppSelector(rideSelector);
 
   useEffect(() => {
     dispatch(
       getRides({
         available: true,
         type: loaiChuyenDi.yensau,
+        departureId: ridesInfor.departure.id,
       })
     );
   }, []);

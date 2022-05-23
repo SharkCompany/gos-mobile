@@ -40,4 +40,6 @@ export interface GetRideQuerySchema {
   type: loaiChuyenDi;
   timeStart: string;
   destination: string;
+  destinationId: number;
+  departureId:number;
 }
