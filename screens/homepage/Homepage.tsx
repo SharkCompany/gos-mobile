@@ -37,7 +37,7 @@ export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
       <View style={tw`w-full px-6 flex-row justify-between px-10`}>
         <TouchableOpacity
           onPress={handlePressDiNhoXe}
-          style={tw`w-36 h-44 bg-white -mt-20 rounded-2xl items-center justify-center shadow-lg `}
+          style={tw`w-36 h-44 bg-white -mt-20 rounded-2xl items-center justify-center shadow-lg mr-2`}
         >
           <MaterialCommunityIcons name="motorbike" size={80} color="#7EBC36" />
 

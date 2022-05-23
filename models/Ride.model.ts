@@ -2,8 +2,8 @@ import { PlaceModel } from "./Place.model";
 import { UserModel } from "./User.model";
 
 export interface RideModel {
-  id:number;
-  price: string;
+  id: number;
+  price: number;
   available: boolean;
   timeStart: string;
   destinationId: number;

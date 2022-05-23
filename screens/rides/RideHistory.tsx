@@ -100,7 +100,9 @@ export default function RideHistory({
       {}
       <ScrollView style={tw`px-6`}>
         {my_drives.map((ride) => (
-          <RideHistoryOption rideInfo={ride} />
+          <RideHistoryOption selectHandler={()=>{
+            navigation.navigate("ConnectSucessfully",{rideInfo:ride});
+          }} rideInfo={ride} />
         ))}
       </ScrollView>
     </SafeAreaView>

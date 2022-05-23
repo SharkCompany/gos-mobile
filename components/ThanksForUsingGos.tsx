@@ -5,12 +5,18 @@ import { Avatar, Image } from "react-native-elements";
 import { TextTW, View, ViewTW } from "./Themed";
 import tw from "twrnc";
 import { ScrollView } from "react-native";
+import { loaiChuyenDi, RideModel } from "models/Ride.model";
 
 type Props = {
-  price: number;
+  rideInfo: RideModel;
 };
 
-export default function ThanksForUsingGos({ price }: Props) {
+export default function ThanksForUsingGos({ rideInfo }: Props) {
+  const driver =
+    rideInfo.type === loaiChuyenDi.dinho ? rideInfo.matcher : rideInfo.creator;
+  const client =
+    rideInfo.type === loaiChuyenDi.dinho ? rideInfo.creator : rideInfo.matcher;
+
   return (
     <ViewTW className="bg-inherit">
       <ScrollView>
@@ -24,17 +30,17 @@ export default function ThanksForUsingGos({ price }: Props) {
                 Trả bằng tiền mặt
               </TextTW>
               <TextTW className="text-lg font-bold">
-                {formatCurrency(price)}
+                {formatCurrency(rideInfo?.price)}
               </TextTW>
               <ViewTW>
                 <ViewTW className="flex flex-row items-center">
                   <Image source={placeIcon} style={tw`h-8 w-8 mr-3`} />
                   <ViewTW className="flex-1">
                     <TextTW className="font-bold text-lg">
-                      Ký túc xá khu A
+                      {rideInfo.departure.title}
                     </TextTW>
                     <TextTW className="w-full">
-                      Tạ Quang Bửu, Khu phố 6, Phường Linh Trung, Thành phố Thủ
+                      {rideInfo.departure.address}
                       Đức
                     </TextTW>
                   </ViewTW>
@@ -43,9 +49,11 @@ export default function ThanksForUsingGos({ price }: Props) {
                   <Image source={placeIconInSearch} style={tw`h-8 w-8 mr-3`} />
                   <ViewTW className="flex-1">
                     <TextTW className="font-bold text-lg">
-                      Ký túc xá khu B
+                      {rideInfo.destination.title}
                     </TextTW>
-                    <TextTW className="w-full">Mạc Đĩnh Chi, Khu phố 6</TextTW>
+                    <TextTW className="w-full">
+                      {rideInfo.destination.address}
+                    </TextTW>
                   </ViewTW>
                 </ViewTW>
               </ViewTW>
@@ -63,16 +71,16 @@ export default function ThanksForUsingGos({ price }: Props) {
                   borderStyle: "solid",
                   borderWidth: 2,
                 }}
-                source={{ uri: "https://picsum.photos/300/300" }}
+                source={{ uri: driver?.picture }}
               />
             </ViewTW>
             <ViewTW className="bg-white">
               <TextTW className="mt-12 font-bold text-center text-xl">
-                Nguyễn Anh Kiệt
+                {driver?.name}
               </TextTW>
               <ViewTW className="flex justify-center w-full px-20">
-                <TextTW className="text-centerr py-2 text-[#7EBC36] mt-5 mb-5 bg-gray-200 ">
-                  51H-626.23
+                <TextTW className="text-center py-2 text-[#7EBC36] mt-5 mb-5 bg-gray-200 ">
+                  {driver?.licensePlates}
                 </TextTW>
               </ViewTW>
               <TextTW className="px-5 mb-5 text-center text-gray-400 ">

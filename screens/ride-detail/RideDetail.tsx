@@ -5,7 +5,7 @@ import { DateToDateTimeString } from "app/utils/DateTimeParse";
 import { formatCurrency } from "app/utils/helper";
 import MainButton from "components/MainButton";
 import { Text, TextTW, View, ViewTW } from "components/Themed";
-import { RideModel } from "models/Ride.model";
+import { loaiChuyenDi, RideModel } from "models/Ride.model";
 import React, { useEffect, useState } from "react";
 import {
   ScrollView,
@@ -28,11 +28,11 @@ function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
     try {
       if (rideInfo?.id) {
         const res = await rideApi.connect(rideInfo?.id);
-        
+
         ToastAndroid.show("Kết nối thành công", ToastAndroid.BOTTOM);
+        navigation.navigate("ConnectSucessfully", { rideInfo: rideInfo });
       }
     } catch (error) {
-      
       ToastAndroid.show("Kết nối thất bại", ToastAndroid.BOTTOM);
     } finally {
       dispatch(setAppLoading(false));
@@ -46,14 +46,13 @@ function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
   async function getRideInfo(id: number) {
     try {
       const ride = await rideApi.getRideById(id);
-      
-      
+
       if (ride) {
         setRideInfo(ride as unknown as RideModel);
       }
     } catch (error) {
       ToastAndroid.show("Lấy chuyến đi thất bại", ToastAndroid.BOTTOM);
-      
+
       setRideInfo(undefined);
     }
   }
@@ -84,7 +83,11 @@ function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
           </View>
 
           <View style={tw`mb-6`}>
-            <Text style={tw`text-xl font-bold mb-2`}>Thông tin tài xế</Text>
+            <Text style={tw`text-xl font-bold mb-2`}>
+              {rideInfo.type === loaiChuyenDi.dinho
+                ? "Người yêu cầu"
+                : "Thông tin tài xế"}
+            </Text>
             <View>
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw`text-lg w-[40%]`}>Họ và tên</Text>
@@ -138,7 +141,7 @@ function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
               <View style={tw`flex-row mb-1`}>
                 <Text style={tw` text-lg w-[40%]`}>Cước phí</Text>
                 <Text style={tw`text-lg text-[#7EBC36]`}>
-                  {/* {formatCurrency(rideInfo?.price)} */}
+                  {formatCurrency(rideInfo?.price)}
                 </Text>
               </View>
             </View>

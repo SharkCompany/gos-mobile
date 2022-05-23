@@ -7,6 +7,7 @@ const url = "drive";
 export const rideApi = {
   createRide: (ride: Partial<RideModel>) => {
     const sub_url = "/create";
+    console.log("create Ride", ride);
     return axiosClient.post(url + sub_url, ride);
   },
   getRides: (query: Partial<GetRideQuerySchema>): Promise<RideModel[]> => {

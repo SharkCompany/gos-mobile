@@ -47,7 +47,7 @@ export default function CreateRide({
 
   const [dataToServer, setDataToServer] = useState<FixMeLater>({
     destinationId: "",
-    price: "1",
+    price: 0,
     available: true,
     timeStart: "",
     departureId: "",
@@ -79,10 +79,10 @@ export default function CreateRide({
 
   const handleTypeChange = (item: { label: string; value: string }) => {
     setDataToServer({ ...dataToServer, type: item.value });
+    
   };
 
   const handleOnPress = () => {
-    
     dispatch(createRide(dataToServer)).then((data) => {
       if (data.payload) {
         

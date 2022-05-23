@@ -53,6 +53,7 @@ export type HomeScreenParamList = {
   RideDetail: { rideInfo: RideModel };
   ConversationScreen: undefined;
   CreateRide: FixMeLater | undefined;
+  ConnectSucessfully: { rideInfo: RideModel };
 };
 
 export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
@@ -77,6 +78,7 @@ export type RideHistoryScreenParamsList = {
   CreateRide: FixMeLater;
   SearchPlaces: undefined;
   CreateRideSearchPlaces: FixMeLater;
+  ConnectSucessfully: { rideInfo: RideModel };
 };
 
 export type RideHistoryScreenProps<
