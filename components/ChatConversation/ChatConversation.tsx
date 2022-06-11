@@ -1,9 +1,11 @@
 import { SafeAreaViewTW, TextTW, View, ViewTW } from "components/Themed";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar } from "react-native-elements";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MainButton from "components/MainButton";
 import { Button, ScrollView, TextInput, TouchableOpacity } from "react-native";
+import { useAppDispatch } from "app/redux/store";
+import { getDetailConversation } from "app/redux/message/messageSlice";
 
 type Props = {};
 
@@ -17,44 +19,31 @@ const mess_data: { id: number; mess: string }[] = [
 		mess: "kakakkaak",
 	},
 	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
 		id: 2,
 		mess: "fjjfjfjjf",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 2,
-		mess: "fjjfjfjjf",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 2,
-		mess: "fjjfjfjjf",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
 	},
 ];
 
-export default function ChatConversation({}: Props) {
+export default function ChatConversation({ route }: any) {
+	const [textInput, setTextInput] = useState("");
+
+	const dispatch = useAppDispatch();
+
+	const handleSendMessage = () => {
+		setTextInput("");
+	};
+
+	useEffect(() => {
+		const id = route?.params?.id;
+		if (id) {
+			dispatch(getDetailConversation(id))
+				.unwrap()
+				.then((data) => {
+					console.log("thong tin chat detail", data);
+				});
+		}
+	}, [route?.params]);
+
 	const ClientMess = ({ mess }: { mess: string }) => (
 		<ViewTW className="w-full bg-inherit mb-2 flex items-start bg-gray-100">
 			<ViewTW className="bg-[#bde952] max-w-[80%] py-3 px-4 rounded-xl ">
@@ -112,11 +101,14 @@ export default function ChatConversation({}: Props) {
 				<ViewTW className="px-4 py-4 flex flex-row bg-white">
 					<ViewTW className="flex-1">
 						<ViewTW className="w-full">
-							<TextInput></TextInput>
+							<TextInput
+								value={textInput}
+								onChangeText={(text) => setTextInput(text)}
+							></TextInput>
 						</ViewTW>
 					</ViewTW>
 					<ViewTW className="">
-						<TouchableOpacity>
+						<TouchableOpacity onPress={handleSendMessage}>
 							<Ionicons
 								name="send-outline"
 								size={22}

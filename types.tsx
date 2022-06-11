@@ -5,99 +5,99 @@
 
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
-  CompositeScreenProps,
-  NavigatorScreenParams,
+	CompositeScreenProps,
+	NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FixMeLater } from "interfaces/migration";
 import { RideModel } from "models/Ride.model";
 
 declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-  }
+	namespace ReactNavigation {
+		interface RootParamList extends RootStackParamList {}
+	}
 }
 
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
-  Modal: undefined;
-  NotFound: undefined;
-  SocialLogin: undefined;
-  EnterInfor: undefined;
+	Root: NavigatorScreenParams<RootTabParamList> | undefined;
+	Modal: undefined;
+	NotFound: undefined;
+	SocialLogin: undefined;
+	EnterInfor: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, Screen>;
+	NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-  Personal: undefined;
-  Messages: undefined;
-  Homepage: undefined;
-  Rides: undefined;
+	TabOne: undefined;
+	TabTwo: undefined;
+	Personal: undefined;
+	Messages: undefined;
+	Homepage: undefined;
+	Rides: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<RootTabParamList, Screen>,
-    NativeStackScreenProps<RootStackParamList>
-  >;
+	CompositeScreenProps<
+		BottomTabScreenProps<RootTabParamList, Screen>,
+		NativeStackScreenProps<RootStackParamList>
+	>;
 
 export type HomeScreenParamList = {
-  Home: undefined;
-  MapScreen: {
-    type: "dinho" | "yensau";
-  };
-  MainSearchScreen: undefined;
-  RideDetail: { rideInfo: RideModel };
-  ConversationScreen: undefined;
-  CreateRide: FixMeLater | undefined;
-  ConnectSucessfully: { rideInfo: RideModel };
+	Home: undefined;
+	MapScreen: {
+		type: "dinho" | "yensau";
+	};
+	MainSearchScreen: undefined;
+	RideDetail: { rideInfo: RideModel };
+	ConversationScreen: undefined | FixMeLater;
+	CreateRide: FixMeLater | undefined;
+	ConnectSucessfully: { rideInfo: RideModel };
 };
 
 export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<HomeScreenParamList, Screen>,
-    BottomTabScreenProps<RootTabParamList>
-  >;
+	CompositeScreenProps<
+		BottomTabScreenProps<HomeScreenParamList, Screen>,
+		BottomTabScreenProps<RootTabParamList>
+	>;
 
 export type MapSearchScreenParamList = {
-  PlaceResult: undefined;
-  MainSearchScreen: undefined;
-  RideResult: undefined;
-  RideDetail: { rideInfo: RideModel };
+	PlaceResult: undefined;
+	MainSearchScreen: undefined;
+	RideResult: undefined;
+	RideDetail: { rideInfo: RideModel };
 };
 
 export type MapSearchScreenProps<
-  Screen extends keyof MapSearchScreenParamList
+	Screen extends keyof MapSearchScreenParamList
 > = NativeStackScreenProps<MapSearchScreenParamList, Screen>;
 
 export type RideHistoryScreenParamsList = {
-  RideHistory: undefined;
-  CreateRide: FixMeLater;
-  SearchPlaces: undefined;
-  CreateRideSearchPlaces: FixMeLater;
-  ConnectSucessfully: { rideInfo: RideModel };
+	RideHistory: undefined;
+	CreateRide: FixMeLater;
+	SearchPlaces: undefined;
+	CreateRideSearchPlaces: FixMeLater;
+	ConnectSucessfully: { rideInfo: RideModel };
 };
 
 export type RideHistoryScreenProps<
-  Screen extends keyof RideHistoryScreenParamsList
+	Screen extends keyof RideHistoryScreenParamsList
 > = CompositeScreenProps<
-  BottomTabScreenProps<RideHistoryScreenParamsList, Screen>,
-  BottomTabScreenProps<MapSearchScreenParamList>
+	BottomTabScreenProps<RideHistoryScreenParamsList, Screen>,
+	BottomTabScreenProps<MapSearchScreenParamList>
 >;
 
 export type MessageScreenParamsList = {
-  AllMessage: undefined;
-  DetailMessage: FixMeLater;
+	AllMessage: undefined;
+	DetailMessage: FixMeLater;
 };
 
 export type MessageScreenProps<Screen extends keyof MessageScreenParamsList> =
-  CompositeScreenProps<
-    BottomTabScreenProps<MessageScreenParamsList, Screen>,
-    BottomTabScreenProps<MapSearchScreenParamList>
-  >;
+	CompositeScreenProps<
+		BottomTabScreenProps<MessageScreenParamsList, Screen>,
+		BottomTabScreenProps<MapSearchScreenParamList>
+	>;
 
 // export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =
 // 	NativeStackScreenProps<HomeScreenParamList, Screen>;

@@ -1,17 +1,33 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { MessageScreenProps } from "types";
 import MessageCard from "components/MessageCard";
+import { useAppDispatch } from "app/redux/store";
+import { getMessages } from "app/redux/message/messageSlice";
 
 type Props = {};
 
 const AllMessages = ({ navigation }: MessageScreenProps<"AllMessage">) => {
-	const pressOnMessageCard = () => {
-		navigation.navigate("DetailMessage");
+	const [listMessages, setListMessages] = useState([]);
+
+	const dispatch = useAppDispatch();
+
+	const pressOnMessageCard = (item: any) => {
+		// console.log(item);
+		navigation.navigate("DetailMessage", { id: item?.id });
 	};
+
+	useEffect(() => {
+		dispatch(getMessages())
+			.unwrap()
+			.then((data: any) => {
+				setListMessages(data);
+				// console.log(data);
+			});
+	}, []);
 
 	return (
 		<SafeAreaView style={tw`flex-1 bg-white `}>
@@ -33,9 +49,14 @@ const AllMessages = ({ navigation }: MessageScreenProps<"AllMessage">) => {
 			</View>
 
 			<ScrollView style={tw`px-6`}>
-				<MessageCard onSelectHandler={pressOnMessageCard} />
-				<MessageCard onSelectHandler={pressOnMessageCard} />
-				<MessageCard onSelectHandler={pressOnMessageCard} />
+				{listMessages &&
+					listMessages.map((item: any) => (
+						<MessageCard
+							key={item?.id}
+							item={item}
+							onSelectHandler={pressOnMessageCard}
+						/>
+					))}
 			</ScrollView>
 		</SafeAreaView>
 	);
