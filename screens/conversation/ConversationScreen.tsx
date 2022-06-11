@@ -1,14 +1,14 @@
-import ChatConversation from "components/ChatConversation/ChatConversation";
-import EditScreenInfo from "components/EditScreenInfo";
-import { SafeAreaViewTW, Text, View } from "components/Themed";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { RootTabScreenProps } from "types";
-import io from "socket.io-client";
-import { useEffect, useState } from "react";
-import { FixMeLater } from "interfaces/migration";
-import { useAppDispatch } from "app/redux/store";
 import { getDetailConversation } from "app/redux/messages/messageSlice";
-import { sendSocketMessage, socket } from "app/modules/chatModule";
+import { useAppDispatch } from "app/redux/store";
+import ChatConversation from "components/ChatConversation/ChatConversation";
+import { SafeAreaViewTW } from "components/Themed";
+import { FixMeLater } from "interfaces/migration";
+import { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import { io } from "socket.io-client";
+import { RootTabScreenProps } from "types";
+
+import { socket } from "app/modules/chatModule";
 
 export default function ConversationScreen({
 	navigation,
@@ -23,17 +23,21 @@ export default function ConversationScreen({
 	const [chatingUser, setChatingUser] = useState(null);
 
 	const sendMessage = (content: FixMeLater) => {
-		sendSocketMessage({
-			message: content,
-			senderId: 5,
-			conversationId: 1,
-		});
+		// sendSocketMessage({
+		// 	message: content,
+		// 	senderId: 5,
+		// 	conversationId: 1,
+		// });
 	};
 
 	useEffect(() => {
-		socket.on("message_recieved", (data) => {
-			// console.log(data.message);
-		});
+		// socket.on("message_recieved", (data: any) => {
+		// 	// console.log(data.message);
+		// });
+
+		// socket.on("connect", () => {
+		// 	console.log("connect", socket.id); // true
+		// });
 	}, [socket]);
 
 	useEffect(() => {
