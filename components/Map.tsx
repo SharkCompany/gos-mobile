@@ -50,7 +50,7 @@ const Map = (props: Props) => {
 				<MapViewDirections
 					origin={departure.geometry}
 					destination={destination.geometry}
-					apikey={"GOOGLE_MAPS_APIKEY"}
+					apikey={GOOGLE_MAPS_APIKEY}
 					strokeWidth={3}
 					strokeColor="#7EBC36"
 					onError={(e) => console.log(e)}
