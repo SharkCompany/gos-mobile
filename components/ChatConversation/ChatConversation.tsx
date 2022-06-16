@@ -1,11 +1,14 @@
-import { SafeAreaViewTW, TextTW, View, ViewTW } from "components/Themed";
-import React, { useEffect, useState } from "react";
-import { Avatar } from "react-native-elements";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MainButton from "components/MainButton";
-import { Button, ScrollView, TextInput, TouchableOpacity } from "react-native";
-import { useAppDispatch } from "app/redux/store";
+import { API_ENDPOINT } from "app/constants";
+import { getSocket } from "app/module/socketModule";
 import { getDetailConversation } from "app/redux/message/messageSlice";
+import { useAppDispatch } from "app/redux/store";
+import { getUserFromLocal } from "app/utils/AppAsyncStorage";
+import { TextTW, ViewTW } from "components/Themed";
+import React, { useEffect, useState } from "react";
+import { ScrollView, TextInput, TouchableOpacity } from "react-native";
+import { Avatar } from "react-native-elements";
+import { io } from "socket.io-client";
 
 type Props = {};
 
@@ -27,11 +30,29 @@ const mess_data: { id: number; mess: string }[] = [
 export default function ChatConversation({ route }: any) {
 	const [textInput, setTextInput] = useState("");
 
+	const [socket, setSocket] = useState<any>(null);
+
 	const dispatch = useAppDispatch();
 
 	const handleSendMessage = () => {
 		setTextInput("");
 	};
+
+	// useEffect(() => {
+	// 	getUserFromLocal().then((data) => {
+	// 		const socket = io(API_ENDPOINT, {
+	// 			query: { token: data?.tokens },
+	// 		});
+	// 		// socket.on("connect", () => {
+	// 		// 	console.log("connected ne");
+	// 		// });
+	// 		// socket.on("connect_error", (err: any) => {
+	// 		// 	console.log("Connect error ne", err);
+	// 		// 	socket.close();
+	// 		// });
+	// 		// setSocket(socket);
+	// 	});
+	// }, [setSocket]);
 
 	useEffect(() => {
 		const id = route?.params?.id;

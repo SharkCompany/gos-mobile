@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { messageApi } from "app/api/message.api";
 import { FixMeLater } from "interfaces/migration";
 import { AppRootState } from "../store";
+import { io } from "socket.io-client";
 
 export const getMessages = createAsyncThunk(
 	"message/get-messages",
@@ -11,7 +12,8 @@ export const getMessages = createAsyncThunk(
 
 			return response;
 		} catch (error) {
-			throw error;
+			console.log(error);
+			// throw error;
 		}
 	}
 );
@@ -30,23 +32,23 @@ export const getDetailConversation = createAsyncThunk(
 );
 
 const initialState: FixMeLater = {
-	messages: [],
+	socketInstance: null,
 };
 
 const messageSlice = createSlice({
 	name: "messages",
 	initialState,
 	reducers: {
-		// savePlaces(state, action: PayloadAction<FixMeLater>) {
-		// 	state.listPlaces = action.payload;
-		// },
+		setSocketInstance(state, action: FixMeLater) {
+			state.socketInstance = action.payload;
+		},
 		// setPlaces(state,action:PayloadAction<PlaceModel[]>) {
 		// 	state.listPlaces = action.payload;
 		// }
 	},
 });
 
-// export const placesSelector = (state: AppRootState) => state.place.listPlaces;
+export const socketInstanceSelector = (state: AppRootState) => state.message;
 
-// export const { savePlaces } = messageSlice.actions;
+export const { setSocketInstance } = messageSlice.actions;
 export default messageSlice.reducer;
