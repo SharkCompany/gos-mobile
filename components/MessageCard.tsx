@@ -26,13 +26,13 @@ const MessageCard = ({ item, onSelectHandler }: FixMeLater) => {
 				<View style={tw`justify-between`}>
 					<View style={tw`flex-row mt-1`}>
 						<Text style={tw`mr-2 font-bold`}>Chuyến đi:</Text>
-						<Text style={tw``}>#a66asdh</Text>
+						<Text style={tw``}>#{item?.id}</Text>
 					</View>
 					<Text style={tw`font-bold mt-1`}>
 						{item?.name ? item?.name : "Nguyen Kiet"}
 					</Text>
 					<Text style={tw`opacity-50 mt-1`}>
-						{item?.name ? item?.name : "Oke hẹn ông ở đó nhe"}
+						{item?.name ? item?.name : ""}
 					</Text>
 				</View>
 				<View

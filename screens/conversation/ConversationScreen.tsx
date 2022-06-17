@@ -4,12 +4,12 @@ import { SafeAreaViewTW, Text, View } from "components/Themed";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { RootTabScreenProps } from "types";
 
-export default function ConversationScreen({
-	navigation,
-}: RootTabScreenProps<"Messages">) {
+export default function ConversationScreen(
+	screenProps: RootTabScreenProps<"Messages">
+) {
 	return (
 		<SafeAreaViewTW className="flex-1 bg-white">
-			<ChatConversation />
+			<ChatConversation {...screenProps} />
 		</SafeAreaViewTW>
 	);
 }
