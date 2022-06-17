@@ -5,6 +5,7 @@ import { getDetailConversation } from "app/redux/message/messageSlice";
 import { useAppDispatch } from "app/redux/store";
 import { getUserFromLocal } from "app/utils/AppAsyncStorage";
 import { Text, TextTW, ViewTW } from "components/Themed";
+import { FixMeLater } from "interfaces/migration";
 import { MessageReceieved } from "models/MessageReceived.model";
 import React, { useEffect, useState } from "react";
 import { ScrollView, TextInput, TouchableOpacity } from "react-native";
@@ -13,21 +14,6 @@ import { io } from "socket.io-client";
 
 type Props = {};
 
-const mess_data: { id: number; mess: string }[] = [
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 1,
-		mess: "kakakkaak",
-	},
-	{
-		id: 2,
-		mess: "fjjfjfjjf",
-	},
-];
-
 export default function ChatConversation({ route }: any) {
 	const [textInput, setTextInput] = useState("");
 
@@ -35,42 +21,46 @@ export default function ChatConversation({ route }: any) {
 
 	const [userId, setUserId] = useState<any>();
 
-	const [userToken, setUserToken] = useState<any>();
+	const [opponentUser, setOpponentUser] = useState<FixMeLater>();
+
+	const [listMessage, setListMessage] = useState<FixMeLater>([]);
 
 	const [conversationId, setConversationId] = useState();
-
-	const [dataReceived, setDataReceived] = useState("");
 
 	const dispatch = useAppDispatch();
 
 	const handleSendMessage = () => {
 		if (socket && userId && conversationId && textInput) {
 			socket.emit("private_message", {
-				senderId: userId,
+				userId: userId,
 				conversationId: conversationId,
 				message: textInput,
 			});
-			// setTextInput("");
+			setTextInput("");
 		}
 	};
 
 	const handleMessageReceived = (data: MessageReceieved) => {
 		// setDataReceived(data.message);
-		console.log("Receieve data ne");
+		// console.log("Receieve data ne", data);
+		setListMessage((messages: FixMeLater) => [...messages, data]);
+		console.log(data);
 	};
 
 	useEffect(() => {
 		getUserFromLocal().then((data) => {
 			setUserId(data?.info.id);
-			setUserToken(data?.tokens);
 			const socket = io(API_ENDPOINT, {
-				query: { token: data?.tokens },
-				withCredentials: true,
+				reconnectionDelayMax: 10000,
+				auth: {
+					token: data?.tokens.accessToken,
+				},
 			});
+			socket.connect();
 			setSocket(socket);
 
 			socket.on("connect", () => {
-				console.log("connected ne");
+				// console.log("connected ne");
 			});
 			socket.on("connect_error", (err: any) => {
 				console.log("Connect error ne", err);
@@ -86,7 +76,7 @@ export default function ChatConversation({ route }: any) {
 
 	useEffect(() => {
 		if (socket) {
-			console.log("receive");
+			// console.log("receive");
 			socket.on("message-received", handleMessageReceived);
 		}
 	}, [socket]);
@@ -97,14 +87,19 @@ export default function ChatConversation({ route }: any) {
 			setConversationId(id);
 			dispatch(getDetailConversation(id))
 				.unwrap()
-				.then((data) => {
-					console.log("thong tin chat detail", data);
+				.then((data: FixMeLater) => {
+					setListMessage(data?.messages);
+
+					const opponentUser = data?.user.find(
+						(user: FixMeLater) => user.id == userId
+					);
+					setOpponentUser(opponentUser);
 				});
 		}
 	}, [route?.params]);
 
 	const ClientMess = ({ mess }: { mess: string }) => (
-		<ViewTW className="w-full bg-inherit mb-2 flex items-start bg-gray-100">
+		<ViewTW className="w-full bg-inherit mb-2 flex items-start bg-gray-100 mb-2">
 			<ViewTW className="bg-[#bde952] max-w-[80%] py-3 px-4 rounded-xl ">
 				<TextTW className="text-[#29282f]">{mess}</TextTW>
 			</ViewTW>
@@ -112,7 +107,7 @@ export default function ChatConversation({ route }: any) {
 	);
 
 	const MyMess = ({ mess }: { mess: string }) => (
-		<ViewTW className=" w-full bg-inherit items-end bg-gray-100">
+		<ViewTW className=" w-full bg-inherit items-end bg-gray-100 mb-2">
 			<ViewTW className="bg-[#7EBC36] max-w-[80%] py-3 px-4 rounded-xl text-white ">
 				<TextTW className="text-white">{mess}</TextTW>
 			</ViewTW>
@@ -121,14 +116,21 @@ export default function ChatConversation({ route }: any) {
 
 	const Space = () => <ViewTW className="h-10 bg-inherit bg-gray-100" />;
 
-	const MessagesComponent = () => (
+	const MessagesComponent = ({
+		listMessage,
+	}: {
+		listMessage: FixMeLater;
+	}) => (
 		<ViewTW className="bg-inherit px-2">
 			<Space />
-			{mess_data.map((mess, index) => {
-				if (mess.id === 1)
-					return <ClientMess mess={mess.mess} key={index} />;
-				else return <MyMess mess={mess.mess} key={index} />;
-			})}
+			{listMessage &&
+				listMessage.map((mess: FixMeLater, index: number) => {
+					if (mess.senderId != userId) {
+						return <ClientMess mess={mess.message} key={index} />;
+					} else {
+						return <MyMess mess={mess.message} key={index} />;
+					}
+				})}
 		</ViewTW>
 	);
 
@@ -145,17 +147,22 @@ export default function ChatConversation({ route }: any) {
 								borderStyle: "solid",
 								borderWidth: 2,
 							}}
-							source={{ uri: "https://picsum.photos/300/300" }}
+							source={{
+								uri: opponentUser
+									? opponentUser?.picture
+									: "https://picsum.photos/300/300",
+							}}
 						/>
 					</ViewTW>
 					<TextTW className="flex-1 font-bold text-lg">
-						Nguyễn Anh Kiệt
+						{opponentUser && opponentUser?.name}
 					</TextTW>
 				</ViewTW>
 				<ViewTW className="flex-1 bg-gray-100">
 					<ScrollView className="bg-inherit">
-						<MessagesComponent />
-						<Text>{dataReceived}</Text>
+						{listMessage && (
+							<MessagesComponent listMessage={listMessage} />
+						)}
 					</ScrollView>
 				</ViewTW>
 				<ViewTW className="px-4 py-4 flex flex-row bg-white">

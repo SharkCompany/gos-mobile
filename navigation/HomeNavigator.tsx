@@ -40,19 +40,6 @@ const HomeNavigator = (props: Props) => {
 				name="ConversationScreen"
 				component={ConversationScreen}
 			/>
-			<Stack.Screen name="CreateRide" component={CreateRide} />
-
-			<Stack.Group
-				screenOptions={{
-					animation: "fade_from_bottom",
-					presentation: "modal",
-				}}
-			>
-				<Stack.Screen
-					name="CreateRideSearchPlaces"
-					component={CreateRidesSearchPlaces}
-				/>
-			</Stack.Group>
 		</Stack.Navigator>
 	);
 };
