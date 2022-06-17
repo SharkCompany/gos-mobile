@@ -22,6 +22,7 @@ export const createRide = createAsyncThunk(
   async (data: Partial<RideModel>, thunkAPI) => {
     try {
       const response = await rideApi.createRide(data);
+      console.log("create spice",response);
 
       return response;
     } catch (error) {
