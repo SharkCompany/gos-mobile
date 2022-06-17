@@ -44,7 +44,7 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
     <SafeAreaView style={tw`flex-1 bg-white`}>
       <View style={tw`flex-row justify-between h-1/10 items-center px-6`}>
         <TouchableOpacity>
-          <Ionicons name="caret-back" size={26} color="#7EBC36" />
+          <Ionicons name="caret-back" size={26} color="#7EBC36" onPress={()=>{navigation.goBack()}}/>
         </TouchableOpacity>
 
         <SwitchSelector
