@@ -37,6 +37,8 @@ import HomeNavigator from "./HomeNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import MessageNavigator from "./MessageNavigator";
 import RideNavigator from "./RideNavigator";
+import DetailRideHistory from "../screens/detail-ride-history/DetailRideHistory";
+
 
 export default function Navigation({
   colorScheme,
@@ -85,7 +87,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="SocialLogin" component={SocialLoginScreen} />
+      <Stack.Screen name="SocialLogin" component={DetailRideHistory} />
+      {/* <Stack.Screen name="SocialLogin" component={SocialLoginScreen} /> */}
       <Stack.Screen name="EnterInfor" component={InformationEntering} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen

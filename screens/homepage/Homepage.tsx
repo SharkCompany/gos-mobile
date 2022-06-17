@@ -41,7 +41,7 @@ export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
         >
           <MaterialCommunityIcons name="motorbike" size={80} color="#7EBC36" />
 
-          <Text style={tw`text-xl font-bold text-[#7EBC36]`}>Đi nhờ xe</Text>
+          <Text style={tw`text-xl font-bold text-[#7EBC36]`}>Đi nhờ xe</Text>ya
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleTimYenSau}
