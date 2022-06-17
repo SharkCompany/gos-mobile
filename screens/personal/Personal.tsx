@@ -4,6 +4,7 @@ import { setAppLoading } from "app/redux/setting/settingSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import { selectUser, setUser } from "app/redux/user/userSlice";
 import MainButton from "components/MainButton";
+import PrimaryButton from "components/PrimaryButton";
 import { Text, View, ViewTW } from "components/Themed";
 import * as ImagePicker from "expo-image-picker";
 import { FixMeLater } from "interfaces/migration";
@@ -54,6 +55,10 @@ export default function Personal({
   useEffect(() => {
     getMeHandler();
   }, []);
+
+  const handleLogout = () =>{
+    navigation.navigate("SocialLogin");
+  }
 
   const handleSaveInformation = async () => {
     const updateData: Partial<UserModel> = {
@@ -171,6 +176,8 @@ export default function Personal({
           />
         </View>
         <MainButton eventHandler={handleSaveInformation}>Cập nhật</MainButton>
+        <ViewTW className="h-2"/>
+        <PrimaryButton eventHandler={handleLogout}>Đăng xuất</PrimaryButton>
         <ViewTW className="h-10"></ViewTW>
       </ScrollView>
     </View>
