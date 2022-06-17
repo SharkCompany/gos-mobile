@@ -1,5 +1,6 @@
 import EditScreenInfo from "components/EditScreenInfo";
 import { Text, View } from "components/Themed";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   FlatList,
   ScrollView,
@@ -15,7 +16,7 @@ import { FixMeLater } from "interfaces/migration";
 import PlaceOption from "components/PlaceOption";
 import RideOption from "components/RideOption";
 import RideHistoryOption from "components/RideHistoryOption";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { loaiChuyenDi } from "models/Ride.model";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import { getRides, selectRides, setRides } from "app/redux/ride/rideSlice";
@@ -60,14 +61,24 @@ export default function RideHistory({
   console.log(my_drives.length);
   console.log(rides.length);
 
-  useEffect(() => {
-    dispatch(getRides({ type: selectingRideType }));
-  }, [selectingRideType]);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(getRides({ type: selectingRideType }));
+    }, [selectingRideType])
+  );
+
+  // useFocusEffect(() => {
+  //   console.log("lich su chuyen di render");
+  // });
 
   return (
     <SafeAreaView style={tw`flex-1 bg-white `}>
       <View style={tw`flex-row justify-between my-4 items-center px-6 `}>
-        <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
           <Ionicons name="caret-back" size={26} color="#7EBC36" />
         </TouchableOpacity>
 
@@ -100,9 +111,13 @@ export default function RideHistory({
       {}
       <ScrollView style={tw`px-6`}>
         {my_drives.map((ride) => (
-          <RideHistoryOption selectHandler={()=>{
-            navigation.navigate("ConnectSucessfully",{rideInfo:ride});
-          }} rideInfo={ride} />
+          <RideHistoryOption
+            key={ride.id}
+            selectHandler={() => {
+              navigation.navigate("ConnectSucessfully", { rideInfo: ride });
+            }}
+            rideInfo={ride}
+          />
         ))}
       </ScrollView>
     </SafeAreaView>

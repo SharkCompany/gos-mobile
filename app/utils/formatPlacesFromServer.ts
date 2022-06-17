@@ -10,8 +10,8 @@ export function formatPlacesFromServer(
       address: place.address,
       title: place.title,
       geometry: {
-        longitude: place.longitude,
-        latitude: place.latitude,
+        longitude: parseInt(place.longitude),
+        latitude: parseInt(place.latitude),
       },
     };
     results.push(newPlace);

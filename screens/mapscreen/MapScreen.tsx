@@ -1,9 +1,10 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { getRides, selectRides } from "app/redux/ride/rideSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
+import { selectUser } from "app/redux/user/userSlice";
 import Map from "components/Map";
 import RideOption from "components/RideOption";
-import { View, ViewTW } from "components/Themed";
+import { TextTW, View, ViewTW } from "components/Themed";
 import { FixMeLater } from "interfaces/migration";
 import { loaiChuyenDi, RideModel } from "models/Ride.model";
 import MapScreenSearchNavigator from "navigation/MapScreenSearchNavigator";
@@ -81,6 +82,7 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
           <MapScreenSearchNavigator />
         </>
       )}
+      
     </SafeAreaView>
   );
 };
@@ -88,7 +90,9 @@ const MapScreen = ({ navigation, route }: HomeScreenProps<"MapScreen">) => {
 const TimYenSau = ({ navigation }: HomeScreenProps<"MapScreen">) => {
   const selectRide = (a: any) => {};
   const dispatch = useAppDispatch();
-  const rides = useAppSelector(selectRides);
+  const user = useAppSelector(selectUser);
+  let rides = useAppSelector(selectRides);
+  rides = rides.filter(ride=>ride.creatorId!==user?.id);
 
   useEffect(() => {
     dispatch(getRides({ available: true, type: loaiChuyenDi.dinho }));

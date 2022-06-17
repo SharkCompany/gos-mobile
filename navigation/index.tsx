@@ -51,16 +51,13 @@ export default function Navigation({
 
   const loadPlaces = () => {
     const data = JSON.parse(JSON.stringify(jsonData));
-    // console.log("loadPlaces",data);
-    dispatch(savePlaces(data));
   };
 
   const loadPlacesFromServer = async () => {
     const data = await placeApi.getPlaces();
     try {
       const places = formatPlacesFromServer(data as unknown as PlaceModelFromServer[]);
-      console.log("places after format",places);
-      // dispatch(savePlaces(places));
+      dispatch(savePlaces(places));
     } catch (error) {
       console.log("loadPlaceFromServer error: ",error);
     }
@@ -75,7 +72,6 @@ export default function Navigation({
 
   useEffect(() => {
     if (places.length === 0) {
-      loadPlaces();
       loadPlacesFromServer();
     }
     loadUser();

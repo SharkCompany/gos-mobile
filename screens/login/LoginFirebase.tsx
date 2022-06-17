@@ -73,6 +73,7 @@ export default function LoginFirebase() {
           } else navigator.navigate("EnterInfor");
         }
       } catch (error) {
+        console.log(error);
         ToastAndroid.show("Đăng nhập thất bại", ToastAndroid.BOTTOM);
         navigator.navigate("SocialLogin");
       } finally {

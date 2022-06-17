@@ -3,8 +3,8 @@ export interface PlaceModel {
   title: string;
   address: string;
   geometry: {
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
   };
 }
 export interface PlaceModelFromServer {

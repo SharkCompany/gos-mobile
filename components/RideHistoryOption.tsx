@@ -30,7 +30,6 @@ const RideHistoryOption = ({ selectHandler, rideInfo }: RideProps) => {
   } = rideInfo;
 
 
-  console.log("RideHistoryOption",rideInfo);
 
   const getStatus = () => {
     const index = driveHistory.length-1;

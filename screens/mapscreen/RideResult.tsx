@@ -16,6 +16,7 @@ import { MapSearchScreenProps } from "types";
 import { BackHandler } from "react-native";
 import { FixMeLater } from "interfaces/migration";
 import { loaiChuyenDi, RideModel } from "models/Ride.model";
+import { selectUser } from "app/redux/user/userSlice";
 type Props = {};
 
 const RideResult = (
@@ -58,7 +59,10 @@ const RideResult = (
     navigation.navigate("RideDetail", { rideInfo: item });
   };
 
-  const rides = useAppSelector(selectRides);
+  const currentUser = useAppSelector(selectUser);
+
+  let rides = useAppSelector(selectRides);
+  rides = rides.filter(ride => ride.creatorId !==currentUser?.id)
   const ridesInfor = useAppSelector(rideSelector);
 
   useEffect(() => {

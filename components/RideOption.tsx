@@ -81,6 +81,11 @@ const YenSau = ({ selectHandler, rideInfo }: Props) => {
             <Text style={tw`font-bold`}>Thời gian: </Text>
             <Text>{DateToDateTimeString(new Date(rideInfo.timeStart))}</Text>
           </View>
+          <View style={tw`flex-row items-center mb-1`}>
+            <Image source={placeIcon} style={tw`h-5 w-5 mr-3`} />
+            <Text style={tw`font-bold`}>Người tạo: </Text>
+            <Text>{rideInfo.creator.name}</Text>
+          </View>
         </View>
         <View>
           <Ionicons
