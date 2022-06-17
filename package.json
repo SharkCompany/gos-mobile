@@ -55,6 +55,7 @@
 		"react-native-switch-selector": "^2.2.0",
 		"react-native-web": "0.17.1",
 		"react-redux": "^7.2.8",
+		"socket.io-client": "^4.5.1",
 		"tailwind-rn": "^4.2.0",
 		"twrnc": "^3.0.3"
 	},

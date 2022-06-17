@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { messageApi } from "app/api/message.api";
 import { FixMeLater } from "interfaces/migration";
 import { AppRootState } from "../store";
-import { io } from "socket.io-client";
 
 export const getMessages = createAsyncThunk(
 	"message/get-messages",
