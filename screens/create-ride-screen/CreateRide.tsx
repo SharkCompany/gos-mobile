@@ -84,6 +84,7 @@ export default function CreateRide({
 
   const handleOnPress = () => {
     dispatch(createRide(dataToServer)).then((data) => {
+      console.log("payload dat xe",data);
       if (data.payload) {
         
         ToastAndroid.show("Tạo chuyến đi thành công", ToastAndroid.BOTTOM);

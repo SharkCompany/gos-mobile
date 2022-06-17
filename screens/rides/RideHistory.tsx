@@ -67,7 +67,7 @@ export default function RideHistory({
   return (
     <SafeAreaView style={tw`flex-1 bg-white `}>
       <View style={tw`flex-row justify-between my-4 items-center px-6 `}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{navigation.goBack()}}>
           <Ionicons name="caret-back" size={26} color="#7EBC36" />
         </TouchableOpacity>
 
