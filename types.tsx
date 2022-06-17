@@ -54,6 +54,7 @@ export type HomeScreenParamList = {
 	ConversationScreen: undefined | FixMeLater;
 	CreateRide: FixMeLater | undefined;
 	ConnectSucessfully: { rideInfo: RideModel };
+	CreateRideSearchPlaces: FixMeLater;
 };
 
 export type HomeScreenProps<Screen extends keyof HomeScreenParamList> =

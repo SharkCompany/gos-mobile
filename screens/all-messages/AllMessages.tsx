@@ -1,4 +1,10 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+	View,
+	Text,
+	ScrollView,
+	TouchableOpacity,
+	RefreshControl,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,18 +21,32 @@ const AllMessages = ({ navigation }: MessageScreenProps<"AllMessage">) => {
 
 	const dispatch = useAppDispatch();
 
+	const [refreshing, setRefreshing] = React.useState(false);
+
 	const pressOnMessageCard = (item: any) => {
 		// console.log(item);
 		navigation.navigate("DetailMessage", { id: item?.id });
 	};
 
-	useEffect(() => {
+	const getAllMessages = () => {
 		dispatch(getMessages())
 			.unwrap()
 			.then((data: any) => {
-				setListMessages(data);
-				// console.log(data);
+				if (data) {
+					setListMessages(data);
+					setRefreshing(false);
+				}
+				console.log("data message", data);
 			});
+	};
+
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+		getAllMessages();
+	}, []);
+
+	useEffect(() => {
+		getAllMessages();
 	}, []);
 
 	return (
@@ -48,7 +68,15 @@ const AllMessages = ({ navigation }: MessageScreenProps<"AllMessage">) => {
 				</View>
 			</View>
 
-			<ScrollView style={tw`px-6`}>
+			<ScrollView
+				style={tw`px-6`}
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={onRefresh}
+					/>
+				}
+			>
 				{listMessages &&
 					listMessages.map((item: any) => (
 						<MessageCard

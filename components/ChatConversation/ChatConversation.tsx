@@ -4,7 +4,8 @@ import { getSocket } from "app/module/socketModule";
 import { getDetailConversation } from "app/redux/message/messageSlice";
 import { useAppDispatch } from "app/redux/store";
 import { getUserFromLocal } from "app/utils/AppAsyncStorage";
-import { TextTW, ViewTW } from "components/Themed";
+import { Text, TextTW, ViewTW } from "components/Themed";
+import { MessageReceieved } from "models/MessageReceived.model";
 import React, { useEffect, useState } from "react";
 import { ScrollView, TextInput, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-elements";
@@ -32,31 +33,68 @@ export default function ChatConversation({ route }: any) {
 
 	const [socket, setSocket] = useState<any>(null);
 
+	const [userId, setUserId] = useState<any>();
+
+	const [userToken, setUserToken] = useState<any>();
+
+	const [conversationId, setConversationId] = useState();
+
+	const [dataReceived, setDataReceived] = useState("");
+
 	const dispatch = useAppDispatch();
 
 	const handleSendMessage = () => {
-		setTextInput("");
+		if (socket && userId && conversationId && textInput) {
+			socket.emit("private_message", {
+				senderId: userId,
+				conversationId: conversationId,
+				message: textInput,
+			});
+			// setTextInput("");
+		}
 	};
 
-	// useEffect(() => {
-	// 	getUserFromLocal().then((data) => {
-	// 		const socket = io(API_ENDPOINT, {
-	// 			query: { token: data?.tokens },
-	// 		});
-	// 		// socket.on("connect", () => {
-	// 		// 	console.log("connected ne");
-	// 		// });
-	// 		// socket.on("connect_error", (err: any) => {
-	// 		// 	console.log("Connect error ne", err);
-	// 		// 	socket.close();
-	// 		// });
-	// 		// setSocket(socket);
-	// 	});
-	// }, [setSocket]);
+	const handleMessageReceived = (data: MessageReceieved) => {
+		// setDataReceived(data.message);
+		console.log("Receieve data ne");
+	};
+
+	useEffect(() => {
+		getUserFromLocal().then((data) => {
+			setUserId(data?.info.id);
+			setUserToken(data?.tokens);
+			const socket = io(API_ENDPOINT, {
+				query: { token: data?.tokens },
+				withCredentials: true,
+			});
+			setSocket(socket);
+
+			socket.on("connect", () => {
+				console.log("connected ne");
+			});
+			socket.on("connect_error", (err: any) => {
+				console.log("Connect error ne", err);
+				socket.close();
+			});
+		});
+		return () => {
+			if (socket) {
+				socket.close();
+			}
+		};
+	}, []);
+
+	useEffect(() => {
+		if (socket) {
+			console.log("receive");
+			socket.on("message-received", handleMessageReceived);
+		}
+	}, [socket]);
 
 	useEffect(() => {
 		const id = route?.params?.id;
 		if (id) {
+			setConversationId(id);
 			dispatch(getDetailConversation(id))
 				.unwrap()
 				.then((data) => {
@@ -117,6 +155,7 @@ export default function ChatConversation({ route }: any) {
 				<ViewTW className="flex-1 bg-gray-100">
 					<ScrollView className="bg-inherit">
 						<MessagesComponent />
+						<Text>{dataReceived}</Text>
 					</ScrollView>
 				</ViewTW>
 				<ViewTW className="px-4 py-4 flex flex-row bg-white">
