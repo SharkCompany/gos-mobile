@@ -2,8 +2,15 @@ export interface PlaceModel {
   id: number;
   title: string;
   address: string;
-  geometry : {
+  geometry: {
     latitude: string;
-    longFitude: string;
-  }
+    longitude: string;
+  };
+}
+export interface PlaceModelFromServer {
+  id: number;
+  title: string;
+  address: string;
+  latitude: string;
+  longitude: string;
 }

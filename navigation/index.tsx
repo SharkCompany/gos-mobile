@@ -11,16 +11,19 @@ import {
   NavigationContainer,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { placeApi } from "app/api/place.api";
 import { savePlaces } from "app/redux/places/placeSlice";
 import { useAppDispatch, useAppSelector } from "app/redux/store";
 import { setUser } from "app/redux/user/userSlice";
 import { getUserFromLocal } from "app/utils/AppAsyncStorage";
+import { formatPlacesFromServer } from "app/utils/formatPlacesFromServer";
 import AppLoading from "components/AppLoading";
 import FeatherIcon from "components/FeathureIcon";
 import jsonData from "constants/destination.json";
+import { PlaceModelFromServer } from "models/Place.model";
 import * as React from "react";
 import { useEffect } from "react";
-import { ColorSchemeName } from "react-native";
+import { ColorSchemeName, ToastAndroid } from "react-native";
 import InformationEntering from "screens/login/InformationEntering";
 import SocialLoginScreen from "screens/login/SocialLoginScreen";
 import Colors from "../constants/Colors";
@@ -48,8 +51,20 @@ export default function Navigation({
 
   const loadPlaces = () => {
     const data = JSON.parse(JSON.stringify(jsonData));
+    // console.log("loadPlaces",data);
     dispatch(savePlaces(data));
   };
+
+  const loadPlacesFromServer = async () => {
+    const data = await placeApi.getPlaces();
+    try {
+      const places = formatPlacesFromServer(data as unknown as PlaceModelFromServer[]);
+      console.log("places after format",places);
+      // dispatch(savePlaces(places));
+    } catch (error) {
+      console.log("loadPlaceFromServer error: ",error);
+    }
+  }
 
   const loadUser = async () => {
     const adminUser = await getUserFromLocal();
@@ -61,6 +76,7 @@ export default function Navigation({
   useEffect(() => {
     if (places.length === 0) {
       loadPlaces();
+      loadPlacesFromServer();
     }
     loadUser();
   }, []);
