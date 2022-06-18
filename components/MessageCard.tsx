@@ -12,6 +12,7 @@ const MessageCard = ({ item, onSelectHandler }: FixMeLater) => {
 			onSelectHandler(item);
 		}
 	};
+	console.log("item ", item);
 
 	return (
 		<View style={tw`px-2 pt-1 mb-2`}>
