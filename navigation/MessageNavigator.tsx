@@ -8,7 +8,8 @@ import { MapSearchScreenParamList, MessageScreenParamsList } from "types";
 type Props = {};
 const Stack = createNativeStackNavigator<MessageScreenParamsList>();
 
-const MessageNavigator = (props: Props) => {
+const MessageNavigator = (props: any) => {
+	console.log("param nè",props.route.params);
 	return (
 		<Stack.Navigator
 			screenOptions={{

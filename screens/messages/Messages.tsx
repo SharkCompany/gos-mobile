@@ -8,6 +8,7 @@ import { RootTabScreenProps } from "types";
 
 export default function Messages({
 	navigation,
+	route,
 }: RootTabScreenProps<"Messages">) {
 	return (
 		<SafeAreaView>
