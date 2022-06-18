@@ -25,7 +25,7 @@ export default function CreateRide({
   const data = [
     {
       value: loaiChuyenDi.dinho,
-      label: "Đi nhờ xe",
+      label: "Xin quá giang",
     },
     {
       value: loaiChuyenDi.yensau,

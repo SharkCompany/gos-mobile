@@ -25,20 +25,20 @@ import { selectUser } from "app/redux/user/userSlice";
 export default function RideHistory({
   navigation,
 }: RideHistoryScreenProps<"RideHistory">) {
-  const [selectingRideType, setSelectingRideType] = useState<loaiChuyenDi>(
-    loaiChuyenDi.dinho
+  const [selectingRideType, setSelectingRideType] = useState<number>(
+    1
   );
   const dispatch = useAppDispatch();
   const options = [
     {
-      label: "Đi nhờ xe",
-      value: loaiChuyenDi.dinho,
+      label: "Tôi đã đi",
+      value: 1,
       testID: "switch-one",
       accessibilityLabel: "switch-one",
     },
     {
-      label: "Tìm yên sau",
-      value: loaiChuyenDi.yensau,
+      label: "Do tôi tạo",
+      value: 2,
       testID: "switch-one",
       accessibilityLabel: "switch-one",
     },
@@ -53,17 +53,24 @@ export default function RideHistory({
 
   const userInfor = useAppSelector(selectUser);
 
-  const my_drives = rides.filter(
-    (ride) =>
-      ride.creatorId === userInfor?.id || ride.matcherId === userInfor?.id
-  );
+  let my_drives;
 
-  console.log(my_drives.length);
-  console.log(rides.length);
+  // const my_drives = rides.filter(
+  //   (ride) =>
+  //     ride.creatorId === userInfor?.id || ride.matcherId === userInfor?.id
+  // );
+
+  if (selectingRideType === 1) {
+    my_drives = rides.filter(ride=>ride.matcherId === userInfor?.id);
+  }
+  else {
+    my_drives = rides.filter(ride=>ride.creatorId === userInfor?.id);
+  }
+
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(getRides({ type: selectingRideType }));
+      dispatch(getRides({ }));
     }, [selectingRideType])
   );
 
