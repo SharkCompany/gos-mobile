@@ -32,9 +32,7 @@ function RideDetail({ navigation, route }: HomeScreenProps<"RideDetail">) {
 
 				console.log("Conversation id ne", res);
 				ToastAndroid.show("Kết nối thành công", ToastAndroid.BOTTOM);
-				navigation.navigate("ConversationScreen", {
-					conversationId: res?.conversationId,
-				});
+				navigation.navigate("Messages");
 			}
 		} catch (error) {
 			ToastAndroid.show("Kết nối thất bại", ToastAndroid.BOTTOM);
