@@ -3,16 +3,21 @@ import React from "react";
 import tw from "twrnc";
 import { avatarTest } from "assets/images";
 import { FixMeLater } from "interfaces/migration";
+import { UserModel } from "models/User.model";
 
 type Props = {};
 
-const MessageCard = ({ item, onSelectHandler }: FixMeLater) => {
+const MessageCard = ({ item, onSelectHandler, currentUser }: FixMeLater) => {
 	const onPressHandler = () => {
 		if (onSelectHandler) {
 			onSelectHandler(item);
 		}
 	};
 	console.log("item ", item);
+
+	const user: UserModel = item?.user.find(
+		(user: UserModel) => user.id != currentUser?.id
+	);
 
 	return (
 		<View style={tw`px-2 pt-1 mb-2`}>
@@ -21,7 +26,7 @@ const MessageCard = ({ item, onSelectHandler }: FixMeLater) => {
 				onPress={onPressHandler}
 			>
 				<Image
-					source={avatarTest}
+					source={{ uri: user.picture }}
 					style={tw`h-12 w-12 rounded-full mr-4`}
 				/>
 				<View style={tw`justify-between`}>
@@ -30,11 +35,9 @@ const MessageCard = ({ item, onSelectHandler }: FixMeLater) => {
 						<Text style={tw``}>#{item?.id}</Text>
 					</View>
 					<Text style={tw`font-bold mt-1`}>
-						{item?.name ? item?.name : "Nguyen Kiet"}
+						{user ? user?.name : "NK"}
 					</Text>
-					<Text style={tw`opacity-50 mt-1`}>
-						{item?.name ? item?.name : ""}
-					</Text>
+					<Text style={tw`opacity-50 mt-1`}>{""}</Text>
 				</View>
 				<View
 					style={tw`w-3 h-3 bg-[#BDE952] rounded-full absolute top-4 right-6`}

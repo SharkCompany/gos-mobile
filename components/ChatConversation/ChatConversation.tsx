@@ -3,6 +3,7 @@ import { API_ENDPOINT } from "app/constants";
 import { getSocket } from "app/module/socketModule";
 import { getDetailConversation } from "app/redux/message/messageSlice";
 import { useAppDispatch } from "app/redux/store";
+import { selectUser } from "app/redux/user/userSlice";
 import { getUserFromLocal } from "app/utils/AppAsyncStorage";
 import { Text, TextTW, ViewTW } from "components/Themed";
 import { FixMeLater } from "interfaces/migration";
@@ -10,6 +11,7 @@ import { MessageReceieved } from "models/MessageReceived.model";
 import React, { useEffect, useState } from "react";
 import { ScrollView, TextInput, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-elements";
+import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 
 type Props = {};
@@ -19,20 +21,22 @@ export default function ChatConversation({ route }: any) {
 
 	const [socket, setSocket] = useState<any>(null);
 
-	const [userId, setUserId] = useState<any>();
+	const [currentUserId, setCurrentUserId] = useState<any>();
 
 	const [opponentUser, setOpponentUser] = useState<FixMeLater>();
 
 	const [listMessage, setListMessage] = useState<FixMeLater>([]);
+
+	const userSelector = useSelector(selectUser);
 
 	const [conversationId, setConversationId] = useState();
 
 	const dispatch = useAppDispatch();
 
 	const handleSendMessage = () => {
-		if (socket && userId && conversationId && textInput) {
+		if (socket && currentUserId && conversationId && textInput) {
 			socket.emit("private_message", {
-				userId: userId,
+				userId: currentUserId,
 				conversationId: conversationId,
 				message: textInput,
 			});
@@ -49,7 +53,7 @@ export default function ChatConversation({ route }: any) {
 
 	useEffect(() => {
 		getUserFromLocal().then((data) => {
-			setUserId(data?.info.id);
+			setCurrentUserId(data?.info.id);
 			const socket = io(API_ENDPOINT, {
 				reconnectionDelayMax: 10000,
 				auth: {
@@ -91,9 +95,10 @@ export default function ChatConversation({ route }: any) {
 					setListMessage(data?.messages);
 
 					const opponentUser = data?.user.find(
-						(user: FixMeLater) => user.id == userId
+						(user: FixMeLater) => user.id != userSelector?.id
 					);
 					setOpponentUser(opponentUser);
+					// console.log("detail message data", data);
 				});
 		}
 	}, [route?.params]);
@@ -125,7 +130,7 @@ export default function ChatConversation({ route }: any) {
 			<Space />
 			{listMessage &&
 				listMessage.map((mess: FixMeLater, index: number) => {
-					if (mess.senderId != userId) {
+					if (mess.senderId != currentUserId) {
 						return <ClientMess mess={mess.message} key={index} />;
 					} else {
 						return <MyMess mess={mess.message} key={index} />;
@@ -135,7 +140,7 @@ export default function ChatConversation({ route }: any) {
 	);
 
 	return (
-		<ViewTW>
+		<ViewTW className="pt-5">
 			<ViewTW className="w-full h-full bg-red-400  flex">
 				<ViewTW className="flex flex-row items-center py-5 w-full   px-4 border-b-2 border-[#7EBC36] bg-white">
 					<ViewTW className="mr-2">
@@ -148,9 +153,7 @@ export default function ChatConversation({ route }: any) {
 								borderWidth: 2,
 							}}
 							source={{
-								uri: opponentUser
-									? opponentUser?.picture
-									: "https://picsum.photos/300/300",
+								uri: opponentUser && opponentUser?.picture,
 							}}
 						/>
 					</ViewTW>

@@ -13,6 +13,8 @@ import { MessageScreenProps } from "types";
 import MessageCard from "components/MessageCard";
 import { useAppDispatch } from "app/redux/store";
 import { getMessages } from "app/redux/message/messageSlice";
+import { useSelector } from "react-redux";
+import { selectUser } from "app/redux/user/userSlice";
 
 type Props = {};
 
@@ -20,6 +22,8 @@ const AllMessages = ({
 	navigation,
 	route,
 }: MessageScreenProps<"AllMessage">) => {
+	const userSelector = useSelector(selectUser);
+
 	const [listMessages, setListMessages] = useState([]);
 
 	const dispatch = useAppDispatch();
@@ -49,9 +53,10 @@ const AllMessages = ({
 
 	useEffect(() => {
 		getAllMessages();
+		console.log(userSelector);
 	}, []);
 	useEffect(() => {
-		console.log("param nè", route.params);
+		// console.log("param nè", route.params);
 	}, [route.params]);
 
 	return (
@@ -88,6 +93,7 @@ const AllMessages = ({
 							key={item?.id}
 							item={item}
 							onSelectHandler={pressOnMessageCard}
+							currentUser={userSelector}
 						/>
 					))}
 			</ScrollView>
