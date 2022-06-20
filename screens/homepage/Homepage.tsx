@@ -14,13 +14,15 @@ import { API_ENDPOINT } from "app/constants";
 import { io } from "socket.io-client";
 import { useAppDispatch } from "app/redux/store";
 import { setSocketInstance } from "app/redux/message/messageSlice";
+import { useSelector } from "react-redux";
+import { selectUser } from "app/redux/user/userSlice";
 
 export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
 	const SLIDER_WIDTH = Dimensions.get("window").width;
 	const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
 	const ITEM_HEIGHT = Math.round((ITEM_WIDTH * 3) / 4);
 
-	const [socket, setSocket] = useState<any>(null);
+	const userSelector = useSelector(selectUser);
 
 	const dispatch = useAppDispatch();
 
@@ -39,7 +41,9 @@ export default function Homepage({ navigation }: HomeScreenProps<"Home">) {
 			<View
 				style={tw`h-[50%] bg-[#7EBC36] w-full pt-10 px-6 rounded-b-3xl`}
 			>
-				<Text style={tw`text-2xl font-bold`}>Welcome Nguyen Kiet</Text>
+				<Text style={tw`text-2xl font-bold`}>
+					Welcome {userSelector?.name} !
+				</Text>
 				<View style={tw`bg-inherit items-center justify-center `}>
 					<HomeCarousel />
 				</View>

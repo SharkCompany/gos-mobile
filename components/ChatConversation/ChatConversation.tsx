@@ -93,7 +93,7 @@ export default function ChatConversation({ route }: any) {
 				.unwrap()
 				.then((data: FixMeLater) => {
 					setListMessage(data?.messages);
-
+					console.log(data?.messages);
 					const opponentUser = data?.user.find(
 						(user: FixMeLater) => user.id != userSelector?.id
 					);
@@ -119,6 +119,14 @@ export default function ChatConversation({ route }: any) {
 		</ViewTW>
 	);
 
+	const SystemMess = ({ mess }: { mess: string }) => (
+		<ViewTW className=" w-full bg-inherit items-center bg-gray-100 mb-2">
+			<ViewTW className="bg-[#c4c4c4] max-w-[80%] py-2 px-4 rounded-xl text-white ">
+				<TextTW className="text-white">{mess}</TextTW>
+			</ViewTW>
+		</ViewTW>
+	);
+
 	const Space = () => <ViewTW className="h-10 bg-inherit bg-gray-100" />;
 
 	const MessagesComponent = ({
@@ -130,11 +138,19 @@ export default function ChatConversation({ route }: any) {
 			<Space />
 			{listMessage &&
 				listMessage.map((mess: FixMeLater, index: number) => {
-					if (mess.senderId != currentUserId) {
+					if (
+						mess.senderId != currentUserId &&
+						mess?.type === "regular"
+					) {
 						return <ClientMess mess={mess.message} key={index} />;
-					} else {
+					}
+					if (
+						mess.senderId == currentUserId &&
+						mess?.type === "regular"
+					) {
 						return <MyMess mess={mess.message} key={index} />;
 					}
+					return <SystemMess mess={mess.message} key={index} />;
 				})}
 		</ViewTW>
 	);
